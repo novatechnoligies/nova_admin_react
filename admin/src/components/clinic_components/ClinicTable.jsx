@@ -73,7 +73,7 @@ const ClinicTable = () => {
       },
     },
     {
-      name: "Phone",
+      name: "Email",
       selector: (row) => row.name,
       sortable: true,
       style: {
@@ -81,7 +81,7 @@ const ClinicTable = () => {
       },
     },
     {
-      name: "Phone",
+      name: "Pincode",
       selector: (row) => row.name,
       sortable: true,
       style: {
@@ -89,7 +89,7 @@ const ClinicTable = () => {
       },
     },
     {
-      name: "Phone",
+      name: "Ownername",
       selector: (row) => row.name,
       sortable: true,
       style: {
@@ -97,7 +97,23 @@ const ClinicTable = () => {
       },
     },
     {
-      name: "Phone",
+      name: "Today's appointment",
+      selector: (row) => row.name,
+      sortable: true,
+      style: {
+        fontWeight: "bold",
+      },
+    },
+    {
+      name: "logo",
+      selector: (row) => row.name,
+      sortable: true,
+      style: {
+        fontWeight: "bold",
+      },
+    },
+    {
+      name: "Is deleted",
       selector: (row) => row.name,
       sortable: true,
       style: {
@@ -197,7 +213,21 @@ const ClinicTable = () => {
           setIsEditing(false);
         }}
       >
-        <input value={editingClinic?.name} />
+       Clinic name <input value={editingClinic?.name} />
+       <br/>
+       Phone <input value={editingClinic?.name} />
+       <br/>
+       Email <input value={editingClinic?.name} />
+       <br/>
+       Pincode <input value={editingClinic?.name} />
+       <br/>
+       Ownername <input value={editingClinic?.name} />
+       <br/>
+       Today's appointment <input value={editingClinic?.name} />
+       <br/>
+       Logo <input value={editingClinic?.name} />
+       <br/>
+       Is deleted <input value={editingClinic?.name} />
       </Modal>
 
       <Modal
@@ -211,7 +241,7 @@ const ClinicTable = () => {
           setIsCreate(false);
         }}
       >
-        <input placeholder="clinic name" />
+       <input placeholder="clinic name" />
       </Modal>
     </div>
   );

@@ -9,7 +9,7 @@ import ShopFilters from './components/filters/ShopFilter';
 import SpaTable from './components/spa_components/SpaTable';
 import LabTable from './components/lab_components/LabTable';
 import CscTable from './components/csc_components/CscTable';
-import BusTable from './components/bus_components copy/BusTable';
+// import BusTable from './components/bus_components copy/BusTable';
 import ClinicTable from './components/clinic_components/ClinicTable';
 
 function App() {
@@ -87,7 +87,7 @@ function App() {
             <Route path="/spa" element={<div className='d-flex flex-column align-items-center'> <SpaTable/></div>}></Route>
             <Route path="/shalon" element={<div className='d-flex flex-column align-items-center'> <ShopTable/></div>}></Route>
             <Route path="/csc" element={<div className='d-flex flex-column align-items-center'> <CscTable/></div>}></Route>
-            <Route path="/bus" element={<div className='d-flex flex-column align-items-center'> <BusTable/></div>}></Route>
+            {/* <Route path="/bus" element={<div className='d-flex flex-column align-items-center'> <BusTable/></div>}></Route> */}
             <Route path="/clinic" element={<div className='d-flex flex-column align-items-center'> <ClinicTable/></div>}></Route>
             <Route path="/consumer" element={<div>consumer</div>}></Route>
             <Route path="/profile" element={<div>profile</div>}></Route>

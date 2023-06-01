@@ -73,7 +73,7 @@ const CscTable = () => {
       },
     },
     {
-      name: "Phone",
+      name: "Email",
       selector: (row) => row.name,
       sortable: true,
       style: {
@@ -81,7 +81,7 @@ const CscTable = () => {
       },
     },
     {
-      name: "Phone",
+      name: "Pincode",
       selector: (row) => row.name,
       sortable: true,
       style: {
@@ -89,7 +89,7 @@ const CscTable = () => {
       },
     },
     {
-      name: "Phone",
+      name: "Ownername",
       selector: (row) => row.name,
       sortable: true,
       style: {
@@ -97,7 +97,23 @@ const CscTable = () => {
       },
     },
     {
-      name: "Phone",
+      name: "Today's appointment",
+      selector: (row) => row.name,
+      sortable: true,
+      style: {
+        fontWeight: "bold",
+      },
+    },
+    {
+      name: "Logo",
+      selector: (row) => row.name,
+      sortable: true,
+      style: {
+        fontWeight: "bold",
+      },
+    },
+    {
+      name: "Is deleted",
       selector: (row) => row.name,
       sortable: true,
       style: {
@@ -197,7 +213,22 @@ const CscTable = () => {
           setIsEditing(false);
         }}
       >
-        <input value={editingCsc?.name} />
+        Csc name: <input value={editingCsc?.name} />
+        <br/>
+        Phone: <input value={editingCsc?.Phone} />
+        <br/>
+        Email: <input value={editingCsc?.Email} />
+        <br/>
+        Pincode: <input value={editingCsc?.Pincode} />
+        <br/>
+        Ownername: <input value={editingCsc?.Ownername} />
+        <br/>
+        Today's appointment: <input value={editingCsc?.appointment} />
+        <br/>
+        Logo: <input value={editingCsc?.Logo} />
+        <br/>
+        Is deleted: <input value={editingCsc?.deleted} />
+
       </Modal>
 
       <Modal
