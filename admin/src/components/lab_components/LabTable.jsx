@@ -1,7 +1,8 @@
 import DataTable from "react-data-table-component";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Modal } from "antd";
+import { Button, Modal ,Form, Input} from "antd";
+
 import {
   DeleteOutlined,
   EditOutlined,
@@ -58,7 +59,7 @@ const LabTable = () => {
     },
     {
       name: "Address",
-      selector: (row) => row.name,
+      selector: (row) => row.alpha2Code,
       sortable: true,
       style: {
         fontWeight: "bold",
@@ -66,6 +67,22 @@ const LabTable = () => {
     },
     {
       name: "Phone",
+      selector: (row) => row.alpha3Code,
+      sortable: true,
+      style: {
+        fontWeight: "bold",
+      },
+    },
+    {
+      name: "Email",
+      selector: (row) => row.population,
+      sortable: true,
+      style: {
+        fontWeight: "bold",
+      },
+    },
+    {
+      name: "Pincode",
       selector: (row) => row.name,
       sortable: true,
       style: {
@@ -73,7 +90,7 @@ const LabTable = () => {
       },
     },
     {
-      name: "Phone",
+      name: "Ownername",
       selector: (row) => row.name,
       sortable: true,
       style: {
@@ -81,7 +98,7 @@ const LabTable = () => {
       },
     },
     {
-      name: "Phone",
+      name: "Today's appoinment",
       selector: (row) => row.name,
       sortable: true,
       style: {
@@ -89,7 +106,7 @@ const LabTable = () => {
       },
     },
     {
-      name: "Phone",
+      name: "Logo",
       selector: (row) => row.name,
       sortable: true,
       style: {
@@ -97,7 +114,7 @@ const LabTable = () => {
       },
     },
     {
-      name: "Phone",
+      name: "Is deleted ",
       selector: (row) => row.name,
       sortable: true,
       style: {
@@ -197,7 +214,71 @@ const LabTable = () => {
           setIsEditing(false);
         }}
       >
-        <input value={editingLab?.name} />
+        <div>
+
+        <Form
+      
+      name="registration_form"
+      
+      labelCol={{ span: 8 }}
+      wrapperCol={{ span: 16 }}
+    >
+      <Form.Item
+        label="Name"
+        name="name"
+        initialValue={editingLab?.name}
+        rules={[{ required: true, message: 'Please enter your name' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="Email"
+        name="email"
+        rules={[
+          { required: true, message: 'Please enter your email' },
+          { type: 'email', message: 'Please enter a valid email' },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="Password"
+        name="password"
+        rules={[
+          { required: true, message: 'Please enter a password' },
+          { min: 6, message: 'Password must be at least 6 characters long' },
+        ]}
+      >
+        <Input.Password />
+      </Form.Item>
+
+      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+        <Button type="primary" htmlType="submit">
+          Update Lab Details
+        </Button>
+        
+      </Form.Item>
+    </Form>
+         <input className="inputStyle" value={editingLab?.name} />
+        <br/>
+        Adress: <input value={editingLab?.alpha2Code} />
+        <br/>
+        Phone: <input value={editingLab?.phone} />
+        <br/>
+        Email: <input value={editingLab?.Email} />
+        <br/>
+        Pincode: <input value={editingLab?.Pincode} />
+        <br/>
+        Ownername: <input value={editingLab?.Ownername} />
+        <br/>
+        Today's appoinment: <input value={editingLab?.appoinment} />
+        <br/>
+        Logo: <input value={editingLab?.logo} />
+        <br/>
+        Is deleted: <input value={editingLab?.is} />
+        </div>
       </Modal>
 
       <Modal

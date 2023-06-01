@@ -81,6 +81,30 @@ const SpaTable = () => {
       },
     },
     {
+      name: "Pincode",
+      selector: (row) => row.name,
+      sortable: true,
+      style: {
+        fontWeight: "bold",
+      },
+    },
+    {
+      name: "Ownername",
+      selector: (row) => row.name,
+      sortable: true,
+      style: {
+        fontWeight: "bold",
+      },
+    },
+    {
+      name: "Today's appointment",
+      selector: (row) => row.name,
+      sortable: true,
+      style: {
+        fontWeight: "bold",
+      },
+    },
+    {
       name: "Logo",
       selector: (row) => row.name,
       sortable: true,
@@ -190,7 +214,23 @@ const SpaTable = () => {
           setIsEditing(false);
         }}
       >
-        <input value={editingSpa?.name} />
+       Spa name: <input value={editingSpa?.name} />
+       <br/>
+       Adress: <input value={editingSpa?.Adress} />
+       <br/>
+       Phone: <input value={editingSpa?.Phone} />
+       <br/>
+       Email: <input value={editingSpa?.Email} />
+       <br/>
+       Pincode: <input value={editingSpa?.Pincode} />
+       <br/>
+       Ownername: <input value={editingSpa?.Ownername} />
+       <br/>
+       Today's appointment: <input value={editingSpa?.appointment} />
+       <br/>
+       Logo: <input value={editingSpa?.Logo} />
+       <br/>
+       Is deleted: <input value={editingSpa?.deleted} />
       </Modal>
 
       <Modal
