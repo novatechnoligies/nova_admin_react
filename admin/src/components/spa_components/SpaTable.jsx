@@ -1,7 +1,7 @@
 import DataTable from "react-data-table-component";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Modal } from "antd";
+import { Button, Modal ,Form, Input} from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
@@ -183,9 +183,7 @@ const SpaTable = () => {
             <Button
               style={{ marginLeft: "20px" }}
               type="primary"
-              onClick={() => {
-                editSpaDetails();
-              }}
+              onClick={() => {editSpaDetails();}}
             >
               Create New Shop
             </Button>
@@ -214,23 +212,115 @@ const SpaTable = () => {
           setIsEditing(false);
         }}
       >
-       Spa name: <input value={editingSpa?.name} />
-       <br/>
-       Adress: <input value={editingSpa?.Adress} />
-       <br/>
-       Phone: <input value={editingSpa?.Phone} />
-       <br/>
-       Email: <input value={editingSpa?.Email} />
-       <br/>
-       Pincode: <input value={editingSpa?.Pincode} />
-       <br/>
-       Ownername: <input value={editingSpa?.Ownername} />
-       <br/>
-       Today's appointment: <input value={editingSpa?.appointment} />
-       <br/>
-       Logo: <input value={editingSpa?.Logo} />
-       <br/>
-       Is deleted: <input value={editingSpa?.deleted} />
+       <div>
+
+<Form
+
+name="registration_form"
+
+labelCol={{ span: 8 }}
+wrapperCol={{ span: 16 }}
+>
+<Form.Item
+label="Name"
+name="name"
+initialValue={editingSpa?.name}
+rules={[{ required: true, message: 'Please enter your name' }]}
+>
+<Input />
+</Form.Item>
+
+<Form.Item
+label="Adress"
+name="Adress"
+initialValue={editingSpa?.topLevelDomain}
+rules={[
+  { required: true, message: 'Please enter your adress' },
+  { type: 'email', message: 'Please enter a valid adress' },
+]}
+>
+<Input />
+</Form.Item>
+
+<Form.Item
+label="Password"
+name="password"
+initialValue={editingSpa?.alpha2Code}
+rules={[
+  { required: true, message: 'Please enter a password' },
+  { min: 6, message: 'Password must be at least 6 characters long' },
+]}
+>
+<Input.Password />
+</Form.Item>
+
+<Form.Item
+label="Email"
+name="email"
+initialValue={editingSpa?.alpha3Code}
+rules={[
+  { required: true, message: 'Please enter your email' },
+  { type: 'email', message: 'Please enter a valid email' },
+]}
+>
+ <Input />
+</Form.Item>
+
+<Form.Item
+label="Pincode"
+name="Pincode"
+initialValue={editingSpa?.callingCodes}
+rules={[
+  { required: true, message: 'Please enter your Pincode' },
+  { type: 'pincode', message: 'Please enter a valid Pincode' },
+]}
+>
+ <Input />
+</Form.Item>
+
+<Form.Item
+label="Ownername"
+name="Ownername"
+initialValue={editingSpa?.capital}
+rules={[
+  { required: true, message: 'Please enter your name' },
+  { type: 'name', message: 'Please enter a valid name' },
+]}
+>
+ <Input />
+</Form.Item>
+
+<Form.Item
+label="Logo"
+name="Logo"
+initialValue={editingSpa?.altSpellings}
+rules={[
+  { required: true, message: 'Please enter your logo' },
+  { type: 'logo', message: 'Please enter a valid logo' },
+]}
+>
+<Input />
+</Form.Item>
+
+<Form.Item
+label="Is deleted"
+name="Is deleted"
+initialValue={editingSpa?.subregion}
+rules={[
+  { required: true, message: 'deleted' },
+  { type: 'delete', message: 'deleted' },
+]}
+> <Input/>
+</Form.Item>
+
+<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+<Button type="primary" htmlType="submit">
+  Update Spa Details
+</Button>
+
+</Form.Item>
+</Form>
+</div>
       </Modal>
 
       <Modal

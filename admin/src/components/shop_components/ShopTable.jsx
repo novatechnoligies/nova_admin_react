@@ -1,7 +1,7 @@
 import DataTable from "react-data-table-component";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Modal } from "antd";
+import { Button, Modal ,Form, Input} from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
@@ -52,13 +52,13 @@ const ShopTable = () => {
 
   const columns = [
     {
-      name: "Shop Name",
+      name: "Lab Name",
       selector: (row) => row.name,
       sortable: true,
     },
     {
       name: "Address",
-      selector: (row) => row.name,
+      selector: (row) => row.alpha2Code,
       sortable: true,
       style: {
         fontWeight: "bold",
@@ -66,6 +66,30 @@ const ShopTable = () => {
     },
     {
       name: "Phone",
+      selector: (row) => row.alpha3Code,
+      sortable: true,
+      style: {
+        fontWeight: "bold",
+      },
+    },
+    {
+      name: "Email",
+      selector: (row) => row.callingCodes,
+      sortable: true,
+      style: {
+        fontWeight: "bold",
+      },
+    },
+    {
+      name: "Pincode",
+      selector: (row) => row.callingCodes,
+      sortable: true,
+      style: {
+        fontWeight: "bold",
+      },
+    },
+    {
+      name: "Ownername",
       selector: (row) => row.name,
       sortable: true,
       style: {
@@ -73,7 +97,7 @@ const ShopTable = () => {
       },
     },
     {
-      name: "Phone",
+      name: "Today's appoinment",
       selector: (row) => row.name,
       sortable: true,
       style: {
@@ -81,7 +105,7 @@ const ShopTable = () => {
       },
     },
     {
-      name: "Phone",
+      name: "Logo",
       selector: (row) => row.name,
       sortable: true,
       style: {
@@ -89,15 +113,7 @@ const ShopTable = () => {
       },
     },
     {
-      name: "Phone",
-      selector: (row) => row.name,
-      sortable: true,
-      style: {
-        fontWeight: "bold",
-      },
-    },
-    {
-      name: "Phone",
+      name: "Is deleted ",
       selector: (row) => row.name,
       sortable: true,
       style: {
@@ -197,7 +213,117 @@ const ShopTable = () => {
           setIsEditing(false);
         }}
       >
-        <input value={editingShop?.name} />
+        <div>
+
+<Form
+
+name="registration_form"
+
+labelCol={{ span: 8 }}
+wrapperCol={{ span: 16 }}
+>
+<Form.Item
+label="Name"
+name="name"
+initialValue={editingShop?.name}
+rules={[{ required: true, message: 'Please enter your name' }]}
+>
+<Input />
+</Form.Item>
+
+<Form.Item
+label="Adress"
+name="Adress"
+initialValue={editingShop?.topLevelDomain}
+rules={[
+  { required: true, message: 'Please enter your adress' },
+  { type: 'email', message: 'Please enter a valid adress' },
+]}
+>
+<Input />
+</Form.Item>
+
+<Form.Item
+label="Password"
+name="password"
+initialValue={editingShop?.Password}
+rules={[
+  { required: true, message: 'Please enter a password' },
+  { min: 6, message: 'Password must be at least 6 characters long' },
+]}
+
+ 
+>
+<Input.Password />
+</Form.Item>
+
+<Form.Item
+label="Email"
+name="email"
+initialValue={editingShop?.alpha3Code}
+rules={[
+  { required: true, message: 'Please enter your email' },
+  { type: 'email', message: 'Please enter a valid email' },
+]}
+>
+ <Input />
+</Form.Item>
+
+<Form.Item
+label="Pincode"
+name="Pincode"
+initialValue={editingShop?.callingCodes}
+rules={[
+  { required: true, message: 'Please enter your Pincode' },
+  { type: 'pincode', message: 'Please enter a valid Pincode' },
+]}
+>
+ <Input />
+</Form.Item>
+
+<Form.Item
+label="Ownername"
+name="Ownername"
+initialValue={editingShop?.capital}
+rules={[
+  { required: true, message: 'Please enter your name' },
+  { type: 'name', message: 'Please enter a valid name' },
+]}
+>
+ <Input />
+</Form.Item>
+
+<Form.Item
+label="Logo"
+name="Logo"
+initialValue={editingShop?.altSpellings}
+rules={[
+  { required: true, message: 'Please enter your logo' },
+  { type: 'logo', message: 'Please enter a valid logo' },
+]}
+>
+<Input />
+</Form.Item>
+
+<Form.Item
+label="Is deleted"
+name="Is deleted"
+initialValue={editingShop?.subregion}
+rules={[
+  { required: true, message: 'deleted' },
+  { type: 'delete', message: 'deleted' },
+]}
+> <Input />
+</Form.Item>
+
+<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+<Button type="primary" htmlType="submit">
+  Update Shop Details
+</Button>
+
+</Form.Item>
+</Form>
+</div>
       </Modal>
 
       <Modal

@@ -75,7 +75,7 @@ const LabTable = () => {
     },
     {
       name: "Email",
-      selector: (row) => row.population,
+      selector: (row) => row.callingCodes,
       sortable: true,
       style: {
         fontWeight: "bold",
@@ -83,7 +83,7 @@ const LabTable = () => {
     },
     {
       name: "Pincode",
-      selector: (row) => row.name,
+      selector: (row) => row.callingCodes,
       sortable: true,
       style: {
         fontWeight: "bold",
@@ -233,11 +233,12 @@ const LabTable = () => {
       </Form.Item>
 
       <Form.Item
-        label="Email"
-        name="email"
+        label="Adress"
+        name="Adress"
+        initialValue={editingLab?.topLevelDomain}
         rules={[
-          { required: true, message: 'Please enter your email' },
-          { type: 'email', message: 'Please enter a valid email' },
+          { required: true, message: 'Please enter your adress' },
+          { type: 'email', message: 'Please enter a valid adress' },
         ]}
       >
         <Input />
@@ -246,12 +247,74 @@ const LabTable = () => {
       <Form.Item
         label="Password"
         name="password"
+        initialValue={editingLab?.alpha2Code}
         rules={[
           { required: true, message: 'Please enter a password' },
           { min: 6, message: 'Password must be at least 6 characters long' },
         ]}
+        
+         
       >
-        <Input.Password />
+       <Input.Password />
+      </Form.Item>
+      
+       <Form.Item
+        label="Email"
+        name="email"
+        initialValue={editingLab?.alpha3Code}
+        rules={[
+          { required: true, message: 'Please enter your email' },
+          { type: 'email', message: 'Please enter a valid email' },
+        ]}
+      >
+         <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="Pincode"
+        name="Pincode"
+        initialValue={editingLab?.callingCodes}
+        rules={[
+          { required: true, message: 'Please enter your Pincode' },
+          { type: 'pincode', message: 'Please enter a valid Pincode' },
+        ]}
+      >
+         <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="Ownername"
+        name="Ownername"
+        initialValue={editingLab?.capital}
+        rules={[
+          { required: true, message: 'Please enter your name' },
+          { type: 'name', message: 'Please enter a valid name' },
+        ]}
+      >
+         <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="Logo"
+        name="Logo"
+        initialValue={editingLab?.altSpellings}
+        rules={[
+          { required: true, message: 'Please enter your logo' },
+          { type: 'logo', message: 'Please enter a valid logo' },
+        ]}
+      >
+     <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="Is deleted"
+        name="Is deleted"
+        initialValue={editingLab?.subregion}
+        rules={[
+          { required: true, message: 'deleted' },
+          { type: 'delete', message: 'deleted' },
+        ]}
+      > <Input />
       </Form.Item>
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
@@ -261,25 +324,8 @@ const LabTable = () => {
         
       </Form.Item>
     </Form>
-         <input className="inputStyle" value={editingLab?.name} />
-        <br/>
-        Adress: <input value={editingLab?.alpha2Code} />
-        <br/>
-        Phone: <input value={editingLab?.phone} />
-        <br/>
-        Email: <input value={editingLab?.Email} />
-        <br/>
-        Pincode: <input value={editingLab?.Pincode} />
-        <br/>
-        Ownername: <input value={editingLab?.Ownername} />
-        <br/>
-        Today's appoinment: <input value={editingLab?.appoinment} />
-        <br/>
-        Logo: <input value={editingLab?.logo} />
-        <br/>
-        Is deleted: <input value={editingLab?.is} />
         </div>
-      </Modal>
+npm      </Modal>
 
       <Modal
         title="Edit Lab:"
