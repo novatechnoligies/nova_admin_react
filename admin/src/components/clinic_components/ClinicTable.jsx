@@ -1,7 +1,7 @@
 import DataTable from "react-data-table-component";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Modal } from "antd";
+import { Button, Modal ,Form, Input} from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
@@ -213,21 +213,117 @@ const ClinicTable = () => {
           setIsEditing(false);
         }}
       >
-       Clinic name <input value={editingClinic?.name} />
-       <br/>
-       Phone <input value={editingClinic?.name} />
-       <br/>
-       Email <input value={editingClinic?.name} />
-       <br/>
-       Pincode <input value={editingClinic?.name} />
-       <br/>
-       Ownername <input value={editingClinic?.name} />
-       <br/>
-       Today's appointment <input value={editingClinic?.name} />
-       <br/>
-       Logo <input value={editingClinic?.name} />
-       <br/>
-       Is deleted <input value={editingClinic?.name} />
+      <div>
+
+<Form
+
+name="registration_form"
+
+labelCol={{ span: 8 }}
+wrapperCol={{ span: 16 }}
+>
+<Form.Item
+label="Name"
+name="name"
+initialValue={editingClinic?.name}
+rules={[{ required: true, message: 'Please enter your name' }]}
+>
+<Input />
+</Form.Item>
+
+<Form.Item
+label="Adress"
+name="Adress"
+initialValue={editingClinic?.topLevelDomain}
+rules={[
+  { required: true, message: 'Please enter your adress' },
+  { type: 'email', message: 'Please enter a valid adress' },
+]}
+>
+<Input />
+</Form.Item>
+
+<Form.Item
+label="Password"
+name="password"
+initialValue={editingClinic?.alpha2Code}
+rules={[
+  { required: true, message: 'Please enter a password' },
+  { min: 6, message: 'Password must be at least 6 characters long' },
+]}
+
+ 
+>
+<Input.Password />
+</Form.Item>
+
+<Form.Item
+label="Email"
+name="email"
+initialValue={editingClinic?.alpha3Code}
+rules={[
+  { required: true, message: 'Please enter your email' },
+  { type: 'email', message: 'Please enter a valid email' },
+]}
+>
+ <Input />
+</Form.Item>
+
+<Form.Item
+label="Pincode"
+name="Pincode"
+initialValue={editingClinic?.callingCodes}
+rules={[
+  { required: true, message: 'Please enter your Pincode' },
+  { type: 'pincode', message: 'Please enter a valid Pincode' },
+]}
+>
+ <Input />
+</Form.Item>
+
+<Form.Item
+label="Ownername"
+name="Ownername"
+initialValue={editingClinic?.capital}
+rules={[
+  { required: true, message: 'Please enter your name' },
+  { type: 'name', message: 'Please enter a valid name' },
+]}
+>
+ <Input />
+</Form.Item>
+
+<Form.Item
+label="Logo"
+name="Logo"
+initialValue={editingClinic?.altSpellings}
+rules={[
+  { required: true, message: 'Please enter your logo' },
+  { type: 'logo', message: 'Please enter a valid logo' },
+]}
+>
+<Input />
+</Form.Item>
+
+<Form.Item
+label="Is deleted"
+name="Is deleted"
+initialValue={editingClinic?.subregion}
+rules={[
+  { required: true, message: 'deleted' },
+  { type: 'delete', message: 'deleted' },
+]}
+> <Input />
+</Form.Item>
+
+<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+<Button type="primary" htmlType="submit">
+  Update Clinic Details
+</Button>
+
+</Form.Item>
+</Form>
+</div>
       </Modal>
 
       <Modal
