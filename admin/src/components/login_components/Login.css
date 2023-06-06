@@ -1,0 +1,97 @@
+/* Login container */
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  border: #292323;
+  border-width: 100px;
+  border-color: #0056b3;
+  border-radius: 20px;
+  box-shadow: 20px;
+}
+
+.gf-btn{
+  width: 100%;
+  padding: 10px;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  margin-left: 35px;
+
+  
+}
+
+/* Login container */
+.login-container {
+  display: flex;
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ccc; /* Add border */
+  border-radius: 4px; /* Optional: Add border radius */
+  align-content: center;
+  margin-left: 33%;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  align-items: center;
+  justify-content: center;
+  
+}
+.login-img{
+  background-image: url('path/to/image2.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+
+}
+
+.login-taital {
+  display: flex;
+  color:white;
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  margin-left: 33%;
+  margin-top: 10%;
+  }
+  .from-label-color{
+    color: white;
+    
+  }
+  .for-position{
+    color: white;
+    margin-left: 23%;
+  }
+  .for-position1{
+    color: white;
+    margin-left: 30%;
+   
+  }
+
+.button {
+  width: 100%;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+/* Login form submit button hover effect */
+.button:hover {
+  background-color: #0056b3;
+}
+
+/* Error message */
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
