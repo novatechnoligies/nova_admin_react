@@ -7,33 +7,52 @@ import { useState } from 'react';
 
 
 const Login = () => {
+  const [showLogin, setShowLogin] = useState(true);
+  const [showForget, setShowForget] = useState(false);
+  const [showVerifyOTP, setShowVerifyOTP] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
 
-  
-    const [showLogin, setShowLogin] = useState(true);
-    const [showForget, setShowForget] = useState(true);
+  const handleForgetPassword = () => {
+    setShowLogin(false);
+    setShowForget(true);
+    setShowVerifyOTP(false);
+    setShowNewPassword(false);
+  };
 
-    const handleForgetPassword = () => {
-      setShowLogin(false);
-      setShowForget(true);
-    };
+  const handleEnterOtp = () => {
+    setShowLogin(false);
+    setShowForget(false);
+    setShowVerifyOTP(true);
+    setShowNewPassword(false);
+  };
 
-    const handleEnterOtp =() =>{
-      setShowLogin(false);
-      setShowForget(false);
-    }
-  
-    const handleLogin = (values) => {
-      // Handle login form submission
-      console.log(values);
-    };
-  
-    const handleCreateAccount = () => {
-      // Handle create account button click
-    };
- 
+  const handleLogin = (values) => {
+    // Handle login form submission
+    console.log(values);
+  };
+
+  const handleNewpassword= () =>{
+    setShowLogin(false);
+    setShowForget(false);
+    setShowVerifyOTP(false);
+    setShowNewPassword(true);
+  }
+
+  const handleCreateAccount = () => {
+    // Handle create account button click
+    
+  };
+  const handleLoginPage =()=>{
+    setShowLogin(true);
+    setShowForget(false);
+    setShowVerifyOTP(false);
+    setShowNewPassword(false);
+
+  }
+
   return (
     <div className="login-img">
-      {showLogin ? (
+      {showLogin && (
         <div className="login-container">
           <Form onFinish={handleLogin}>
             <div>
@@ -43,7 +62,9 @@ const Login = () => {
               className="from-label-color"
               name="username"
               label="Username"
-              rules={[{ required: true, message: 'Please input your username!' }]}
+              rules={[
+                { required: true, message: "Please input your username!" },
+              ]}
             >
               <Input />
             </Form.Item>
@@ -51,7 +72,9 @@ const Login = () => {
               className="from-label-color"
               name="password"
               label="Password"
-              rules={[{ required: true, message: 'Please input your password!' }]}
+              rules={[
+                { required: true, message: "Please input your password!" },
+              ]}
             >
               <Input.Password />
             </Form.Item>
@@ -60,13 +83,21 @@ const Login = () => {
               <Button type="primary" className="button" htmlType="submit">
                 Log in
               </Button>
-              <Button className="for-position" type="link" onClick={handleForgetPassword}>
+              <Button
+                className="for-position"
+                type="link"
+                onClick={handleForgetPassword}
+              >
                 Forget Password..?
               </Button>
               <br />
             </Form.Item>
             <Form.Item>
-              <Button type="primary" className="button" onClick={handleCreateAccount}>
+              <Button
+                type="primary"
+                className="button"
+                onClick={handleCreateAccount}
+              >
                 Create new account
               </Button>
             </Form.Item>
@@ -78,14 +109,19 @@ const Login = () => {
                   google
                 </Button>
 
-                <Button type="primary" htmlType="submit" style={{ marginLeft: '5%' }}>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{ marginLeft: "5%" }}
+                >
                   facebook
                 </Button>
               </div>
             </div>
           </Form>
         </div>
-      ) : (
+      )}
+      {showForget && (
         <div className="login-container">
           <h2>Password Reset</h2>
           <div>
@@ -94,21 +130,92 @@ const Login = () => {
                 className="from-label-color"
                 name="emailorphone"
                 label="Enter Email/Phone"
-                rules={[{ required: true, message: 'Please input your username!' }]}
+                rules={[
+                  { required: true, message: "Please input your username!" },
+                ]}
               >
                 <Input />
               </Form.Item>
 
               <Form.Item>
-              <Button type="primary" className="button" onClick={handleEnterOtp}>
-                Get OTP
-              </Button>
-            </Form.Item>
-
+                <Button
+                  type="primary"
+                  className="button"
+                  onClick={handleEnterOtp}
+                >
+                  Get OTP
+                </Button>
+              </Form.Item>
             </Form>
           </div>
         </div>
       )}
+      {showVerifyOTP && (<div className="login-container">
+          <h2>Enter OTP</h2>
+          <div>
+            <Form onFinish={handleLogin}>
+              <Form.Item
+                className="from-label-color"
+                name="emailorphone"
+                label="Enter Email/Phone"
+                rules={[
+                  { required: true, message: "Please input your username!" },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item>
+                <Button
+                  type="primary"
+                  className="button"
+                  onClick={handleNewpassword}
+                >
+                  Verify OTP
+                </Button>
+              </Form.Item>
+            </Form>
+          </div>
+        </div>)}
+
+        {showNewPassword && (<div className="login-container">
+          <h2>Set Password</h2>
+          <div>
+            <Form onFinish={handleLogin}>
+              <Form.Item
+                className="from-label-color"
+                name="new Password"
+                label="Enter Email/Phone"
+                rules={[
+                  { required: true, message: "Please input your username!" },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                className="from-label-color"
+                name="conform Password"
+                label="Enter Email/Phone"
+                rules={[
+                  { required: true, message: "Please input your username!" },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item>
+                <Button
+                  type="primary"
+                  className="button"
+                  onClick={handleLoginPage}
+                >
+                  Set new password
+                </Button>
+              </Form.Item>
+            </Form>
+          </div>
+        </div>)}
     </div>
   );
 };
