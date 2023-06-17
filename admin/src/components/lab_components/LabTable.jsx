@@ -1,7 +1,7 @@
 import DataTable from "react-data-table-component";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Modal ,Form, Input} from "antd";
+import { Button, Modal ,Form, Input, Slider} from "antd";
 
 import {
   DeleteOutlined,
@@ -163,6 +163,8 @@ const LabTable = () => {
   };
   return (
     <div className="novaTable ">
+      <Slider></Slider>
+      <header></header>
       <DataTable
         className="container headerStyles"
         title="LAB DETAILS"

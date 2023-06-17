@@ -9,9 +9,9 @@ import ShopFilters from './components/filters/ShopFilter';
 import SpaTable from './components/spa_components/SpaTable';
 import LabTable from './components/lab_components/LabTable';
 import CscTable from './components/csc_components/CscTable';
-//import BusTable from './components/bus_components copy/BusTable';
+// import BusTable from './components/bus_components copy/BusTable';
 import ClinicTable from './components/clinic_components/ClinicTable';
-//import Login from './components/login_components/Login';
+import Login from './components/login_components/Login';
 
 
 function App() {
@@ -20,15 +20,12 @@ function App() {
   return (
     <div>
     <div style={{display: "flex", flexDirection: "column" , flex:1}}>
-      <Header/>
+      {/* <Header/> */}
       </div>
       <div  style={{display: "flex", flexDirection: "row",flex:1 ,alignItems: 'flex-start'}}>
-        {/* <Login>
-          
-        </Login> */}
-
-     <SlideMenu/>
-     <Content/>
+      <Login></Login>
+     {/* <SlideMenu/>
+     <Content/> */}
      </div>
      </div>   
   );
