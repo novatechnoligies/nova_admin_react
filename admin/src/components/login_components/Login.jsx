@@ -4,6 +4,10 @@ import { Form, Input, Button } from 'antd';
 import { Alignment } from "react-data-table-component";
 import FormItem from "antd/es/form/FormItem";
 import { useState } from 'react';
+import axios from 'axios';
+
+
+
 
 
 const Login = () => {
@@ -11,6 +15,7 @@ const Login = () => {
   const [showForget, setShowForget] = useState(false);
   const [showVerifyOTP, setShowVerifyOTP] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showCreateAccount, setCreateAccount] =useState(false);
 
   const handleForgetPassword = () => {
     setShowLogin(false);
@@ -26,9 +31,28 @@ const Login = () => {
     setShowNewPassword(false);
   };
 
-  const handleLogin = (values) => {
+  const handleLogin = async(values) => {
     // Handle login form submission
     console.log(values);
+    const formData = new FormData();
+    formData.append('username', values.username);
+    formData.append('password', values.password);
+    try {
+      axios.post("http://13.127.197.105:8082/getUserByUserNameAndPassword", formData)
+  .then(response => {
+    // Handle the response data here
+    if(response.data=="username/password not found"){
+      alert("invalid username or passowrd");
+    }else{
+      alert("u r success");
+    }
+    console.log(response.data);
+  })
+  .catch(error => {
+    // Handle any errors that occur during the request
+    console.error(error);
+  });
+    } catch (error) {}
   };
 
   const handleNewpassword= () =>{
@@ -39,6 +63,12 @@ const Login = () => {
   }
 
   const handleCreateAccount = () => {
+    setShowLogin(false);
+    setShowForget(false);
+    setShowVerifyOTP(false);
+    setShowNewPassword(false);
+    setCreateAccount(true)
+    
     // Handle create account button click
     
   };
@@ -49,6 +79,7 @@ const Login = () => {
     setShowNewPassword(false);
 
   }
+  
 
   return (
     <div className="login-img">
@@ -93,11 +124,7 @@ const Login = () => {
               <br />
             </Form.Item>
             <Form.Item>
-              <Button
-                type="primary"
-                className="button"
-                onClick={handleCreateAccount}
-              >
+              <Button type="primary" className="button" onClick={handleCreateAccount}>
                 Create new account
               </Button>
             </Form.Item>
@@ -215,6 +242,45 @@ const Login = () => {
               </Form.Item>
             </Form>
           </div>
+        </div>)}
+       
+       {showCreateAccount&&( <div className="login-container">
+          <h2>Create Your Account</h2>
+          <Form onFinish={handleCreateAccount}>
+            <Form.Item label="Firstname" name="firstName" rules={[{ required: true, message: 'Please enter your Firstname' }]}>
+              <Input placeholder="Enter your Firstname" />
+            </Form.Item>
+            <Form.Item label="Lastname" name="lastName" rules={[{ required: true, message: 'Please enter your Lastname' }]}>
+              <Input placeholder="Enter your Lastname" />
+            </Form.Item>
+            <Form.Item label="Date of birth" name="dateOfBirth" rules={[{ required: true, message: 'Please enter your Date of Birth' }]}>
+              <Input type="date" placeholder="Enter your Date of Birth" />
+            </Form.Item>
+            <Form.Item
+                label="Gender"
+                name="gender"
+                rules={[{ required: true, message: 'Please select your Gender' }]}
+              >
+                    {/* <Radio.Group>
+              <Radio.Button value="male">Male</Radio.Button>
+              <Radio.Button value="female">Female</Radio.Button>
+                      </Radio.Group> */}
+             </Form.Item>
+             <Form.Item label="Phone" name="Phone num" rules={[{ required: true, message: 'Please enter your PhoneNumber' }]}>
+              <Input placeholder="Enter your PhoneNumber" />
+            </Form.Item>
+            <Form.Item label="Email" name="email" rules={[{ required: true, message: 'Please enter your email' }, { type: 'email', message: 'Please enter a valid email' }]}>
+              <Input type="email" placeholder="Enter your email" />
+            </Form.Item>
+            <Form.Item label="Password" name="password" rules={[{ required: true, message: 'Please enter your password' }]}>
+              <Input.Password placeholder="Enter your password" />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" >
+                Create Account
+              </Button>
+            </Form.Item>
+          </Form>
         </div>)}
     </div>
   );

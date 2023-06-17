@@ -9,7 +9,7 @@ import ShopFilters from './components/filters/ShopFilter';
 import SpaTable from './components/spa_components/SpaTable';
 import LabTable from './components/lab_components/LabTable';
 import CscTable from './components/csc_components/CscTable';
-//import BusTable from './components/bus_components copy/BusTable';
+// import BusTable from './components/bus_components copy/BusTable';
 import ClinicTable from './components/clinic_components/ClinicTable';
 import Login from './components/login_components/Login';
 
@@ -23,12 +23,7 @@ function App() {
       {/* <Header/> */}
       </div>
       <div  style={{display: "flex", flexDirection: "row",flex:1 ,alignItems: 'flex-start'}}>
-      <Router>
-      <Switch>
-        <Route exact path="/" component={Login} />
-        <Route path="/create-account" component={CreateAccount} />
-      </Switch>
-    </Router>
+      <Login></Login>
      {/* <SlideMenu/>
      <Content/> */}
      </div>
