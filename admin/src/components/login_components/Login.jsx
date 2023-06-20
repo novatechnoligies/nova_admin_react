@@ -10,7 +10,7 @@ import axios from 'axios';
 
 
 
-const Login = () => {
+const Login = (props) => {
   const [showLogin, setShowLogin] = useState(true);
   const [showForget, setShowForget] = useState(false);
   const [showVerifyOTP, setShowVerifyOTP] = useState(false);
@@ -32,7 +32,9 @@ const Login = () => {
   };
 
   const handleLogin = async(values) => {
-    // Handle login form submission
+
+    
+   // Handle login form submission
     console.log(values);
     const formData = new FormData();
     formData.append('username', values.username);
@@ -44,6 +46,7 @@ const Login = () => {
     if(response.data=="username/password not found"){
       alert("invalid username or passowrd");
     }else{
+      props.onLogin();
       alert("u r success");
     }
     console.log(response.data);
