@@ -1,0 +1,18 @@
+.filter-section {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+
+.label {
+  display: inline-block;
+  margin-right: 10px; /* Adjust margin as needed */
+}
+
+.slider-container {
+  display: inline-block;
+}
+
+.slider {
+  width: 200px; /* Adjust width as needed */
+}

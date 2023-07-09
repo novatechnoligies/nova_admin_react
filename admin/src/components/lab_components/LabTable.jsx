@@ -162,8 +162,7 @@ const LabTable = () => {
     alert("success");
   };
   return (
-    <div className="novaTable ">
-      <Slider></Slider>
+    <div className=" ">
       <header></header>
       <DataTable
         className="container headerStyles"
@@ -193,7 +192,6 @@ const LabTable = () => {
             </Button>
           </div>
         }
-        subHeader
         subHeaderComponent={
           <input
             className="w-25 form-control"
@@ -203,6 +201,8 @@ const LabTable = () => {
             onChange={(e) => setSearch(e.target.value)}
           ></input>
         }
+        subHeader
+        
       />
 
       <Modal

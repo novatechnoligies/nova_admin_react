@@ -36,3 +36,36 @@
     transform: rotate(360deg);
   }
 }
+
+.wrapper {
+  background-color: lightgray;
+  /* padding: 20px;
+  width: 100%; */
+}
+
+.left-side {
+  flex: 0 0 300px; 
+  height: 106vh;
+  width: 300px;
+  background-color: lightblue;
+}
+
+.top {
+  flex: 1;
+  background-color: rgb(44, 170, 212);
+}
+
+.bottom {
+  flex: 1;
+  background-color: lightgreen;
+}
+
+.container-row {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Adjust the height as needed */
+  background-color: white;
+  background: white;
+}
+
+

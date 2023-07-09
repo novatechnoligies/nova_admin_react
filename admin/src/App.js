@@ -9,6 +9,7 @@ import LabTable from './components/lab_components/LabTable';
 import CscTable from './components/csc_components/CscTable';
 import ClinicTable from './components/clinic_components/ClinicTable';
 import LoginPage from './components/login_components/Login';
+import Filter from './components/filter_componets/Filter';
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -27,11 +28,20 @@ function App() {
   return (
     <div>
       {loggedIn ? (
-        <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+        <div>
+           <div> 
           <Header onLogout={handleLogout} />
-          <div style={{ display: 'flex', flexDirection: 'row', flex: 1, alignItems: 'flex-start' }}>
-            <SlideMenu location={location} navigate={navigate} onLogout={handleLogout} />
-            <Content />
+          </div>
+          <div className="wrapper">
+            <div className="container">
+              <div className=" left-side"><SlideMenu location={location} navigate={navigate} onLogout={handleLogout} /></div>
+              <div >
+              <div className='container-row'>
+                <div className="top"><Filter></Filter></div>
+                <div className="bottom"><Content /></div>
+              </div>
+              </div>
+            </div>
           </div>
         </div>
       ) : (
@@ -44,7 +54,7 @@ function App() {
 
 function Header({ onLogout }) {
   return (
-    <div style={{ height: 60, background: 'lightblue', color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>
+    <div style={{ height: 60, background: 'light-greay', color: 'black', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>
       <div>Header</div>
       <button onClick={onLogout}>Logout</button>
     </div>
@@ -55,7 +65,7 @@ function SlideMenu({ location, navigate, onLogout }) {
   const selectedKeys = [location.pathname];
 
   return (
-    <div className="App" style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start' }}>
+    <div className="App" style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start' , width: '100%' }}>
       <Menu
         selectedKeys={selectedKeys}
         onClick={({ key }) => {
@@ -78,7 +88,7 @@ function SlideMenu({ location, navigate, onLogout }) {
             { label: 'Inactive', key: '/inactive', icon: <ShopOutlined /> },
           ] },
           { label: 'Profile', key: '/profile', icon: <ProfileOutlined /> },
-          { label: 'Sign Out', key: '/logout', icon: <SettingOutlined />, danger: true },
+          { label: 'Sign Out', key: '/logout', icon: <SettingOutlined  />, danger: true },
         ]}
       />
     </div>
@@ -87,7 +97,7 @@ function SlideMenu({ location, navigate, onLogout }) {
 
 function Content() {
   return (
-    <div>
+    <div style={{marginTop:'5px'}}>
       <Routes>
         <Route path="/" element={<div>Dashboard</div>} />
         <Route path="/dash" element={<div>Dashboard</div>} />
