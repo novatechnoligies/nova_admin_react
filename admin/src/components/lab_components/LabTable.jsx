@@ -1,21 +1,161 @@
 import DataTable from "react-data-table-component";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Modal ,Form, Input, Slider} from "antd";
-
-import {
-  DeleteOutlined,
-  EditOutlined,
-  ExportOutlined,
-} from "@ant-design/icons/lib/icons";
+import { Button, Modal ,Form, Input,Select,DatePicker ,Checkbox ,TimePicker,Card  } from "antd";
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import {DeleteOutlined,EditOutlined,ExportOutlined,} from "@ant-design/icons/lib/icons";
 import "./LabTable.css";
-const style = {
-  border: "1px solid black",
-  padding: "10px",
-  borderRadius: "5px",
+import moment from 'moment';
+
+const LabTable = ({ selectedLocation, handleLocationChange }) => {
+
+
+  //const [showFlash, setShowFlash] = useState(false);
+  const [shopAvailibilityModal, setShopAvailibilityModal] = useState(false);
+  const [showServiceModel, setShowServiceModel] = useState(false);
+  const [serviceData, setServiceData] = useState([]);
+  const [creatShopModalData, setCreateShopModalData] = useState(null);
+  const [selectedServices, setSelectedServices] = useState([]);
+
+  const [form] = Form.useForm();
+  const [availibilityForm] = Form.useForm();
+  const [dropdownOptions, setDropdownOptions] = useState([]);
+  
+
+  const handleCheckboxChange = (serviceId) => {
+    setPriceInputs((prevInputs) => {
+      const updatedInputs = { ...prevInputs };
+      updatedInputs[serviceId] = !updatedInputs[serviceId];
+  
+      // Move the selected value to a new list if checked
+      if (updatedInputs[serviceId]) {
+        setSelectedServices((prevServices) => [...prevServices, serviceId]);
+      } else {
+        // Remove the value from the list if unchecked
+        setSelectedServices((prevServices) =>
+          prevServices.filter((service) => service !== serviceId)
+        );
+      }
+      console.log(updatedInputs);
+      return updatedInputs;
+    });
+  };
+  
+
+  const handlePriceInputChange = (e, serviceId) => {
+    const { value } = e.target;
+    setPriceInputs((prevInputs) => ({
+      ...prevInputs,
+      [serviceId]: value,
+    }));
+  };
+
+  // Fetch data from API and set the serviceData state
+  useEffect(() => {
+    // Simulating API call with a timeout
+    setTimeout(() => {
+      const data = [
+        { id: 1, name: 'Service 1', description: 'Service 1 Description' },
+        { id: 2, name: 'Service 2', description: 'Service 2 Description' },
+        // Add more services here
+      ];
+      setServiceData(data);
+    }, 1000);
+  }, []);
+
+  // const handleOk = () => {
+  //   const selectedServices = serviceData.filter((service) => priceInputs[service.id]);
+  //   console.log('Selected Services:', selectedServices);
+  //   setShowServiceModel(false);
+  // };
+
+  const handleCreateShopModalPost = (values) => {
+    console.log('Form values:', values);
+
+    const modifiedData = {
+      ...values,
+      owner: { id: values.owner }
+    };
+    axios.post('http://localhost:8081/saveShopDetails', modifiedData)
+    .then((response) => {
+      console.log('Post request successful:', response.data.id);
+      setShopAvailibilityModal(true);
+      setShowServiceModel(false)
+      setCreateShopModalData(response.data.id);
+    })
+    .catch((error) => {
+      console.error('Post request error:', error);
+    });
+  };
+  const handleShopAvailibilityModalPost = (values) => {
+    const modifiedData = {
+      ...values,
+      shop: { id: values.shop },
+      fromDate: moment(values.fromDate).format('YYYY-MM-DD'),
+      toDate: moment(values.toDate).format('YYYY-MM-DD'),
+      fromTime: moment(values.fromTime).format('HH:mm'),
+      toTime: moment(values.toTime).format('HH:mm')
+    };
+    console.log('Form values:', values);
+    axios.post('http://localhost:8081/saveShopAvailability', modifiedData)
+    .then((response) => {
+      console.log('Post request successful:', response.data);
+      setShopAvailibilityModal(false);
+      setShowServiceModel(true);
+      getAllLabServices();
+
+
+    })
+    .catch((error) => {
+      console.error('Post request error:', error);
+    });
+  };
+  
+
+  const daysOfWeekOptions = [
+    { label: "Monday", value: "monday" },
+    { label: "Tuesday", value: "tuesday" },
+    { label: "Wednesday", value: "wednesday" },
+    { label: "Thursday", value: "thursday" },
+    { label: "Friday", value: "friday" },
+    { label: "Saturday", value: "saturday" },
+    { label: "Sunday", value: "sunday" },
+  ];
+  // const { Option } = Select;
+
+const handleSearch = (value) => {
+  axios
+  .get(`http://localhost:8081/getAllUserDetailsOfOwner?ownerName=${value}`)
+  .then((response) => {
+    const searchResults = response.data.map((result) => ({
+      value: result.id,
+      label: result.username,
+    }));
+
+    setDropdownOptions(searchResults);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 };
 
-const LabTable = () => {
+  const mapContainerStyle = {
+    width: '100%',
+    height: '400px',
+  };
+  const defaultCenter = {
+    lat: 37.7749, // Set default latitude
+    lng: -122.4194, // Set default longitude
+  };
+
+  const handleMapClick = (event) => {
+    const { latLng } = event;
+    const lat = latLng.lat();
+    const lng = latLng.lng();
+
+    handleLocationChange({ lat, lng })
+  }
+  
   const [labData, setLabData] = useState([]);
   const [search, setSearch] = useState("");
   const [filterLabData, setFilterLabData] = useState([]);
@@ -23,12 +163,33 @@ const LabTable = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isCreate, setIsCreate] = useState(false);
   const [editingLab, setEditingLab] = useState(null);
+  const [priceInputs, setPriceInputs] = useState({});
   const getLabData = async () => {
     try {
-      const response = await axios.get("https://restcountries.com/v2/all");
+      const response = await axios.get("http://localhost:8081/findAllShopDetails");
       setLabData(response.data);
       setFilterLabData(response.data);
     } catch (error) {}
+  };
+
+  const getAllLabServices = async () => {
+    try {
+       await axios.get("http://localhost:8081/findAllMaster")
+       .then((response) => {
+        setServiceData(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });;
+      
+    } catch (error) {}
+  };
+
+  const filterOption = (input, option) => {
+    if (option && option.label) {
+      return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+    }
+    return false;
   };
 
   const onDeleteLab = (lab) => {
@@ -47,19 +208,19 @@ const LabTable = () => {
     setEditingLab({ ...labDetails });
   };
 
-  const createLabDetails = () => {
-    setIsEditing(true);
-  };
+  // const createLabDetails = () => {
+  //   setIsEditing(true);
+  // };
 
   const columns = [
     {
       name: "Lab Name",
-      selector: (row) => row.name,
+      selector: (row) => row.shopName,
       sortable: true,
     },
     {
       name: "Address",
-      selector: (row) => row.alpha2Code,
+      selector: (row) => row.shopAddress,
       sortable: true,
       style: {
         fontWeight: "bold",
@@ -67,7 +228,7 @@ const LabTable = () => {
     },
     {
       name: "Phone",
-      selector: (row) => row.alpha3Code,
+      selector: (row) => row.phone,
       sortable: true,
       style: {
         fontWeight: "bold",
@@ -75,7 +236,7 @@ const LabTable = () => {
     },
     {
       name: "Email",
-      selector: (row) => row.callingCodes,
+      selector: (row) => row.email,
       sortable: true,
       style: {
         fontWeight: "bold",
@@ -83,7 +244,7 @@ const LabTable = () => {
     },
     {
       name: "Pincode",
-      selector: (row) => row.callingCodes,
+      selector: (row) => row.shopCode,
       sortable: true,
       style: {
         fontWeight: "bold",
@@ -91,15 +252,15 @@ const LabTable = () => {
     },
     {
       name: "Ownername",
-      selector: (row) => row.name,
+      selector: (row) => row.shopName,
       sortable: true,
       style: {
         fontWeight: "bold",
       },
     },
     {
-      name: "Today's appoinment",
-      selector: (row) => row.name,
+      name: "GST NO",
+      selector: (row) => row.gstNo,
       sortable: true,
       style: {
         fontWeight: "bold",
@@ -107,7 +268,7 @@ const LabTable = () => {
     },
     {
       name: "Logo",
-      selector: (row) => row.name,
+      selector: (row) => row.logo,
       sortable: true,
       style: {
         fontWeight: "bold",
@@ -115,7 +276,7 @@ const LabTable = () => {
     },
     {
       name: "Is deleted ",
-      selector: (row) => row.name,
+      selector: (row) => row.shopName,
       sortable: true,
       style: {
         fontWeight: "bold",
@@ -149,7 +310,14 @@ const LabTable = () => {
 
   useEffect(() => {
     getLabData();
+    getAllLabServices();
+
   }, []);
+
+  const handleCancel = () => {
+    // Handle cancellation of the service model modal
+    setShowServiceModel(false);
+  };
 
   useEffect(() => {
     const result = labData.filter((labData) => {
@@ -202,132 +370,161 @@ const LabTable = () => {
           ></input>
         }
         subHeader
-        
       />
 
-      <Modal
-        title="Edit Lab:"
+    <Modal
+        title="Create New Lab"
         visible={isEditing}
         onCancel={() => {
           setIsEditing(false);
+          form.resetFields();
         }}
         onOk={() => {
-          updaetLabDetails();
-          setIsEditing(false);
+          form
+            .validateFields()
+            .then((values) => {
+              handleCreateShopModalPost(values);
+              form.resetFields();
+              setIsEditing(false);
+            })
+            .catch((error) => {
+              console.log('Form validation error:', error);
+            });
         }}
       >
-        <div>
-
-        <Form
-      
-      name="registration_form"
-      
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 16 }}
-    >
-      <Form.Item
-        label="Name"
-        name="name"
-        initialValue={editingLab?.name}
-        rules={[{ required: true, message: 'Please enter your name' }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Adress"
-        name="Adress"
-        initialValue={editingLab?.topLevelDomain}
-        rules={[
-          { required: true, message: 'Please enter your adress' },
-          { type: 'email', message: 'Please enter a valid adress' },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Password"
-        name="password"
-        initialValue={editingLab?.alpha2Code}
-        rules={[
-          { required: true, message: 'Please enter a password' },
-          { min: 6, message: 'Password must be at least 6 characters long' },
-        ]}
         
-         
-      >
-       <Input.Password />
-      </Form.Item>
-      
-       <Form.Item
-        label="Email"
-        name="email"
-        initialValue={editingLab?.alpha3Code}
-        rules={[
-          { required: true, message: 'Please enter your email' },
-          { type: 'email', message: 'Please enter a valid email' },
-        ]}
-      >
-         <Input />
-      </Form.Item>
 
-      <Form.Item
-        label="Pincode"
-        name="Pincode"
-        initialValue={editingLab?.callingCodes}
-        rules={[
-          { required: true, message: 'Please enter your Pincode' },
-          { type: 'pincode', message: 'Please enter a valid Pincode' },
-        ]}
+        <Form form={form} name="registration_form" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
+              <Form.Item
+                label="id"
+                name="id"
+                initialValue={editingLab?.id}
+              >
+                  <Input />
+              </Form.Item>
+              <Form.Item
+                label="Name"
+                name="shopName"
+                initialValue={editingLab?.shopName}
+                rules={[{ required: true, message: 'Please enter your name' }]}>
+                  <Input />
+              </Form.Item>
+
+              <Form.Item
+                label="Adress"
+                name="shopAddress"
+                initialValue={editingLab?.shopAddress}
+                rules={[
+                  { required: true, message: 'Please enter your adress' },
+                  {  message: 'Please enter a valid adress' },
+                ]}>
+                <Input.TextArea/>
+              </Form.Item>
+
+              {/* <Form.Item
+                label="Password"
+                name="password"
+                initialValue={editingLab?.alpha2Code}
+                rules={[
+                  { required: true, message: 'Please enter a password' },
+                  { min: 6, message: 'Password must be at least 6 characters long' },
+                ]}>
+              <Input.Password />
+              </Form.Item> */}
+              
+              <Form.Item
+                label="Email"
+                name="email"
+                initialValue={editingLab?.email}
+                rules={[
+                  { required: true, message: 'Please enter your email' },
+                  { type: 'email', message: 'Please enter a valid email' },
+                ]}>
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                label="Pincode"
+                name="pincode"
+                initialValue={editingLab?.pinCode}
+                rules={[
+                  { required: true, message: 'Please enter your Pincode' },
+                  { min: 10, type: 'pincode', message: 'Please enter a valid Pincode' },
+                ]}>
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+  label="Ownername"
+  name="owner"
+  rules={[
+    { required: true, message: 'Please enter your name' },
+    { type: 'name', message: 'Please enter a valid name' },
+  ]}
+>
+  <Select
+    showSearch
+    onSearch={handleSearch}
+    placeholder="Select an owner"
+    optionFilterProp="label"
+    filterOption={filterOption}
+    options={dropdownOptions}
+  />
+</Form.Item>
+
+              <Form.Item
+                label="Phone"
+                name="phone"
+                initialValue={editingLab?.phone}
+                rules={[
+                  { required: true, message: 'Please enter your Phone' },
+                  { type: 'name', message: 'Please enter a valid Phone number' },
+                ]}>
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                label="GST"
+                name="gstNo"
+                initialValue={editingLab?.gstNo}
+                rules={[{  message: 'Please enter your name' }]}>
+                  <Input />
+              </Form.Item>
+
+              <Form.Item
+                label="Logo"
+                name="logo"
+                initialValue={editingLab?.Logo}
+                rules={[
+                  { required: true, message: 'Please enter your logo' },
+                  { type: 'logo', message: 'Please enter a valid logo' },
+                ]}>
+                <Input type="file"/>
+              </Form.Item>
+              
+              <LoadScript googleMapsApiKey="YOUR_API_KEY">
+      <GoogleMap
+        mapContainerStyle={mapContainerStyle}
+        zoom={12} // Adjust the initial zoom level as needed
+        center={selectedLocation ? selectedLocation : defaultCenter}
+        onClick={handleMapClick}
       >
-         <Input />
-      </Form.Item>
+        {selectedLocation && <Marker position={selectedLocation} />}
+      </GoogleMap>
+    </LoadScript>
 
-      <Form.Item
-        label="Ownername"
-        name="Ownername"
-        initialValue={editingLab?.capital}
-        rules={[
-          { required: true, message: 'Please enter your name' },
-          { type: 'name', message: 'Please enter a valid name' },
-        ]}
-      >
-         <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Logo"
-        name="Logo"
-        initialValue={editingLab?.altSpellings}
-        rules={[
-          { required: true, message: 'Please enter your logo' },
-          { type: 'logo', message: 'Please enter a valid logo' },
-        ]}
-      >
-     <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Is deleted"
-        name="Is deleted"
-        initialValue={editingLab?.subregion}
-        rules={[
-          { required: true, message: 'deleted' },
-          { type: 'delete', message: 'deleted' },
-        ]}
-      > <Input />
-      </Form.Item>
-
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit">
-          Update Lab Details
-        </Button>
-        
-      </Form.Item>
-    </Form>
-        </div>
-npm      </Modal>
+              {/* <Form.Item
+                label="Is deleted"
+                name="Is deleted"
+                initialValue={editingLab?.subregion}
+                rules={[
+                  { required: true, message: 'deleted' },
+                  { type: 'delete', message: 'deleted' },
+                ]}>
+                  <Input />
+              </Form.Item> */}
+        </Form>
+    </Modal>
 
       <Modal
         title="Edit Lab:"
@@ -342,6 +539,148 @@ npm      </Modal>
       >
         <input placeholder="lab name" />
       </Modal>
+
+      <Modal
+      title="WellCome to Nova Update Shop Availbility here"
+      visible={shopAvailibilityModal}
+      inputData={creatShopModalData}
+      onCancel={() => {
+        setShopAvailibilityModal(false);
+        //setShopAvailibilityModal(false);
+
+      }}
+      onOk={() => {
+        availibilityForm
+          .validateFields()
+          .then((values) => {
+            handleShopAvailibilityModalPost(values);
+            availibilityForm.resetFields();
+            setIsEditing(false);
+          })
+          .catch((error) => {
+            console.log('Form validation error:', error);
+          });
+        // Handle Ok button click in the service model modal
+        setShowServiceModel(true); // Close the service model modal
+        setShopAvailibilityModal(false); // Show the new modal
+      }}
+    >
+      <Form form={availibilityForm} name="registration_form" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} >
+              <Form.Item
+                label="id"
+                name="id"
+                initialValue={editingLab?.id}
+              >
+                  <Input />
+              </Form.Item>
+              <Form.Item
+                label="shopId"
+                name="shop"
+                initialValue={creatShopModalData}
+                rules={[{ required: true, message: 'Please enter your name' }]}>
+                  <Input />
+              </Form.Item>
+
+              <Form.Item
+                label="Start Date"
+                name="fromDate"
+                initialValue={editingLab?.fromDate}
+                rules={[
+                  { required: true, message: 'Please enter the start date' },
+                ]}
+              >
+                <DatePicker format="YYYY-MM-DD"  />
+              </Form.Item>
+              
+              <Form.Item
+                label="End Date"
+                name="toDate"
+                initialValue={editingLab?.toDate}
+                rules={[
+                  { required: true, message: 'Please enter the end date' },
+                ]}
+              >
+                <DatePicker format="YYYY-MM-DD" />
+              </Form.Item>
+
+              <Form.Item
+                label="Open Time"
+                name="fromTime"
+                initialValue={editingLab?.fromTime}
+                rules={[
+                  { required: true, message: 'Please enter the open time' },
+                ]}
+              >
+                <TimePicker format="HH:mm" />
+              </Form.Item>
+
+              <Form.Item
+                label="Close Time"
+                name="toTime"
+                initialValue={editingLab?.toTime}
+                rules={[
+                  { required: true, message: 'Please enter the open time' },
+                ]}
+              >
+                <TimePicker format="HH:mm" />
+              </Form.Item>
+
+              <Form.Item
+                label="Intervals"
+                name="timeInterval"
+                initialValue={editingLab?.timeInterval}
+                rules={[
+                  { required: true, message: 'Please enter the open time' },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+
+              {/* <Form.Item
+                label="Days"
+                name="days"
+                initialValue={editingLab?.days}
+                rules={[{ message: "Please select at least one day" }]}
+              >
+                <Checkbox.Group options={daysOfWeekOptions} />
+              </Form.Item> */}
+
+              
+        </Form>
+
+      {/* New modal content */}
+    </Modal>
+
+    <Modal
+  onCancel={handleCancel}
+  title="Update Your Service With Price"
+  visible={showServiceModel}
+  onOk={() => {
+    // Handle Ok button click in the new modal
+    setShowServiceModel(false); // Close the new modal
+  }}
+>
+  {serviceData.map((service) => (
+    <Card key={service.id}>
+      <Checkbox
+        onChange={() => handleCheckboxChange(service.id)}
+        checked={!!priceInputs[service.id]}
+      >
+        {service.name}
+      </Checkbox>
+      {priceInputs[service.id] && (
+    <Input
+      placeholder="Enter price"
+      defaultValue="0"
+      value={priceInputs[service.id]}
+      onChange={(e) => handlePriceInputChange(e, service.id)}
+    />
+  )}
+      <p>Description: {service.description}</p>
+    </Card>
+  ))}
+    </Modal>
+
     </div>
   );
 };

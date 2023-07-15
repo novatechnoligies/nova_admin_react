@@ -158,3 +158,14 @@ body {
 .forget-password-button {
   color: #ff0000; /* Set your desired color */
 }
+
+.profile-photo{
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px; /* Adjust the size of the circle */
+  height: 40px; /* Adjust the size of the circle */
+  border-radius: 50%;
+  background-color: lightblue;
+}
+

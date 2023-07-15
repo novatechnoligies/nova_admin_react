@@ -3,13 +3,16 @@ import { Menu } from 'antd';
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { DashboardOutlined, HomeOutlined, ProfileOutlined, SettingOutlined, ShopOutlined, ShoppingOutlined } from '@ant-design/icons/lib/icons';
 import ShopTable from './components/shop_components/ShopTable';
-import ShopFilters from './components/filters/ShopFilter';
 import SpaTable from './components/spa_components/SpaTable';
 import LabTable from './components/lab_components/LabTable';
 import CscTable from './components/csc_components/CscTable';
 import ClinicTable from './components/clinic_components/ClinicTable';
 import LoginPage from './components/login_components/Login';
 import Filter from './components/filter_componets/Filter';
+import { NotificationOutlined ,UserOutlined } from '@ant-design/icons';
+import { MailOutlined } from '@ant-design/icons';
+import { Badge } from 'antd';
+
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -54,9 +57,23 @@ function App() {
 
 function Header({ onLogout }) {
   return (
-    <div style={{ height: 60, background: 'light-greay', color: 'black', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>
-      <div>Header</div>
-      <button onClick={onLogout}>Logout</button>
+
+    <div style={{ height: 60, background: 'light-greay', color: 'black', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', fontWeight: 'bold' }}>
+      {/* <div>Header</div> */}
+      <div style={{marginLeft:'20px'}}>
+        <Badge count='5' offset={[10, 0]}>
+        <NotificationOutlined />
+        </Badge>
+      </div>
+      <div style={{marginLeft:'20px'}}>
+        <Badge count='5' offset={[10, 0]}>
+        <MailOutlined style={{ fontSize: '24px' }} />
+        </Badge>
+      </div>
+      <div style={{marginLeft:'20px'}}>
+        <UserOutlined  className="profile-photo"/>
+      </div>
+      
     </div>
   );
 }
@@ -65,8 +82,8 @@ function SlideMenu({ location, navigate, onLogout }) {
   const selectedKeys = [location.pathname];
 
   return (
-    <div className="App" style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start' , width: '100%' }}>
-      <Menu
+    <div className="App">
+      <Menu style={{background:'black',color:'white'}}
         selectedKeys={selectedKeys}
         onClick={({ key }) => {
           if (key === '/logout') {
