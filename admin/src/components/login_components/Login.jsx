@@ -120,7 +120,7 @@ const Login = (props) => {
                       { required: true, message: "Please input your password!" },
                     ]}
                   >
-                    <Input.Password className="custom-input" placeholder="Enter your username"/>
+                    <Input.Password className="custom-input" placeholder="Enter your password"/>
                   </Form.Item>
 
                     <Form.Item>
