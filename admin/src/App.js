@@ -83,7 +83,7 @@ function SlideMenu({ location, navigate, onLogout }) {
 
   return (
     <div className="App">
-      <Menu style={{background:'black',color:'white'}}
+      <Menu style={{background:'#148F77',color:'white'}}
         selectedKeys={selectedKeys}
         onClick={({ key }) => {
           if (key === '/logout') {
@@ -114,7 +114,7 @@ function SlideMenu({ location, navigate, onLogout }) {
 
 function Content() {
   return (
-    <div style={{marginTop:'5px'}}>
+    <div style={{marginTop:'1px'}}>
       <Routes>
         <Route path="/" element={<div>Dashboard</div>} />
         <Route path="/dash" element={<div>Dashboard</div>} />
