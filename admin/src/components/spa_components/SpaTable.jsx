@@ -57,7 +57,7 @@ const SpaTable = () => {
       sortable: true,
     },
     {
-      name: "Spa Address",
+      name: "Spa Address",  
       selector: (row) => row.name,
       sortable: true,
       style: {
@@ -287,7 +287,14 @@ rules={[
   { type: 'name', message: 'Please enter a valid name' },
 ]}
 >
- <Input />
+{/* <Select
+    showSearch
+    onSearch={handleSearch}
+    placeholder="Select an owner"
+    optionFilterProp="label"
+    filterOption={filterOption}
+    options={dropdownOptions}
+  /> */}
 </Form.Item>
 
 <Form.Item
