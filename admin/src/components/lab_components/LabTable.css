@@ -5,10 +5,10 @@
   /* padding: 20px; */
 }
 .novaTable {
-  width: 100%;
+  width: 800px;
   max-width: 100%;
   border-radius: 10px;
-  border-color: black;
+  border-color: #8a3838;
   border-style: groove;
   margin-top: 8%;
   margin-left: 8px;
