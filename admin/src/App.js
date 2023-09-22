@@ -58,7 +58,7 @@ function App() {
 function Header({ onLogout }) {
   return (
 
-    <div style={{ height: 60, background: 'light-greay', color: 'black', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', fontWeight: 'bold' }}>
+    <div style={{ height: 60, background: 'light-grey', color: 'black', display: 'flex', justifyContent: 'flex', alignItems: 'center', fontWeight: 'bold' }}>
       {/* <div>Header</div> */}
       <div style={{marginLeft:'20px'}}>
         <Badge count='5' offset={[10, 0]}>
@@ -83,7 +83,7 @@ function SlideMenu({ location, navigate, onLogout }) {
 
   return (
     <div className="App">
-      <Menu style={{background:'#148F77',color:'white'}}
+      <Menu style={{background:'#0B8C73',color:'white', height:'800px', overflow:'hidden'}}
         selectedKeys={selectedKeys}
         onClick={({ key }) => {
           if (key === '/logout') {
