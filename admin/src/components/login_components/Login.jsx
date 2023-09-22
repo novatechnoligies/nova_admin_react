@@ -42,12 +42,12 @@ const Login = (props) => {
     formData.append('password', values.password);
     try {
       axios.post(BASE_URL+"/getUserByUserNameAndPassword", formData)
-  .then(response => {
+      .then(response => {
     // Handle the response data here
     if(response.data=="username/password not found"){
       alert("invalid username or passowrd");
     }else{
-      props.onLogin();
+      props.onLogin();  
       alert("u r success");
     }
     console.log(response.data);
@@ -86,11 +86,11 @@ const Login = (props) => {
   
 
   return (
-    <div className="wrapper">
+    <div className="log-in-wrapper">
       <div className="container">
         {/* <div className="left-side">Left Side</div> */}
-        <div className=" left-side login-right-img "></div>
-        <div className="right-side login-img">
+        <div className=" left-side_L login-right-img "></div>
+        <div className="right-side_R login-img">
           
             {showLogin && (
               <div className="login-container">

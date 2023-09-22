@@ -12,6 +12,7 @@ import Filter from './components/filter_componets/Filter';
 import { NotificationOutlined ,UserOutlined } from '@ant-design/icons';
 import { MailOutlined } from '@ant-design/icons';
 import { Badge } from 'antd';
+import "./App.css"
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -31,22 +32,22 @@ function App() {
   return (
     <div>
       {loggedIn ? (
-        <div>
+        <section>
            <div> 
           <Header onLogout={handleLogout} />
           </div>
           <div className="wrapper">
             <div className="container">
               <div className=" left-side"><SlideMenu location={location} navigate={navigate} onLogout={handleLogout} /></div>
-              <div >
-              <div className='container-row'>
-                <div className="top"><Filter></Filter></div>
-                <div className="bottom"><Content /></div>
-              </div>
+              <div  className='right-side'>
+                 <div className='container-row'>
+                    <div className="top"><Filter></Filter></div>
+                    <div className="bottom"><Content /></div>
+                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </section>
       ) : (
         <LoginPage onLogin={handleLogin}></LoginPage>
         // <Login onLogin={handleLogin} />
@@ -57,20 +58,19 @@ function App() {
 
 function Header({ onLogout }) {
   return (
-
-    <div style={{ height: 60, background: 'light-greay', color: 'black', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', fontWeight: 'bold' }}>
+    <div  className="top-bar" >
       {/* <div>Header</div> */}
-      <div style={{marginLeft:'20px'}}>
+      <div className='top_bar_icons' >
         <Badge count='5' offset={[10, 0]}>
         <NotificationOutlined />
         </Badge>
       </div>
-      <div style={{marginLeft:'20px'}}>
+      <div  className='top_bar_icons' >
         <Badge count='5' offset={[10, 0]}>
         <MailOutlined style={{ fontSize: '24px' }} />
         </Badge>
       </div>
-      <div style={{marginLeft:'20px'}}>
+      <div className='top_bar_icons' >
         <UserOutlined  className="profile-photo"/>
       </div>
       
@@ -83,7 +83,7 @@ function SlideMenu({ location, navigate, onLogout }) {
 
   return (
     <div className="App">
-      <Menu style={{background:'#148F77',color:'white'}}
+      <Menu style={{background:'#0B8C73',color:'white', height:'800px', overflow:'hidden'}}
         selectedKeys={selectedKeys}
         onClick={({ key }) => {
           if (key === '/logout') {
@@ -101,8 +101,8 @@ function SlideMenu({ location, navigate, onLogout }) {
           { label: 'CSC', key: '/csc', icon: <ShopOutlined /> },
           { label: 'Clinic', key: '/clinic', icon: <ShopOutlined /> },
           { label: 'Consumer', key: '/consumer', icon: <ShoppingOutlined />, children: [
-            { label: 'Active', key: '/active', icon: <ShopOutlined /> },
-            { label: 'Inactive', key: '/inactive', icon: <ShopOutlined /> },
+          { label: 'Active', key: '/active', icon: <ShopOutlined /> },
+          { label: 'Inactive', key: '/inactive', icon: <ShopOutlined /> },
           ] },
           { label: 'Profile', key: '/profile', icon: <ProfileOutlined /> },
           { label: 'Sign Out', key: '/logout', icon: <SettingOutlined  />, danger: true },
@@ -117,7 +117,7 @@ function Content() {
     <div style={{marginTop:'1px'}}>
       <Routes>
         <Route path="/" element={<div>Dashboard</div>} />
-        <Route path="/dash" element={<div>Dashboard</div>} />
+        <Route path="/dash" element={<div >Dashboard</div>} />
         <Route path="/lab" element={<div className="d-flex flex-column align-items-center"> <LabTable /></div>} />
         <Route path="/spa" element={<div className="d-flex flex-column align-items-center"> <SpaTable /></div>} />
         <Route path="/shalon" element={<div className="d-flex flex-column align-items-center"> <ShopTable /></div>} />
