@@ -6,6 +6,7 @@ import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import {DeleteOutlined,EditOutlined,ExportOutlined,} from "@ant-design/icons/lib/icons";
 import "./LabTable.css";
 import moment from 'moment';
+import { BASE_URL } from "../../constants/constants";
 
 const LabTable = ({ selectedLocation, handleLocationChange }) => {
 
@@ -76,7 +77,7 @@ const LabTable = ({ selectedLocation, handleLocationChange }) => {
       ...values,
       owner: { id: values.owner }
     };
-    axios.post('http://localhost:8081/saveShopDetails', modifiedData)
+    axios.post(BASE_URL+'/saveShopDetails', modifiedData)
     .then((response) => {
       console.log('Post request successful:', response.data.id);
       setShopAvailibilityModal(true);
@@ -97,7 +98,7 @@ const LabTable = ({ selectedLocation, handleLocationChange }) => {
       toTime: moment(values.toTime).format('HH:mm')
     };
     console.log('Form values:', values);
-    axios.post('http://localhost:8081/saveShopAvailability', modifiedData)
+    axios.post(BASE_URL+'/saveShopAvailability', modifiedData)
     .then((response) => {
       console.log('Post request successful:', response.data);
       setShopAvailibilityModal(false);
@@ -125,7 +126,7 @@ const LabTable = ({ selectedLocation, handleLocationChange }) => {
 
 const handleSearch = (value) => {
   axios
-  .get(`http://localhost:8081/getAllUserDetailsOfOwner?ownerName=${value}`)
+  .get(BASE_URL+`/getAllUserDetailsOfOwner?ownerName=${value}`)
   .then((response) => {
     const searchResults = response.data.map((result) => ({
       value: result.id,
@@ -166,7 +167,7 @@ const handleSearch = (value) => {
   const [priceInputs, setPriceInputs] = useState({});
   const getLabData = async () => {
     try {
-      const response = await axios.get("http://localhost:8081/findAllShopDetails");
+      const response = await axios.get(BASE_URL+"/findAllShopDetails");
       setLabData(response.data);
       setFilterLabData(response.data);
     } catch (error) {}
@@ -174,7 +175,7 @@ const handleSearch = (value) => {
 
   const getAllLabServices = async () => {
     try {
-       await axios.get("http://localhost:8081/findAllMaster")
+       await axios.get(BASE_URL+"/findAllMaster")
        .then((response) => {
         setServiceData(response.data);
       })
