@@ -40,7 +40,7 @@ const Login = (props) => {
     formData.append('username', values.username);
     formData.append('password', values.password);
     try {
-      axios.post("http://13.127.197.105:8082/getUserByUserNameAndPassword", formData)
+      axios.post("http://13.200.116.103:8082/getUserByUserNameAndPassword", formData)
   .then(response => {
     // Handle the response data here
     if(response.data=="username/password not found"){
@@ -85,11 +85,11 @@ const Login = (props) => {
   
 
   return (
-    <div className="wrapper">
+    <div className="log-in-wrapper">
       <div className="container">
         {/* <div className="left-side">Left Side</div> */}
-        <div className=" left-side login-right-img "></div>
-        <div className="right-side login-img">
+        <div className=" left-side_L login-right-img "></div>
+        <div className="right-side_R login-img">
           
             {showLogin && (
               <div className="login-container">

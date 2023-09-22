@@ -32,22 +32,22 @@ function App() {
   return (
     <div>
       {loggedIn ? (
-        <div>
+        <section>
            <div> 
           <Header onLogout={handleLogout} />
           </div>
           <div className="wrapper">
             <div className="container">
               <div className=" left-side"><SlideMenu location={location} navigate={navigate} onLogout={handleLogout} /></div>
-              <div >
-              <div className='container-row'>
-                <div className="top"><Filter></Filter></div>
-                <div className="bottom"><Content /></div>
-              </div>
+              <div  className='right-side'>
+                 <div className='container-row'>
+                    <div className="top"><Filter></Filter></div>
+                    <div className="bottom"><Content /></div>
+                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </section>
       ) : (
         <LoginPage onLogin={handleLogin}></LoginPage>
         // <Login onLogin={handleLogin} />

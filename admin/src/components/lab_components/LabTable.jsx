@@ -458,7 +458,7 @@ const handleSearch = (value) => {
    label="Ownername"
   name="owner"
   rules={[
-    { required: true, message: 'Please enter your name' },
+    { required: false, message: 'Please enter your name' },
     { type: 'name', message: 'Please enter a valid name' },
   ]}
 >

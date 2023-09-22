@@ -10,12 +10,6 @@
   pointer-events: none;
 } */
 
-
-
-
-
-
-
 /* @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -48,16 +42,15 @@
 
 .wrapper {
   /* background-color: lightgray; */
-  /* padding: 20px;
-  width: 100%; */
+  /* padding: 20px; */
+  width: 100%;
 }
-
-/* .left-side {
-  flex: 0 0 300px; 
-  height: 300px;
-  width: 300px;
-  background-color: rgb(231, 29, 29);
-} */
+.left-side {
+  flex-basis: 15%;
+  height:92.5vh;
+  /* width: 300px; */
+  background-color: rgb(2, 2, 2);
+}
 
 /* .top {
   flex: 1;
@@ -70,21 +63,25 @@
 } */
 
 .container-row {
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* height: 100vh; Adjust the height as needed */
-  /* background-color: white; */
-  /* background: white; */
+  display: flex;
+  flex-direction: column;
+  /* height: 0; Adjust the height as needed  */
+  background-color: white;
+  background: white;
 }
 
 /* .ant-menu-light,
 .ant-menu-light > .ant-menu {
   background: none !important;
+  width: 100%;
+   height: 92.5vh;
 } */
 
 
+
 .top-bar{
-  height: 6.5vh;
+  height: 7.5vh;
+  background-image: linear-gradient(white 75%, #d9d9d9);
   width: 100%;
   /* position: fixed; */
   color: black;
@@ -94,5 +91,16 @@
   font-weight: bold;
 }
 .top_bar_icons{
-  margin:0 0.5% 0 2%;
+ flex-basis:4% ;
+}
+
+.right-side{
+  width: 90%;
+  
+}
+
+/* creat lab popup */
+:where(.css-dev-only-do-not-override-ed5zg0).ant-modal{
+  
+  top: 10px !important;
 }

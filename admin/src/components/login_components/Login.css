@@ -77,13 +77,13 @@
   width: 100%;
 }
 
-.left-side {
+.left-side_L {
   flex: 1;
   /* height: 100%; */
   background-color: lightblue;
 }
 
-.right-side {
+.right-side_R {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -93,7 +93,7 @@
   /* height: 90vh; */
 }
 
-.wrapper {
+.log-in-wrapper {
   display: flex;
   justify-content: center;
   /* align-items: center; */
