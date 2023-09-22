@@ -58,7 +58,6 @@ function App() {
 
 function Header({ onLogout }) {
   return (
-
     <div  className="top-bar" >
       {/* <div>Header</div> */}
       <div className='top_bar_icons' >
@@ -84,7 +83,7 @@ function SlideMenu({ location, navigate, onLogout }) {
 
   return (
     <div className="App">
-      <Menu style={{background:'black',color:'white'}}
+      <Menu style={{background:'#0B8C73',color:'white', height:'800px', overflow:'hidden'}}
         selectedKeys={selectedKeys}
         onClick={({ key }) => {
           if (key === '/logout') {
@@ -115,7 +114,7 @@ function SlideMenu({ location, navigate, onLogout }) {
 
 function Content() {
   return (
-    <div style={{marginTop:'5px'}}>
+    <div style={{marginTop:'1px'}}>
       <Routes>
         <Route path="/" element={<div>Dashboard</div>} />
         <Route path="/dash" element={<div >Dashboard</div>} />
