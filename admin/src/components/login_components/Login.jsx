@@ -6,6 +6,7 @@ import FormItem from "antd/es/form/FormItem";
 import { useState } from 'react';
 import axios from 'axios';
 import { UserOutlined } from '@ant-design/icons';
+import { BASE_URL } from "../../constants/constants";
 
 
 
@@ -40,7 +41,7 @@ const Login = (props) => {
     formData.append('username', values.username);
     formData.append('password', values.password);
     try {
-      axios.post("http://13.127.197.105:8082/getUserByUserNameAndPassword", formData)
+      axios.post(BASE_URL+"/getUserByUserNameAndPassword", formData)
   .then(response => {
     // Handle the response data here
     if(response.data=="username/password not found"){
