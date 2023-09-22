@@ -79,7 +79,7 @@
 
 .left-side {
   flex: 1;
-  height: 90vh;
+  /* height: 100%; */
   background-color: lightblue;
 }
 
@@ -90,7 +90,7 @@
   align-items: center;
   background-color: lightgreen;
   padding: 20px;
-  height: 90vh;
+  /* height: 90vh; */
 }
 
 .wrapper {
@@ -99,6 +99,10 @@
   /* align-items: center; */
   height: 100vh;
   background-color: lightgray;
+}
+
+.ant-menu .ant-menu-root .ant-menu-vertical .ant-menu-light .css-dev-only-do-not-override-ed5zg0{
+  margin-left: 0 !important;
 }
 
 
@@ -126,7 +130,7 @@ body {
 }
 
 .button {
-  margin-right: 10px;
+  /* margin-right: 10px; */
   margin-bottom: 10px;
 }
 
@@ -139,8 +143,8 @@ body {
 }
 
 .custom-button {
-  width: 200px; /* Set your desired width */
-  margin-left: 20%;
+  width: 12.5rem; /* Set your desired width */
+  margin-left: 32%;
 }
 
 .from-label-color .ant-form-item-label label {
@@ -169,3 +173,37 @@ body {
   background-color: lightblue;
 }
 
+
+
+/* Media queries for phone screens (up to 480px wide) */
+@media (max-width: 480px) {
+  .page {
+    /* Modify styles for smaller screens */
+    border-width: 50px;
+    border-radius: 10px;
+    box-shadow: none;
+  }
+
+  .login-container {
+    /* Modify styles for smaller screens */
+    flex-direction: column;
+  }
+
+  .custom-button {
+    width: 12.5rem; /* Set your desired width */
+    margin-left: 0%;
+  }
+
+  .gf-btn {
+    /* Modify styles for smaller screens */
+    margin-left: 0;
+  }
+
+  .login-img,
+  .login-right-img {
+    flex: 1;
+    padding: 10px;
+  }
+
+  /* Add more styles for phone screens here */
+}
