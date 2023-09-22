@@ -10,12 +10,6 @@
   pointer-events: none;
 } */
 
-
-
-
-
-
-
 /* @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -51,7 +45,6 @@
   /* padding: 20px; */
   width: 100%;
 }
-
 .left-side {
   flex-basis: 15%;
   height:92.5vh;
