@@ -6,39 +6,50 @@ const Filter = (probs) => {
     const { Option } = Select;
 
     return (
-          <div className="container-row" style={{ background: 'white' ,marginTop:'5px'}}>
-            <div>
-                <div>
-                <label>Filter By : </label> <Input placeholder="Search..."  className="seach-filter" style={{width:'200px'}}/>
 
-                <label style={{marginLeft:'15%'}}>Status: </label>
-                    <Select defaultValue="All" style={{width:'200px'}}>
-                        <Option value="">All</Option>
-                        <Option value="category1">Active</Option>
-                        <Option value="category2">In-Active</Option>
-                    </Select>
-                <label htmlFor="price-range" className="label" style={{marginLeft:'15%'}}>Price Range:</label>
-                    <div className="slider-container">
-                        <div><Slider range min={0} max={100} step={1} className="slider" id="price-range" /></div>
-                    </div>
-                    <br></br> <br></br>
-                    <div style={{width: 'fit-content'}}>   
+          <div className=" filter_container-row" style={{ background: 'white' ,marginTop:'5px'}}>
+            
+                <div className="filter-chuld-1" >
+                   <div className="search-box">
+                     <label for="s-bar" >Filter By : </label> 
+                     <Input type="search" placeholder="Search..."  className="seach-filter" name="s-bar" style={{width:'200px'}}/>
+                   </div> 
+                    
+                   <div className="status-box">
+                     <label>Status: </label>
+                        <Select defaultValue="All" style={{width:'200px'}}>
+                         <Option value="">All</Option>
+                         <Option value="category1">Active</Option>
+                         <Option value="category2">In-Active</Option>
+                        </Select>
+                   </div>
+                   <div className="price-box">
+                      <label htmlFor="price-range" className="label" >Price Range:</label>
+                          <div className="slider-container">
+                             <div><Slider range min={0} max={100} step={1} className="slider" id="price-range" /></div>
+                          </div>
+                   </div>
                      
-                        <label>Features:</label>
+                </div>
+
+
+                
+                <div  className="filter-chuld-2" >   
+                      <div className="feature-box">
+                         <label>Features:</label>
                             <Checkbox style={{marginLeft:'20px'}}>Feature 1</Checkbox>
                             <Checkbox style={{marginLeft:'20px'}}>Feature 2</Checkbox>
-                        <label style={{marginLeft:'190px'}}>Data Range : </label>
+                      </div>
+                       <div className="date-range-box">
+                         <label>Data Range : </label>
                             <label style={{marginLeft:'20px'}}>Start Date:</label>
                             <DatePicker />
                             <label style={{marginLeft:'10px'}}>End Date:</label>
                             <DatePicker />
-                            <br></br>
-                            
-                    </div>
-
-                
+                       </div> 
+       
                 </div>
-            </div>
+     
           </div>
         
       );
