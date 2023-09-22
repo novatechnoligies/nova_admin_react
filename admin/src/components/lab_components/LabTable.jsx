@@ -42,7 +42,6 @@ const LabTable = ({ selectedLocation, handleLocationChange }) => {
     });
   };
   
-
   const handlePriceInputChange = (e, serviceId) => {
     const { value } = e.target;
     setPriceInputs((prevInputs) => ({
@@ -72,7 +71,6 @@ const LabTable = ({ selectedLocation, handleLocationChange }) => {
 
   const handleCreateShopModalPost = (values) => {
     console.log('Form values:', values);
-
     const modifiedData = {
       ...values,
       owner: { id: values.owner }
@@ -542,7 +540,7 @@ const handleSearch = (value) => {
       </Modal>
 
       <Modal
-      title="WellCome to Nova Update Shop Availbility here"
+      title="WelCome to Nova Update Shop Availbility here"
       visible={shopAvailibilityModal}
       inputData={creatShopModalData}
       onCancel={() => {
@@ -567,18 +565,20 @@ const handleSearch = (value) => {
       }}
     >
       <Form form={availibilityForm} name="registration_form" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} >
-              <Form.Item
+                    <Form.Item
                 label="id"
                 name="id"
                 initialValue={editingLab?.id}
+                hidden // Use the hidden prop to hide the form field
               >
-                  <Input />
+                <Input />
               </Form.Item>
               <Form.Item
                 label="shopId"
                 name="shop"
                 initialValue={creatShopModalData}
-                rules={[{ required: true, message: 'Please enter your name' }]}>
+                hidden // Use the hidden prop to hide the form field
+                rules={[{ required: false, message: 'Please enter your name' }]}>
                   <Input />
               </Form.Item>
 
@@ -603,6 +603,23 @@ const handleSearch = (value) => {
               >
                 <DatePicker format="YYYY-MM-DD" />
               </Form.Item>
+
+              <Form.Item
+                name="selectedDays"
+                label="Holidays:"
+                rules={[{ required: true, message: 'Please select at least one day!' }]}
+              >
+                <Checkbox.Group style={{ display: 'flex', flexDirection: 'column' }}>
+                  <Checkbox value="Monday" style={{marginLeft:'8px'}}>Monday</Checkbox>
+                  <Checkbox value="Tuesday">Tuesday</Checkbox>
+                  <Checkbox value="Wednesday">Wednesday</Checkbox>
+                  <Checkbox value="Thursday">Thursday</Checkbox>
+                  <Checkbox value="Friday">Friday</Checkbox>
+                  <Checkbox value="Saturday">Saturday</Checkbox>
+                  <Checkbox value="Sunday">Sunday</Checkbox>
+                </Checkbox.Group>
+              </Form.Item>
+                
 
               <Form.Item
                 label="Open Time"
