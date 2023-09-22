@@ -114,7 +114,7 @@ function SlideMenu({ location, navigate, onLogout }) {
 
 function Content() {
   return (
-    <div style={{marginTop:'5px'}}>
+    <div style={{marginTop:'1px'}}>
       <Routes>
         <Route path="/" element={<div>Dashboard</div>} />
         <Route path="/dash" element={<div>Dashboard</div>} />
