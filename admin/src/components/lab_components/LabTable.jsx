@@ -57,7 +57,10 @@ const LabTable = ({ selectedLocation, handleLocationChange }) => {
       const data = [
         { id: 1, name: 'Service 1', description: 'Service 1 Description' },
         { id: 2, name: 'Service 2', description: 'Service 2 Description' },
-        // Add more services here
+        { id: 3, name: 'Service 3', description: 'Service 3 Description' }, //added to work on FIRST-33
+        { id: 4, name: 'Service 4', description: 'Service 4 Description' }, //added to work on FIRST-33
+        { id: 5, name: 'Service 5', description: 'Service 5 Description' } //added to work on FIRST-33
+        // Added more services here
       ];
       setServiceData(data);
     }, 1000);
@@ -71,6 +74,7 @@ const LabTable = ({ selectedLocation, handleLocationChange }) => {
 
   const handleCreateShopModalPost = (values) => {
     console.log('Form values:', values);
+    setShopAvailibilityModal(true);
     const modifiedData = {
       ...values,
       owner: { id: values.owner }
@@ -398,6 +402,7 @@ const handleSearch = (value) => {
                 label="id"
                 name="id"
                 initialValue={editingLab?.id}
+                hidden
               >
                   <Input />
               </Form.Item>
@@ -670,6 +675,7 @@ const handleSearch = (value) => {
     </Modal>
 
     <Modal
+    style={{width:'100%', display:"inline-flex", marginLeft:"300px" }}
   onCancel={handleCancel}
   title="Update Your Service With Price"
   visible={showServiceModel}
