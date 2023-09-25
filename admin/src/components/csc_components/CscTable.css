@@ -5,12 +5,13 @@
   /* padding: 20px; */
 }
 .novaTable {
-    width: 70%;
+    width: 82vw;
     border-radius: 10px;
     border-color: black;
     border-style: groove;
-    margin-top: 30px;
-    margin-left: 30px;
+    margin-top: 7px;
+    margin-left: 7px;
+    margin-right: 7px !important;
 }
 .headerStyles {
   background: rebeccapurple;
