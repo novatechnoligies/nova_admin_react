@@ -46,7 +46,7 @@
   width: 100%;
 }
 .left-side {
-  flex-basis: 15%;
+  width: 15vw;
   height:92.5vh;
   /* width: 300px; */
   background-color: rgb(2, 2, 2);
@@ -95,12 +95,25 @@
 }
 
 .right-side{
-  width: 90%;
+  width: 83vw;
+  margin: 0px auto;
   
 }
 
 /* creat lab popup */
-:where(.css-dev-only-do-not-override-ed5zg0).ant-modal{
-  
+:where(.css-dev-only-do-not-override-ed5zg0).ant-modal{ 
   top: 10px !important;
+}
+
+.ant-menu .ant-menu-root .ant-menu-vertical .ant-menu-light .css-dev-only-do-not-override-ed5zg0{
+  height: 92.5vh;
+}
+/* SPA details card */
+.fPIktX{
+  min-height: 40px !important;
+}
+ /*bottom  dada tabel */
+.novaTable{
+  width: 82.5vw !important;
+  margin-left: 0px !important;
 }

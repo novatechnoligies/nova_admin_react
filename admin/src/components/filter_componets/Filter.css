@@ -1,8 +1,8 @@
 .filter_container-row{
+  width: 100%;
   gap: 15px;
   display: flex;
   background: white;
-  margin: 7px 15px 0px 7px;
   flex-direction: column;
 }
 

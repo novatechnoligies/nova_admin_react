@@ -84,7 +84,7 @@ function SlideMenu({ location, navigate, onLogout }) {
 
   return (
     <div className="App">
-      <Menu style={{background:'#0B8C73',color:'white', height:'800px', overflow:'hidden'}}
+      <Menu style={{background:'#0B8C73',color:'white', height:'92.5vh', overflow:'hidden'}}
         selectedKeys={selectedKeys}
         onClick={({ key }) => {
           if (key === '/logout') {
