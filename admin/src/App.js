@@ -12,7 +12,8 @@ import Filter from './components/filter_componets/Filter';
 import { NotificationOutlined ,UserOutlined } from '@ant-design/icons';
 import { MailOutlined } from '@ant-design/icons';
 import { Badge } from 'antd';
-import "./App.css"
+import "./App.css";
+import NewConsumer from './components/consumer_components/consumermodule';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -103,6 +104,7 @@ function SlideMenu({ location, navigate, onLogout }) {
           { label: 'Consumer', key: '/consumer', icon: <ShoppingOutlined />, children: [
           { label: 'Active', key: '/active', icon: <ShopOutlined /> },
           { label: 'Inactive', key: '/inactive', icon: <ShopOutlined /> },
+          { label: 'New Consumer Account', key: '/newconsumeraccount', icon: <ShopOutlined /> },
           ] },
           { label: 'Profile', key: '/profile', icon: <ProfileOutlined /> },
           { label: 'Sign Out', key: '/logout', icon: <SettingOutlined  />, danger: true },
@@ -128,6 +130,7 @@ function Content() {
         <Route path="/logout" element={<div>Logout</div>} />
         <Route path="/active" element={<div>Active</div>} />
         <Route path="/inactive" element={<div>Inactive</div>} />
+        <Route path="/newconsumeraccount" element={<div><NewConsumer/></div>} />
       </Routes>
     </div>
   );
