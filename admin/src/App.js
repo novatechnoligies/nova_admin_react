@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Menu } from 'antd';
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
-import { DashboardOutlined, HomeOutlined, ProfileOutlined, SettingOutlined, ShopOutlined, ShoppingOutlined } from '@ant-design/icons/lib/icons';
+import { DashboardOutlined, HomeOutlined, ProfileOutlined, SettingOutlined, ShopOutlined, ShoppingOutlined,IdcardOutlined } from '@ant-design/icons/lib/icons';
 import ShopTable from './components/shop_components/ShopTable';
 import SpaTable from './components/spa_components/SpaTable';
 import LabTable from './components/lab_components/LabTable';
@@ -9,6 +9,7 @@ import CscTable from './components/csc_components/CscTable';
 import ClinicTable from './components/clinic_components/ClinicTable';
 import LoginPage from './components/login_components/Login';
 import Filter from './components/filter_componets/Filter';
+import Acards from './components/consumers_appointments/Acards';
 import { NotificationOutlined ,UserOutlined } from '@ant-design/icons';
 import { MailOutlined } from '@ant-design/icons';
 import { Badge } from 'antd';
@@ -96,6 +97,7 @@ function SlideMenu({ location, navigate, onLogout }) {
         items={[
           { label: 'Home', key: '/', icon: <HomeOutlined /> },
           { label: 'Dashboard', key: '/dash', icon: <DashboardOutlined /> },
+          { label:'Appointments', key:'Acard',icon: <IdcardOutlined />},
           { label: 'Lab', key: '/lab', icon: <ShopOutlined /> },
           { label: 'Spa', key: '/spa', icon: <ShopOutlined /> },
           { label: 'Shalon', key: '/shalon', icon: <ShopOutlined /> },
@@ -107,7 +109,7 @@ function SlideMenu({ location, navigate, onLogout }) {
           { label: 'New Consumer Account', key: '/newconsumeraccount', icon: <ShopOutlined /> },
           ] },
           { label: 'Profile', key: '/profile', icon: <ProfileOutlined /> },
-          { label: 'Sign Out', key: '/logout', icon: <SettingOutlined  />, danger: true },
+          { label: 'Sign Out', key: '/logout', icon: <SettingOutlined />, danger: true },
         ]}
       />
     </div>
@@ -119,8 +121,9 @@ function Content() {
     <div style={{marginTop:'1px'}}>
       <Routes>
         <Route path="/" element={<div>Dashboard</div>} />
-        <Route path="/dash" element={<div >Dashboard</div>} />
+        <Route path="/dash" element={<div>Dashboard</div>} />
         <Route path="/lab" element={<div className="d-flex flex-column align-items-center"> <LabTable /></div>} />
+        <Route path="/Acard" element={<div className="d-flex flex-column align-items-center"> <Acards/></div>} />
         <Route path="/spa" element={<div className="d-flex flex-column align-items-center"> <SpaTable /></div>} />
         <Route path="/shalon" element={<div className="d-flex flex-column align-items-center"> <ShopTable /></div>} />
         <Route path="/csc" element={<div className="d-flex flex-column align-items-center"> <CscTable /></div>} />
