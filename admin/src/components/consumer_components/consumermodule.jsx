@@ -4,6 +4,7 @@ import { Button, Modal } from 'antd';
 import { Form, Input, Radio, DatePicker, Checkbox, Upload } from 'antd';
 const { TextArea } = Input;
 import { UploadOutlined } from '@ant-design/icons';
+import "../consumer_components/consumermodule.css";
 
 
 function NewConsumer() {
@@ -53,7 +54,7 @@ function NewConsumer() {
       <Form.Item name="firstName" label="First Name" rules={[{ required: true, max: 50 }]}>
         <Input />
       </Form.Item>
-      <Form.Item name="lastName" label="Last Name:" rules={[{max: 50 }]}>
+      <Form.Item name="lastName" label="Last Name:" rules={[{ max: 50 }]}>
         <Input />
       </Form.Item>
       <Form.Item name="email" label="Email" rules={[{ required: true, type: 'email', max: 50 }]}>
