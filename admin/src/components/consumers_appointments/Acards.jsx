@@ -1,12 +1,12 @@
 import React from 'react'
-// import Acard1 from './Acard1';
-import Acard2 from './Acard2';
+// import Acard2 from './Acard2';
+import AppChildCards from './AppChildCards';
 const Acards = () => {
 
   return (
      <section>
-         {/* <Acard1/>   */}
-         <Acard2/> 
+         {/* <Acard2/>  */}
+         <AppChildCards/>
      </section> 
   )
 }
