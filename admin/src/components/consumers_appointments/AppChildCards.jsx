@@ -63,7 +63,9 @@ const AppChildCards = () => {
           <div
             className="card"
             key={index}
-            style={{
+           
+          >
+            <div class="first-content"  style={{
               background:
                 e.type === "home"
                   ? e.appointmentStatus === "BOOKED"
@@ -72,9 +74,7 @@ const AppChildCards = () => {
                   : e.type === "store" && e.appointmentStatus === "BOOKED"
                   ? "linear-gradient(109.6deg, rgb(255, 207, 84) 11.2%, rgb(255, 158, 27) 91.1%)"
                   : "linear-gradient(to top, #a7a6cb 0%, #8989ba 52%, #8989ba 100%)",
-            }}
-          >
-            {/* <div class="first-content">
+            }}>
               <div className="img">
                 <img src={itac} alt="a-img" />
               </div>
@@ -93,32 +93,46 @@ const AppChildCards = () => {
                   <i>{e.type}</i>
                 </div>
               </div>
-            </div> */}
+            </div>
             <div class="second-content">
-              <section class="bottom">
-                <ul class="users">
-                  <li class="user">
-                    <span class="user-name">services</span>
-                    <span class="user-occupation">5</span>
+              <section class="s_bottom">
+                <ul className="s_ul">
+                  <li class="list_item">
+                    <span class="name">service</span>
+                    <span class="count">6</span>
                   </li>
-                  <li class="user">
-                    <span class="user-name">Ethan Murphy</span>
-                    <span class="user-occupation">Graphic Designer</span>
+                  <li class="list_item">
+                    <span class="name">service</span>
+                    <span class="count">6</span>
                   </li>
-                  <li class="user">
-                    <span class="user-name">Ava Collins</span>
-                    <span class="user-occupation">Financial Analyst</span>
+                  <li class="list_item">
+                    <span class="name">service</span>
+                    <span class="count">6</span>
                   </li>
-                  <li class="user">
-                    <span class="user-name">Noah Walker</span>
-                    <span class="user-occupation">Journalist</span>
+                  <li class="list_item">
+                    <span class="name">service</span>
+                    <span class="count">6</span>
                   </li>
+
+                  <NavLink className="na_button" to={`/AppChildCards/${e.id}`} key={e.id}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-6 h-6"
+                      >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
+                      ></path>
+                    </svg>
+                    <div class="na_text">More..</div>
+                  </NavLink>
                 </ul>
               </section>
-
-              <NavLink to={`/AppChildCards/${e.id}`} key={e.id}>
-               <p className="n_p">More</p>
-              </NavLink>
             </div>
           </div>
         ))}

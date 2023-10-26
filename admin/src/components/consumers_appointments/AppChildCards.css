@@ -53,10 +53,11 @@
   }
 
   .card {
+    position: relative;
     width: 100%;
     max-width: 290px;
     height: 325px;
-    background: rgb(103, 225, 255);
+    
     transition: all 0.4s;
     border-radius: 10px;
     /* box-shadow: 0px 0px 10px 5px  rgba(0, 0, 0, 0.705); */
@@ -165,21 +166,25 @@
   .card:hover {
     /* border-radius: 15px; */
     cursor: pointer;
-    /* box-shadow: 0px 0px 10px 5px  rgba(0, 0, 0, 0.705); */
-    background: rgb(103, 151, 255);
+    box-shadow: 0px 0px 10px 5px  rgba(0, 0, 0, 0.705);
+   
   }
   
   .first-content {
+    position: absolute;
     height: 100%;
     width: 100%;
     transition: all 0.3s;
     display: flex;
     flex-wrap: wrap;
     opacity: 1;
-    border-radius: 10%;
+    border-radius: 10px;
     align-items: center;
     flex-direction: column;
     justify-content: space-between;
+    z-index: 2;
+   
+   
   }
   
   .card:hover .first-content {
@@ -187,90 +192,122 @@
     opacity: 0;
   }
   
-  /* .second-content {
+  .second-content {
+    position: absolute;
     height: 0%;
     width: 100%;
     opacity: 0;
-    border-radius: 15px;
+    border-radius: 10px;
     transition: all 0.4s;
     font-size: 0px;
-    } */
+    z-index: 1;
+    }
   
   .card:hover .second-content {
     opacity: 1;
     height: 100%;
     font-size: 1rem;
-    transform: rotate(0deg);
+    transform: rotate(0deg); 
+    background: linear-gradient(180.3deg, rgb(221, 221, 221) 5.5%, rgb(110, 136, 161) 90.2%);
+    border-radius: 10px;
+
   }
 
-  .users {
-    display: flex;
-    gap: 25px;
-    flex-direction: column;
-    padding-inline-start: 0px;
-    margin: 30px 0px;
-    border-bottom: 1px solid;
-  }
+  /* 2nd card detail  */
 
-  .user:nth-last-child(1) {
-    border-bottom: none;
-  }
-  .user-name {
-    font-weight: 550;
-    font-style: italic;
-    margin: 0 0 0 6px;
-  }
-  .user-occupation {
-    opacity: .8;
-    font-weight: 400;
-    margin: 0 6px 0 0;
-  }
   
-  
+  .s_bottom {
+    height: 100%;
+   font-size: 16px;
+   border-radius: 10px;
+   font-weight: 700;
+   background-color: rgb(255,255,255);
+   overflow: hidden;
+   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+   cursor: pointer;
+ }
+ 
+ .list_item:hover {
+   transform: scale(1.05);
+   color: #000;
+   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+ }
+ 
+ .list_item:active {
+   transform: scale(0.9);
+ }
+ 
+ .list_item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, #007bff, #00bfff);
+    transition: all 0.85s ease-in-out;
+    z-index: -1;
+    border-radius: 50px;
+ }
+ 
+ .list_item:hover::before {
+   right: 100%;
+ }
 
-  .user {
-    width: 100%;
-    /* padding: 0.75rem 4rem; */
-    display: flex;
-    gap: 0.4rem;
-    flex-direction: row;
-    align-items: flex;
-    font-size: 1.1rem;
-    border-bottom: 1px solid var(--bc-al);
-    justify-content: space-between;
+ .s_ul {
+  list-style: none;
+  height: 90%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+   }
    
-  }
+   .list_item{
+    position: relative;
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    padding: 5px 10px 5px 5px;
+    background: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
+    justify-content: space-between;
+    transition: all 0.3s ease-in-out;
+    z-index: 1;
+    border-radius: 50px;
+    overflow: hidden;
+   }
+   
 
+.na_button{
+  background-color: #ffffff00;
+  color: black;
+  width: 8.5em;
+  height: 1.5em;
+  border: #3654ff 0.2em solid;
+  border-radius: 11px;
+  text-align: right;
+  transition: all 0.6s ease;
+}
 
-  .n_p{
-    font-size: 1.1rem;
-    padding-left:0.4rem;;
-  }
-  
-  .user:hover {
-    background: rgb(233, 232, 232);
-  }
+.na_button:hover {
+  background-color: #3654ff;
+  cursor: pointer;
+}
 
-  
+.na_button svg {
+  width: 1.6em;
+  margin: -0.1em 0.8em 1em;
+  position: absolute;
+  display: flex;
+  transition: all 0.6s ease;
+}
 
-  /* .first-content:active {
-    transform: scale(0.9);
-    transition-duration: .3s;
-  } */
-  
-  /* .first-content:hover .second-content  {
-    animation: slide-in-top 0.3s both;
-    font-size: 1.8rem;
-  } */
-  
-  /* @keyframes slide-in-top {
-    0% {
-      transform: translateY(-50px);
-      opacity: 0;
-    }
-  
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  } */
+.na_button:hover svg {
+  transform: translateX(5px);
+}
+
+.na_text {
+  margin: 0 1.5em
+}
+ 
