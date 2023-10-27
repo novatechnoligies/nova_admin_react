@@ -1,0 +1,313 @@
+
+
+.data_cards{
+    width: 82.2vw;
+    margin: 5px 0px 0px 0px;
+    display: grid;
+    grid-template-columns: minmax(0, 0.65fr) minmax(0, 0.65fr) minmax(0, 0.65fr) minmax(0, 0.65fr);
+    gap: 10px;
+    overflow-y: scroll;
+    height: 69.3vh;
+    border-radius: 8px;
+    padding: 7px;
+    justify-items: center;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    
+  }
+  .data_cards::-webkit-scrollbar {
+    width: 12px;  
+  
+  
+  }
+  .data_cards::-webkit-scrollbar-track {
+    background:rgb(233, 232, 232);  
+    border-radius: 10px; 
+     
+  }
+  .data_cards::-webkit-scrollbar-thumb {
+    background-color:rgb(169,169,169);    
+    border-radius: 10px;
+   
+  }
+  
+  .search_input[type = "text"] {
+    display: block;
+    color: rgb(34, 34, 34);
+    background: linear-gradient(142.99deg, rgba(217, 217, 217, 0.63) 15.53%, rgba(243, 243, 243, 0.63) 88.19%);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    border-color: rgba(7, 4, 14, 0);
+    border-radius: 50px;
+    block-size: 20px;
+    margin: 7px auto;
+    padding: 6px 10px;
+    outline: none;
+    text-align: center;
+    width: 200px;
+    transition: 0.5s;
+  }
+  
+  .search_input[type = "text"]:hover {
+    width: 240px;
+  }
+
+  .card {
+    position: relative;
+    width: 100%;
+    max-width: 290px;
+    height: 325px;
+    
+    transition: all 0.4s;
+    border-radius: 10px;
+    /* box-shadow: 0px 0px 10px 5px  rgba(0, 0, 0, 0.705); */
+    font-size: 30px;
+    font-weight: 900;
+  }
+
+  .h1{
+    font-size: 25px;
+    text-align: center;
+    font-weight: lighter;
+    margin: 0 !important;
+  }
+  .p {
+    font-size: 12px;
+    font-weight: lighter;
+  }
+  
+
+  .img {
+    width: 100%;
+    height: 60%;
+    display: flex;
+    border-radius: 10px;
+    background: linear-gradient(#d7cfcf, #9198e5);
+    align-content: flex-end;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .img img {
+    width: 35%;
+    height: 60%;
+    margin-bottom: 3%;
+    border-radius: 8%;
+}
+
+.content{
+    height: 30%;
+    width: 95%;
+}
+  
+/* bottem effect */
+
+.s_container {
+    height: 10%;
+    width: 100%;
+    background: transparent;
+    position: relative;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.438);
+    overflow: hidden;
+    border-radius: 10px;
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0% 0% 10px 10px  ;
+  }
+  
+  .s_card {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #212121;
+    background-color: rgba(255, 255, 255, 0.074);
+    /* border: 1px solid rgba(255, 255, 255, 0.222); */
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+  }
+  
+  .s_container::after,
+  .s_container::before {
+    width: 100px;
+    height: 100px;
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+   
+    
+    /* transition: .5s linear; */
+  }
+  
+  .s_container::after {
+    top: -20px;
+    left: -20px;
+    background-color: rgba(125, 214, 66, 0.603);
+
+   
+  }
+  
+  .s_container::before {
+    background-color: rgb(226, 223, 54);
+    top: 45%;
+    left: 70%;
+   
+  }
+  
+  
+  
+  .card:hover {
+    /* border-radius: 15px; */
+    cursor: pointer;
+    box-shadow: 0px 0px 10px 5px  rgba(0, 0, 0, 0.705);
+   
+  }
+  
+  .first-content {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    transition: all 0.3s;
+    display: flex;
+    flex-wrap: wrap;
+    opacity: 1;
+    border-radius: 10px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 2;
+   
+   
+  }
+  
+  .card:hover .first-content {
+    height: 0px;
+    opacity: 0;
+  }
+  
+  .second-content {
+    position: absolute;
+    height: 0%;
+    width: 100%;
+    opacity: 0;
+    border-radius: 10px;
+    transition: all 0.4s;
+    font-size: 0px;
+    z-index: 1;
+    }
+  
+  .card:hover .second-content {
+    opacity: 1;
+    height: 100%;
+    font-size: 1rem;
+    transform: rotate(0deg); 
+    background: linear-gradient(180.3deg, rgb(221, 221, 221) 5.5%, rgb(110, 136, 161) 90.2%);
+    border-radius: 10px;
+
+  }
+
+  /* 2nd card detail  */
+
+  
+  .s_bottom {
+    height: 100%;
+   font-size: 16px;
+   border-radius: 10px;
+   font-weight: 700;
+   background-color: rgb(255,255,255);
+   overflow: hidden;
+   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+   cursor: pointer;
+ }
+ 
+ .list_item:hover {
+   transform: scale(1.05);
+   color: #000;
+   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+ }
+ 
+ .list_item:active {
+   transform: scale(0.9);
+ }
+ 
+ .list_item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, #007bff, #00bfff);
+    transition: all 0.85s ease-in-out;
+    z-index: -1;
+    border-radius: 50px;
+ }
+ 
+ .list_item:hover::before {
+   right: 100%;
+ }
+
+ .s_ul {
+  list-style: none;
+  height: 90%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+   }
+   
+   .list_item{
+    position: relative;
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    padding: 5px 10px 5px 5px;
+    background: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
+    justify-content: space-between;
+    transition: all 0.3s ease-in-out;
+    z-index: 1;
+    border-radius: 50px;
+    overflow: hidden;
+   }
+   
+
+.na_button{
+  background-color: #ffffff00;
+  color: black;
+  width: 8.5em;
+  height: 1.5em;
+  border: #3654ff 0.2em solid;
+  border-radius: 11px;
+  text-align: right;
+  transition: all 0.6s ease;
+}
+
+.na_button:hover {
+  background-color: #3654ff;
+  cursor: pointer;
+}
+
+.na_button svg {
+  width: 1.6em;
+  margin: -0.1em 0.8em 1em;
+  position: absolute;
+  display: flex;
+  transition: all 0.6s ease;
+}
+
+.na_button:hover svg {
+  transform: translateX(5px);
+}
+
+.na_text {
+  margin: 0 1.5em
+}
+ 

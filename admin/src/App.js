@@ -15,6 +15,7 @@ import { MailOutlined } from '@ant-design/icons';
 import { Badge } from 'antd';
 import "./App.css";
 import NewConsumer from './components/consumer_components/consumermodule';
+import { More } from './components/consumers_appointments/More';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -133,6 +134,7 @@ function Content() {
         <Route path="/logout" element={<div>Logout</div>} />
         <Route path="/active" element={<div>Active</div>} />
         <Route path="/inactive" element={<div>Inactive</div>} />
+        <Route path="/AppChildCards/:id" element={<More/>}/>
         <Route path="/newconsumeraccount" element={<div><NewConsumer/></div>} />
       </Routes>
     </div>

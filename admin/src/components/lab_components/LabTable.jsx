@@ -167,6 +167,7 @@ const handleSearch = (value) => {
   const [isCreate, setIsCreate] = useState(false);
   const [editingLab, setEditingLab] = useState(null);
   const [priceInputs, setPriceInputs] = useState({});
+  
   const getLabData = async () => {
     try {
       const response = await axios.get(BASE_URL+"/findAllShopDetails");
