@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Card_Data } from "./AcardData";
 import { useParams, NavLink } from "react-router-dom";
 import "./More.css";
+import AddDrop from "./AddDrop";
+import BillPart from "./BillPart";
 
 export const More = () => {
   const { id } = useParams();
@@ -36,21 +38,11 @@ export const More = () => {
               </div>
               <div class="p_bio-row">
                 <p>
-                  <span>Country </span>: Australia
-                </p>
-              </div>
-              <div class="p_bio-row">
-                <p>
                   <span>Birthday</span>: 13 July 1983
                 </p>
               </div>
             </div>
             <div className="p_row_2">
-              <div class="p_bio-row">
-                <p>
-                  <span>Occupation </span>: UI Designer
-                </p>
-              </div>
               <div class="p_bio-row">
                 <p>
                   <span>Email </span>: jsmith@flatlab.com
@@ -69,8 +61,20 @@ export const More = () => {
             </div>
           </div>
         </div>
-        <NavLink to={"/Acard"}>back</NavLink>
       </section>
+      <div className="drop-downs">
+        <div className="drops-continer">
+          <AddDrop />
+          <NavLink  className="cta" to={"/Acard"}>
+            <svg className="cta-svg" viewBox="0 0 13 10" height="10px" width="15px">
+              <path d="M1,5 L11,5"></path>
+              <polyline points="8 1 12 5 8 9"></polyline>
+            </svg>
+            <span className="cta-span">Back</span>
+          </NavLink >
+        </div>
+        <BillPart />
+      </div>
     </>
   );
 };
