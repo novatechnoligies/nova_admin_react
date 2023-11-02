@@ -61,7 +61,14 @@ function App() {
 
 function Header({ onLogout }) {
   return (
-    <div  className="top-bar" >
+    <>
+    <div className="top-bar">
+      <div class="org-search-box" style={{justifyContent:'flex-start',display:"flex"}}>
+        <label for="s-bar" style={{fontSize:'20px', padding:'5px'}}>Organization:</label>
+        <input type="search" placeholder="Search..." name="org-bar" className="organization-search" value="" style={{width:'200px', borderRadius:'5px'}}/>
+      </div>
+
+      <div  className="top-bar">
       {/* <div>Header</div> */}
       <div className='top_bar_icons' >
         <Badge count='5' offset={[10, 0]}>
@@ -78,6 +85,8 @@ function Header({ onLogout }) {
       </div>
       
     </div>
+    </div>
+    </>
   );
 }
 
