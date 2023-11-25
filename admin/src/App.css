@@ -118,9 +118,14 @@
 .fPIktX{
   min-height: 40px !important;
 }
- /*bottom  dada tabel */
+ /*bottom  data tabel */
 .novaTable{
   width: 82.5vw !important;
   margin-left: 0px !important;
 }
 
+/* data tabel */
+.cmkfnw{
+  min-height: 50px !important;
+  padding-right: 16px !important;
+}

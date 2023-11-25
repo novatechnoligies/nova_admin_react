@@ -1,7 +1,7 @@
 import React from "react";
 import { Input,Select,Slider,Checkbox,DatePicker } from 'antd';
 import './Filter.css'
-const Filter = (probs) => {
+const   Filter = (probs) => {
 
     const { Option } = Select;
 

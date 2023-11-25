@@ -1,53 +1,45 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "./AppChildCards.css";
+import axios from "axios";
 import { NavLink } from "react-router-dom";
-import { Card_Data } from "./AcardData";
+// import { Card_Data } from "./AcardData";
 import itac from "./itac.jpg";
 
+// export const Card_Data =`localhost:8082/getAllConsumerDetailsByld/4`;
+
 const AppChildCards = () => {
-  const [searchItem, setSearchItem] = useState("");
-  // const [items,setItems]= useState([])
+  // const [searchItem, setSearchItem] = useState("");
+  const [items,setItems]= useState([])
   // const [isError, setIsError]=useState({show:"false",msg:""})
 
-  const handelChange = (e) => {
-    setSearchItem(e.target.value);
+  // const handelChange = (e) => {
+  //   setSearchItem(e.target.value);
+  // };
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:8082/getAllConsumerDetailsByld/4");
+      setItems(response.data);
+      console.log(response.data)
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
+ 
 
-  // const getData = async (url)=>{
-  //   setisLoading(true)
-  //   try{
-  //     const res= await fetch (url);
-  //     const data = await res.json();
-  //     console.log(data);
-  //     if(data.res === "true"){
-  //       setIsError({show:false,msg:""} );
-  //       setItems(data.as_per_the_res);
-  //     }else{
-  //       setIsError({show:true, msg:""})
-  //     }
-  //   }catch(error){
-  //     console.log(error)
-  //   }
-
-  // }
-
-  //debouncing is removed
-
-  // useEffect(()=>{
-  //   let timeOut=setTimeout(()=>{getData(`${Card_Data}`)},900)
-
-  //   return()=>clearTimeout(timeOut);
-  // },[])
+  useEffect(()=>{
+    fetchData(); 
+  },[])
 
   //serch filter
-  const filteredData = Card_Data.filter((val) => {
-    if (searchItem === "") {
-      return true;
-    } else if (val.name.toLowerCase().includes(searchItem.toLowerCase())) {
-      return true;
-    }
-    return false;
-  });
+  // const filteredData = Card_Data.filter((val) => {
+  //   if (searchItem === "") {
+  //     return true;
+  //   } else if (val.name.toLowerCase().includes(searchItem.toLowerCase())) {
+  //     return true;
+  //   }
+  //   return false;
+  // });
 
   return (
     <div className="data_card_container">
@@ -56,10 +48,10 @@ const AppChildCards = () => {
         name="text"
         placeholder="Search"
         class="search_input"
-        onChange={handelChange}
+        // onChange={handelChange}
       ></input>
       <div className="data_cards">
-        {filteredData.map((e, index) => (
+        {items.map((e, index) => (
           <div
             className="card"
             key={index}

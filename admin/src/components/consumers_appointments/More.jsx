@@ -22,7 +22,7 @@ export const More = () => {
     <>
       <section className="profile_pg">
         <div class="panel-body bio-graph-info">
-          <h1>Bio Graph</h1>
+          <h1>Bio</h1>
 
           <div class="p_row">
             <div className="p_row_1">

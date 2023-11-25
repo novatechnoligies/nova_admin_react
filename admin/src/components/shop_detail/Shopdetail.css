@@ -1,0 +1,38 @@
+.S_detail_nav_bar{
+    min-width: 82.5vw;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 8px;
+    padding: 5px;
+    margin: 5px 0px 5px 0px; 
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .SD_navLink {
+        padding: 0.5em 3em;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 2.5px;
+        font-weight: 500;
+        color: #000;
+        background-color: #fff;
+        border: none;
+        border-radius: 45px;
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease 0s;
+        cursor: pointer;
+        outline: none;
+      }
+      
+      .SD_navLink:hover {
+        background-color: rgb(86, 194, 167);
+        color: #fff;
+        transform: translateY(-3px);
+      }
+
+      .SD_navLink:active {
+        transform: translateY(-1px);
+        background-color: rgb(173, 255, 250);
+      }

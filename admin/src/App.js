@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Menu } from 'antd';
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
-import { DashboardOutlined, HomeOutlined, ProfileOutlined, SettingOutlined, ShopOutlined, ShoppingOutlined,IdcardOutlined } from '@ant-design/icons/lib/icons';
+import { DashboardOutlined, HomeOutlined, ProfileOutlined, SettingOutlined, ShopOutlined, ShoppingOutlined,IdcardOutlined,AuditOutlined } from '@ant-design/icons/lib/icons';
 import ShopTable from './components/shop_components/ShopTable';
 import SpaTable from './components/spa_components/SpaTable';
 import LabTable from './components/lab_components/LabTable';
@@ -10,6 +10,13 @@ import ClinicTable from './components/clinic_components/ClinicTable';
 import LoginPage from './components/login_components/Login';
 import Filter from './components/filter_componets/Filter';
 import Acards from './components/consumers_appointments/Acards';
+import Shopdetail from './components/shop_detail/Shopdetail';
+import ShopServeice from './components/shop_detail/ShopServeice';
+import ShopAva from './components/shop_detail/ShopAva';
+import ShopPromo from './components/shop_detail/ShopPromo';
+import ShopInventory from './components/shop_detail/ShopInventory'
+import EmoloyesManagement from './components/shop_detail/EmoloyesManagement';
+import S_Consumer from './components/shop_detail/S_Consumer';
 import { NotificationOutlined ,UserOutlined } from '@ant-design/icons';
 import { MailOutlined } from '@ant-design/icons';
 import { Badge } from 'antd';
@@ -44,7 +51,7 @@ function App() {
               <div className=" left-side"><SlideMenu location={location} navigate={navigate} onLogout={handleLogout} /></div>
               <div  className='right-side'>
                  <div className='container-row'>
-                    <div className="top"><Filter></Filter></div>
+                    <div className="top"><Filter/></div>
                     <div className="bottom"><Content /></div>
                  </div>
               </div>
@@ -98,6 +105,7 @@ function SlideMenu({ location, navigate, onLogout }) {
         items={[
           { label: 'Home', key: '/', icon: <HomeOutlined /> },
           { label: 'Dashboard', key: '/dash', icon: <DashboardOutlined /> },
+          {label:'Shop Details', key:'/shop_detail', icon:<AuditOutlined /> },
           { label:'Appointments', key:'Acard',icon: <IdcardOutlined />},
           { label: 'Lab', key: '/lab', icon: <ShopOutlined /> },
           { label: 'Spa', key: '/spa', icon: <ShopOutlined /> },
@@ -126,7 +134,16 @@ function Content() {
         <Route path="/lab" element={<div className="d-flex flex-column align-items-center"> <LabTable /></div>} />
         <Route path="/Acard" element={<div className="d-flex flex-column align-items-center"> <Acards/></div>} />
         <Route path="/spa" element={<div className="d-flex flex-column align-items-center"> <SpaTable /></div>} />
-        <Route path="/shalon" element={<div className="d-flex flex-column align-items-center"> <ShopTable /></div>} />
+        <Route path="/shop_detail" element={<div className="d-flex flex-column align-items-center"> <Shopdetail /> </div>} >
+          <Route path='ShopServeice' element={<ShopServeice/>}/>
+          <Route path='ShopAva' element={<ShopAva/>}/>
+          <Route path='ShopPromo' element={<ShopPromo/>}/>
+          <Route path='ShopInventory' element={<ShopInventory/>}/>
+          <Route path='EmoloyesManagement' element={<EmoloyesManagement/>}/>
+          <Route path='S_Consumer' element={<S_Consumer/>}/>
+
+        </Route>
+        <Route path="/shalon" element={<div className="d-flex flex-column align-items-center"> <SpaTable /></div>} />
         <Route path="/csc" element={<div className="d-flex flex-column align-items-center"> <CscTable /></div>} />
         <Route path="/clinic" element={<div className="d-flex flex-column align-items-center"> <ClinicTable /></div>} />
         <Route path="/consumer" element={<div>Consumer</div>} />
