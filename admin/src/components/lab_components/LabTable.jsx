@@ -22,6 +22,7 @@ const LabTable = ({ selectedLocation, handleLocationChange }) => {
   const [availibilityForm] = Form.useForm();
   const [dropdownOptions, setDropdownOptions] = useState([]);
   
+  
 
   const handleCheckboxChange = (serviceId) => {
     setPriceInputs((prevInputs) => {
@@ -79,7 +80,7 @@ const LabTable = ({ selectedLocation, handleLocationChange }) => {
       ...values,
       owner: { id: values.owner }
     };
-    axios.post(BASE_URL+'/saveShopDetails', modifiedData)
+    axios.post(BASE_URL+'/dataservice/saveShopDetails', modifiedData)
     .then((response) => {
       console.log('Post request successful:', response.data.id);
       setShopAvailibilityModal(true);
@@ -100,7 +101,7 @@ const LabTable = ({ selectedLocation, handleLocationChange }) => {
       toTime: moment(values.toTime).format('HH:mm')
     };
     console.log('Form values:', values);
-    axios.post(BASE_URL+'/saveShopAvailability', modifiedData)
+    axios.post(BASE_URL+'/dataservice/saveShopAvailability', modifiedData)
     .then((response) => {
       console.log('Post request successful:', response.data);
       setShopAvailibilityModal(false);
@@ -128,7 +129,7 @@ const LabTable = ({ selectedLocation, handleLocationChange }) => {
 
 const handleSearch = (value) => {
   axios
-  .get(BASE_URL+`/getAllUserDetailsOfOwner?ownerName=${value}`)
+  .get(BASE_URL+`/dataservice/searchOwnerByName?ownerName=${value}`)
   .then((response) => {
     const searchResults = response.data.map((result) => ({
       value: result.id,
@@ -170,7 +171,7 @@ const handleSearch = (value) => {
   
   const getLabData = async () => {
     try {
-      const response = await axios.get(BASE_URL+"/findAllShopDetails");
+      const response = await axios.get(BASE_URL+"/dataservice/findAllShopDetails");
       setLabData(response.data);
       setFilterLabData(response.data);
     } catch (error) {}
@@ -178,7 +179,7 @@ const handleSearch = (value) => {
 
   const getAllLabServices = async () => {
     try {
-       await axios.get(BASE_URL+"/findAllMaster")
+       await axios.get(BASE_URL+"/dataservice/findAllMaster")
        .then((response) => {
         setServiceData(response.data);
       })
@@ -676,7 +677,7 @@ const handleSearch = (value) => {
     </Modal>
 
     <Modal
-    style={{width:'100%', display:"inline-flex", marginLeft:"300px" }}
+  style={{ width: '100%', display: 'inline-flex', marginLeft: '300px' }}
   onCancel={handleCancel}
   title="Update Your Service With Price"
   visible={showServiceModel}
@@ -685,26 +686,30 @@ const handleSearch = (value) => {
     setShowServiceModel(false); // Close the new modal
   }}
 >
-  {serviceData.map((service) => (
-    <Card key={service.id}>
-      <Checkbox
-        onChange={() => handleCheckboxChange(service.id)}
-        checked={!!priceInputs[service.id]}
-      >
-        {service.name}
-      </Checkbox>
-      {priceInputs[service.id] && (
-    <Input
-      placeholder="Enter price"
-      defaultValue="0"
-      value={priceInputs[service.id]}
-      onChange={(e) => handlePriceInputChange(e, service.id)}
-    />
+{Array.isArray(serviceData) ? (
+    serviceData.map((service) => (
+      <Card key={service.id}>
+        <Checkbox
+          onChange={() => handleCheckboxChange(service.id)}
+          checked={!!priceInputs[service.id]}
+        >
+          {service.name}
+        </Checkbox>
+        {priceInputs[service.id] && (
+          <Input
+            placeholder="Enter price"
+            defaultValue="0"
+            value={priceInputs[service.id]}
+            onChange={(e) => handlePriceInputChange(e, service.id)}
+          />
+        )}
+        <p>Description: {service.description}</p>
+      </Card>
+    ))
+  ) : (
+    <p>Loading service data...</p>
   )}
-      <p>Description: {service.description}</p>
-    </Card>
-  ))}
-    </Modal>
+</Modal>
 
     </div>
   );
