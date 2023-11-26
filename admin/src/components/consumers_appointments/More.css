@@ -1,0 +1,100 @@
+.profile_pg{
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    border-radius: 10px;
+    margin-top: 7px;
+}
+.profile_box{
+    margin: 10px 5px 5px ;
+    padding: 5px;
+}
+.p_row{
+    width: 85%;
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 2px solid rgb(211,211,211);
+    margin-bottom: 40px;
+}
+.panel-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 35vh;
+    justify-content: space-between;
+}
+
+.add_drop{
+    height: 20vh;
+    display: flex;
+}
+.drop-downs{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.drops-continer{
+    width: 49%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.cta {
+    position: relative;
+    margin: auto;
+    padding: 12px 18px;
+    transition: all 0.2s ease;
+    border: none;
+    background: none;
+   }
+   
+   .cta:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    border-radius: 50px;
+    background: #b1dae7;
+    width: 50px;
+    height: 45px;
+    transition: all 0.3s ease;
+   }
+   
+   .cta .cta-span {
+    position: relative;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #234567;
+   }
+   
+   .cta .cta-svg {
+    position: relative;
+    top: 0;
+    margin-left: 10px;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transform: rotate(180deg) ;
+    stroke: #234567;
+    stroke-width: 2;
+    /* transform: translateX(-5px); */
+    transition: all 0.3s ease;
+   }
+   
+   .cta:hover:before {
+    width: 100%;
+    background: #b1dae7;
+   }
+   
+   .cta:hover .cta-svg {
+    transform: rotate(180deg)   translateX(5px);
+   }
+   
+   .cta:active {
+    transform: scale(0.95);
+   }
+
