@@ -6,14 +6,14 @@ import { BASE_URL } from "../../constants/constants";
 
 function NewConsumer() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [form] = Form.useForm(); // Create a form instance
+  const [cusumerform] = Form.useForm(); // Create a form instance
 
   const showModal = () => {
     setIsModalOpen(true);
   };
 
   const handleOk = () => {
-    form.validateFields().then((values) => {
+    cusumerform.validateFields().then((values) => {
       // Validate form fields and post data if validation is successful
       const modifiedData = {
         ...values,
@@ -21,7 +21,7 @@ function NewConsumer() {
       };
       console.log('Form values:', modifiedData);
 
-      axios.post(BASE_URL+'/api/v1/saveUserDetails', values)
+      axios.post(BASE_URL+'/dataservice/saveUserDetails', modifiedData)
         .then((response) => {
           console.log('API response:', response);
           setIsModalOpen(false);
@@ -42,7 +42,7 @@ function NewConsumer() {
         Create Consumer Account
       </Button>
       <Modal title="New Consumer Account" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <Form form={form} name="newConsumerForm">
+        <Form form={cusumerform} name="newConsumerForm">
         <Form.Item
             name="id"
             label="id"

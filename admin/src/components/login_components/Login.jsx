@@ -1,8 +1,6 @@
 import React from "react";
 import "./Login.css"
 import { Form, Input, Button } from 'antd';
-import { Alignment } from "react-data-table-component";
-import FormItem from "antd/es/form/FormItem";
 import { useState } from 'react';
 import axios from 'axios';
 import { UserOutlined } from '@ant-design/icons';
@@ -17,6 +15,14 @@ const Login = (props) => {
   const [showVerifyOTP, setShowVerifyOTP] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showCreateAccount, setCreateAccount] =useState(false);
+  const [otpform] = Form.useForm();
+  const [verifyotpform] = Form.useForm();
+  const [newpasswordform] = Form.useForm();
+  
+  const [email, setEmail] = useState('');
+  const [otp, setOtp] = useState('');
+
+  //const [otpEmailForm, setOtpEmailForm] = useState(null);
 
   const handleForgetPassword = () => {
     setShowLogin(false);
@@ -30,10 +36,36 @@ const Login = (props) => {
     setShowForget(false);
     setShowVerifyOTP(true);
     setShowNewPassword(false);
+
+    const formData = otpform.getFieldsValue();
+    console.log(formData.emailorphone);
+    setEmail(formData.emailorphone);
+
+    try {
+      axios.get(BASE_URL+"/dataservice/sendOtpToEmailForForgetPassword/"+formData.emailorphone)
+      .then(response => {
+    // Handle the response data here
+    //if(response.data=="username/password not found"){
+      alert("invalid username or passowrd");
+    // }else{
+    //   props.onLogin();  
+    //   alert("u r success");
+    // }
+    console.log(response.data);
+  })
+  .catch(error => {
+    // Handle any errors that occur during the request
+    console.error(error);
+  });
+    } catch (error) {
+
+    }
+    
+    
   };
 
   const handleLogin = async(values) => {
-    props.onLogin();
+    //props.onLogin();
     
    // Handle login form submission
     console.log(values);
@@ -41,7 +73,7 @@ const Login = (props) => {
     formData.append('username', values.username);
     formData.append('password', values.password);
     try {
-      axios.post(BASE_URL+"/getUserByUserNameAndPassword", formData)
+      axios.post(BASE_URL+"/dataservice/getUserByUserNameAndPassword", formData)
       .then(response => {
     // Handle the response data here
     if(response.data=="username/password not found"){
@@ -60,10 +92,35 @@ const Login = (props) => {
   };
 
   const handleNewpassword= () =>{
+    alert();
     setShowLogin(false);
     setShowForget(false);
     setShowVerifyOTP(false);
     setShowNewPassword(true);
+    const otp = verifyotpform.getFieldsValue();
+    console.log(otp.verifyotp);
+    setOtp(otp.verifyotp);
+
+    try {
+      axios.get(BASE_URL+"/dataservice/verifyEmail/"+email+"/"+otp.verifyotp)
+      .then(response => {
+    // Handle the response data here
+    //if(response.data=="username/password not found"){
+      alert("invalid username or passowrd");
+    // }else{
+    //   props.onLogin();  
+    //   alert("u r success");
+    // }
+    console.log(response.data);
+  })
+  .catch(error => {
+    // Handle any errors that occur during the request
+    console.error(error);
+  });
+    } catch (error) {
+
+    }
+
   }
 
   const handleCreateAccount = () => {
@@ -81,6 +138,27 @@ const Login = (props) => {
     setShowForget(false);
     setShowVerifyOTP(false);
     setShowNewPassword(false);
+    const passwordfrom = newpasswordform.getFieldsValue();
+
+    try {
+      axios.get(BASE_URL+"/dataservice/updtaePasswordByEmail/"+email+"/"+otp+"/"+passwordfrom.password)
+      .then(response => {
+    // Handle the response data here
+    //if(response.data=="username/password not found"){
+      alert("invalid username or passowrd");
+    // }else{
+    //   props.onLogin();  
+    //   alert("u r success");
+    // }
+    console.log(response.data);
+  })
+  .catch(error => {
+    // Handle any errors that occur during the request
+    console.error(error);
+  });
+    } catch (error) {
+
+    }
 
   }
   
@@ -160,15 +238,15 @@ const Login = (props) => {
             )}
             {showForget && (
               <div className="login-container">
-                <h2>Password Reset</h2>
+                {/* <h2>Password Reset</h2> */}
                 <div>
-                  <Form onFinish={handleLogin}>
+                  <Form form={otpform} onFinish={handleLogin}>
                     <Form.Item
                       className="from-label-color"
                       name="emailorphone"
                       label="Enter Email/Phone"
                       rules={[
-                        { required: true, message: "Please input your username!" },
+                        { required: true, message: "Please input your email!" },
                       ]}
                     >
                       <Input />
@@ -188,13 +266,13 @@ const Login = (props) => {
               </div>
             )}
             {showVerifyOTP && (<div className="login-container">
-                <h2>Enter OTP</h2>
+                {/* <h2>Enter OTP</h2> */}
                 <div>
-                  <Form onFinish={handleLogin}>
+                  <Form form={verifyotpform} onFinish={handleLogin}>
                     <Form.Item
                       className="from-label-color"
-                      name="emailorphone"
-                      label="Enter Email/Phone"
+                      name="verifyotp"
+                      label="Enter OTP"
                       rules={[
                         { required: true, message: "Please input your username!" },
                       ]}
@@ -217,11 +295,11 @@ const Login = (props) => {
               {showNewPassword && (<div className="login-container">
                 <h2>Set Password</h2>
                 <div>
-                  <Form onFinish={handleLogin}>
+                  <Form form ={newpasswordform} onFinish={handleLogin}>
                     <Form.Item
                       className="from-label-color"
-                      name="new Password"
-                      label="Enter Email/Phone"
+                      name="password"
+                      label="Enter password"
                       rules={[
                         { required: true, message: "Please input your username!" },
                       ]}
@@ -232,7 +310,7 @@ const Login = (props) => {
                     <Form.Item
                       className="from-label-color"
                       name="conform Password"
-                      label="Enter Email/Phone"
+                      label="re-ernter password"
                       rules={[
                         { required: true, message: "Please input your username!" },
                       ]}
@@ -253,7 +331,7 @@ const Login = (props) => {
                 </div>
               </div>)}
         
-            {showCreateAccount&&( <div className="login-container">
+            {/* {showCreateAccount&&( <div className="login-container">
                 <h2>Create Your Account</h2>
                 <Form onFinish={handleCreateAccount}>
                   <Form.Item label="Firstname" name="firstName" rules={[{ required: true, message: 'Please enter your Firstname' }]}>
@@ -270,10 +348,7 @@ const Login = (props) => {
                       name="gender"
                       rules={[{ required: true, message: 'Please select your Gender' }]}
                     >
-                          {/* <Radio.Group>
-                    <Radio.Button value="male">Male</Radio.Button>
-                    <Radio.Button value="female">Female</Radio.Button>
-                            </Radio.Group> */}
+                        
                   </Form.Item>
                   <Form.Item label="Phone" name="Phone num" rules={[{ required: true, message: 'Please enter your PhoneNumber' }]}>
                     <Input placeholder="Enter your PhoneNumber" />
@@ -290,7 +365,7 @@ const Login = (props) => {
                     </Button>
                   </Form.Item>
                 </Form>
-              </div>)}
+              </div>)} */}
       </div>
       </div>
     </div>
