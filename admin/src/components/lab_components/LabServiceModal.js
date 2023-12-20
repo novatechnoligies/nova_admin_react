@@ -1,5 +1,5 @@
 import React, {useEffect, useState } from 'react';
-import { Button, Modal, Form, Input, Checkbox, Card, Row, Col, Select } from 'antd';
+import { Button, Modal, Form, Input, Checkbox, Card, Row, Col, Select, message } from 'antd';
 import axios from "axios";
 import { BASE_URL } from "../../constants/constants";
 
@@ -58,7 +58,26 @@ const LabServiceModal = ({ visible, onCancel, onCreate, services }) => {
   const handleAddServices = () => {
     const selected = serviceMaster.filter((service) => service.isChecked);
     setSelectedServices(selected);
-    console.log(selected);
+    const shopIds = ["1", "2"]; // Replace this with your actual shopId values
+
+    const jsonData = {
+      shopIds: shopIds,
+      masterShopRelationDTOs: selected,
+    };
+
+    console.log("json data here : "+JSON.stringify(jsonData));  
+    axios.post(BASE_URL + '/dataservice/saveServiceListForMultiShop', jsonData)
+      .then((response) => {
+        message.success("Services Added Successfully");
+        // Handle success, if needed
+        console.log('Service list saved successfully:', response.data);
+      })
+      .catch((error) => {
+        // Handle error, if needed
+        console.error('Error saving service list:', error);
+        message.error("Failed to add services to the lab")
+      });
+    //console.log(selected);
   };
 
 const { Option } = Select;

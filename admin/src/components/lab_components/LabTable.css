@@ -52,16 +52,18 @@
 .lab-summary {
   border-collapse: collapse;
   width: 100%;
+  justify-content: space-evenly;
 }
 
 .lab-summary td {
-  border: 1px solid #ddd;
+  border: none;
   padding: 8px;
   text-align: left;
+
 }
 
 .lab-summary th {
-  border: 1px solid #ddd;
+  border: none;
   padding: 8px;
   text-align: left;
   background-color: #f2f2f2;
@@ -84,8 +86,13 @@
 .lab-summary-container {
   margin: 20px;
   padding: 20px;
-  border: 1px solid #ddd;
+  border: none;
   border-radius: 8px;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.td-key {
+  justify-content: end;
+  align-items: flex-end;
 }
