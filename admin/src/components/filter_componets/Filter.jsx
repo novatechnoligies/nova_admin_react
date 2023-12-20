@@ -11,7 +11,7 @@ const Filter = (probs) => {
             
                 <div className="filter-chuld-1" >
                    <div className="search-box">
-                     <label for="s-bar" >Filter By : </label> 
+                     <label htmlFor="s-bar" >Filter By : </label> 
                      <Input type="search" placeholder="Search..."  className="seach-filter" name="s-bar" style={{width:'200px'}}/>
                    </div> 
                     

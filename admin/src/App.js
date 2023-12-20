@@ -8,7 +8,7 @@ import LabTable from './components/lab_components/LabTable';
 import CscTable from './components/csc_components/CscTable';
 import ClinicTable from './components/clinic_components/ClinicTable';
 import LoginPage from './components/login_components/Login';
-import Filter from './components/filter_componets/Filter';
+// import Filter from './components/filter_componets/Filter';
 import Acards from './components/consumers_appointments/Acards';
 import { NotificationOutlined ,UserOutlined } from '@ant-design/icons';
 import { MailOutlined } from '@ant-design/icons';
@@ -44,8 +44,8 @@ function App() {
               <div className=" left-side"><SlideMenu location={location} navigate={navigate} onLogout={handleLogout} /></div>
               <div  className='right-side'>
                  <div className='container-row'>
-                    <div className="top"><Filter></Filter></div>
-                    <div className="bottom"><Content /></div>
+                    {/* <div className="top"><Filter></Filter></div> */}
+                    <div className><Content /></div>
                  </div>
               </div>
             </div>
