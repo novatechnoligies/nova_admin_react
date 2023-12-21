@@ -33,7 +33,7 @@
   }
   
   .search_input[type = "text"] {
-    display: block;
+    display: inline-table;
     color: rgb(34, 34, 34);
     background: linear-gradient(142.99deg, rgba(217, 217, 217, 0.63) 15.53%, rgba(243, 243, 243, 0.63) 88.19%);
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;

@@ -12,10 +12,11 @@ import LoginPage from './components/login_components/Login';
 import Acards from './components/consumers_appointments/Acards';
 import { NotificationOutlined ,UserOutlined } from '@ant-design/icons';
 import { MailOutlined } from '@ant-design/icons';
-import { Badge } from 'antd';
+import { Badge, Avatar, Upload, Button, Popover} from 'antd';
 import "./App.css";
 import NewConsumer from './components/consumer_components/consumermodule';
 import { More } from './components/consumers_appointments/More';
+import AppointmentBookingPage from './components/consumers_appointments/AppointmentBookingPage';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -136,6 +137,7 @@ function Content() {
         <Route path="/inactive" element={<div>Inactive</div>} />
         <Route path="/AppChildCards/:id" element={<More/>}/>
         <Route path="/newconsumeraccount" element={<div><NewConsumer/></div>} />
+        <Route path="/appointment-booking" element={<AppointmentBookingPage />} />
       </Routes>
     </div>
   );

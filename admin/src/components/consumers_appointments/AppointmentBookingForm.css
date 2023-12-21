@@ -1,0 +1,20 @@
+/* Add this to your CSS file (AppointmentBookingForm.css) */
+.time-slot-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .time-slot-button {
+    margin: 4px;
+    padding: 8px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .time-slot-button.selected {
+    background-color: #1890ff;
+    color: #fff;
+    border-color: #1890ff;
+  }
+  
