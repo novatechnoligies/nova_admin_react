@@ -1,20 +1,28 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Table, Space } from 'antd';
 import { SearchOutlined, PlusOutlined } from '@ant-design/icons';
+import { BASE_URL } from "../../constants/constants";
+import axios from "axios";
+import qs from 'qs';
 
-const ExistingAccountSearch = () => {
+const ExistingAccountSearch = ({ onSelectAccount }) => {
   const [form] = Form.useForm();
-  const [searchResults, setSearchResults] = useState([]);
+  const [consumerListByPhone, setConsumerListByPhone] = useState([]);
 
-  const onFinish = (values) => {
-    console.log('Search values:', values);
-    // Add logic to search for existing accounts (e.g., API call, etc.)
-    // Update the searchResults state with the search results
-    const dummySearchResults = [
-      { id: 1, name: 'John Doe', contactNumber: '123-456-7890' },
-      { id: 2, name: 'Jane Smith', contactNumber: '987-654-3210' },
-    ];
-    setSearchResults(dummySearchResults);
+  const getConsumerListByPhone = (value) => {
+    axios.get(BASE_URL + `/dataservice/getUserByPhone/${value.searchQuery}`)
+      .then((response) => {
+        const searchOwner = response.data.map((result) => ({
+          id: result.id,
+          name: result.firstName,
+          contactNumber: result.phone,
+        }));
+
+        setConsumerListByPhone(searchOwner);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const columns = [
@@ -38,7 +46,7 @@ const ExistingAccountSearch = () => {
       key: 'action',
       render: (text, record) => (
         <Space size="middle">
-          {/* Add an action for selecting an existing account */}
+          {/* Use handleSelectAccount directly instead of onSelectAccount */}
           <Button type="primary" icon={<PlusOutlined />} onClick={() => handleSelectAccount(record)}>
             Select
           </Button>
@@ -49,12 +57,12 @@ const ExistingAccountSearch = () => {
 
   const handleSelectAccount = (selectedAccount) => {
     console.log('Selected Account:', selectedAccount);
-    // Add logic to handle the selected account (e.g., pass it to the booking form)
+    onSelectAccount(selectedAccount);
   };
 
   return (
     <div>
-      <Form form={form} onFinish={onFinish} layout="inline">
+      <Form form={form} onFinish={getConsumerListByPhone} layout="inline">
         <Form.Item name="searchQuery">
           <Input placeholder="Search by name or contact number" />
         </Form.Item>
@@ -65,7 +73,7 @@ const ExistingAccountSearch = () => {
         </Form.Item>
       </Form>
 
-      <Table columns={columns} dataSource={searchResults} />
+      <Table columns={columns} dataSource={consumerListByPhone} />
     </div>
   );
 };

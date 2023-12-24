@@ -17,6 +17,9 @@ import "./App.css";
 import NewConsumer from './components/consumer_components/consumermodule';
 import { More } from './components/consumers_appointments/More';
 import AppointmentBookingPage from './components/consumers_appointments/AppointmentBookingPage';
+import defaultProfilePhoto from './default-profile-photo.png';
+
+
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -60,7 +63,7 @@ function App() {
   );
 }
 
-function Header({ onLogout }) {
+function Header({ onLogout, profilePhoto  }) {
   return (
     <div  className="top-bar" >
       {/* <div>Header</div> */}
@@ -74,8 +77,12 @@ function Header({ onLogout }) {
         <MailOutlined style={{ fontSize: '24px' }} />
         </Badge>
       </div>
-      <div className='top_bar_icons' >
-        <UserOutlined  className="profile-photo"/>
+      <div className='top_bar_icons'>
+        {profilePhoto ? (
+          <img src={profilePhoto} alt="Profile" className="profile-photo" />
+        ) : (
+          <img src={defaultProfilePhoto} alt="Default Profile" className="profile-photo" />
+        )}
       </div>
       
     </div>

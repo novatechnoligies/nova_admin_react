@@ -33,6 +33,13 @@ const AppointmentBookingPage = () => {
     }, 1000);
   };
 
+  const [selectedAccount, setSelectedAccount] = useState(null);
+
+  const handleSelectAccount = (accountData) => {
+    console.log("Selected Account Updated:", accountData);
+    setSelectedAccount(accountData);
+  };
+
   return (
       <div>
           <Row gutter={16}>
@@ -40,7 +47,7 @@ const AppointmentBookingPage = () => {
               <Col span={12}>
                   <div style={{ padding: '20px', border: '1px solid #d9d9d9', borderRadius: '4px' }}>
                       <h2>Appointment Booking</h2>
-                      <AppointmentBookingForm />
+                      <AppointmentBookingForm selectedAccount={selectedAccount} />
                   </div>
               </Col>
 
@@ -48,7 +55,7 @@ const AppointmentBookingPage = () => {
               <Col span={12}>
                   <div style={{ padding: '20px', border: '1px solid #d9d9d9', borderRadius: '4px' }}>
                       <h2>Search Existing Account</h2>
-                      <ExistingAccountSearch />
+                      <ExistingAccountSearch onSelectAccount={handleSelectAccount} />
                   </div>
               </Col>
           </Row>
