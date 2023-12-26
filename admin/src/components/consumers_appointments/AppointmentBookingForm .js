@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, DatePicker, Button, Select, Row, Col } from "antd";
+import { Form, Input, DatePicker, Button, Select, message, } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import moment from "moment";
 import "./AppointmentBookingForm.css";
 import axios from "axios";
 import { BASE_URL } from "../../constants/constants";
-
-const { Option } = Select;
 
 const AppointmentBookingForm = (selectedAccount) => {
   const [form] = Form.useForm();
@@ -23,12 +21,10 @@ const AppointmentBookingForm = (selectedAccount) => {
         // Add similar lines for other fields
       });
     } else {
-      // Set default values when selectedAccount or selectedAccount.selectedAccount is null
       form.setFieldsValue({
         id: "",
         name: "",
         phone: "",
-        // Add default values for other fields
       });
     }
   }, [selectedAccount, form]);
@@ -48,9 +44,26 @@ const AppointmentBookingForm = (selectedAccount) => {
       });
   };
 
-  const onFinish = (values) => {
-    console.log("Received values:", values);
-    // Add logic to handle the form submission (e.g., API call, etc.)
+  const bookAppointmentForm = (values) => {
+    const formValuesWithSlot = {
+      ...values,
+      slotId: selectedTime,
+      shopId: selectedLab,
+      serviceId: 1,
+    };
+
+    console.log("Received values:", formValuesWithSlot);
+
+    axios
+      .post(BASE_URL + "/dataservice/saveAppointment", formValuesWithSlot)
+      .then((response) => {
+        message.success("appointment booked ..!");
+        console.log("Appointment submitted successfully:", response.data);
+      })
+      .catch((error) => {
+        message.error("appointment failed  booked ..!");
+        console.error("Error submitting appointment:", error.message);
+      });
   };
 
   const [timeSlots, setTimeSlots] = useState([]);
@@ -59,66 +72,41 @@ const AppointmentBookingForm = (selectedAccount) => {
 
   const handleDateChange = (selectedDate) => {
     if (!selectedDate) {
-      // Handle the case when selectedDate is null or undefined
       return;
     }
-  
-    const availableTimeSlots = getAvailableTimeSlots(
-      moment(selectedDate).startOf("day"),
-      selectedLab
-    );
-  
-    setTimeSlots(availableTimeSlots);
-    console.log("availableTimeSlots   ::: " + availableTimeSlots);
-    // if (selectedLab) {
-    //   fetchServices(selectedLab, selectedDate);
-    // }
+    const formattedDate = selectedDate.format("YYYY-MM-DD");
+    getAvailableTimeSlots(moment(formattedDate).startOf("day"), selectedLab);
   };
-  
 
-  const getAvailableTimeSlots = (selectedDate, selectedLab) => {
+  const getAvailableTimeSlots = async (selectedDate, selectedLab) => {
+    alert(selectedDate.format("YYYY-MM-DD"));
+    try {
+      const response = await axios.get(  BASE_URL +  `/dataservice/getAllSlotAvailabilityByLabIdAndDate?labId=${selectedLab}&date=${selectedDate.format("YYYY-MM-DD")}`);
+      const responseData = response.data;
+      const timeSlots = Array.isArray(responseData)
+        ? responseData.map((result) => ({
+            value: result.id,
+            label: moment(result.slot, "HH:mm:ss").format("hh:mm A"),
+          }))
+        : [];
 
-    
-
-    // Your logic to fetch time slots based on the selected date
-    // This is a placeholder, you should replace it with your actual implementation
-
-    // For example, generate some dummy time slots for the sake of demonstration
-    const startHour = 9;
-    const endHour = 17;
-    const timeSlotDuration = 60; // in minutes
-
-    const timeSlots = [];
-
-    for (let hour = startHour; hour <= endHour; hour++) {
-      for (let minute = 0; minute < 60; minute += timeSlotDuration) {
-        const formattedTime = moment()
-          .hour(hour)
-          .minute(minute)
-          .format("hh:mm A");
-
-        timeSlots.push(formattedTime);
-      }
+      console.log(response);
+      setTimeSlots(timeSlots);
+    } catch (error) {
+      console.error("Error fetching time slots:", error.message);
     }
-
-    return timeSlots;
   };
 
   const handleTimeSlotClick = (time) => {
-    // Reset styles for previously selected time
-    if (selectedTime) {
-      const prevSelectedButton = document.getElementById(selectedTime);
-      if (prevSelectedButton) {
-        prevSelectedButton.classList.remove("selected");
-      }
+    const prevSelectedButton = document.querySelector(".time-slot-button.selected");
+    if (prevSelectedButton) {
+      prevSelectedButton.classList.remove("selected");
     }
-
-    // Apply styles for the clicked time
-    setSelectedTime(time);
-    const selectedButton = document.getElementById(time);
+    const selectedButton = document.getElementById(time.value);
     if (selectedButton) {
       selectedButton.classList.add("selected");
     }
+    setSelectedTime(time.value);
   };
 
   const filterOption = (input, option) => {
@@ -133,12 +121,8 @@ const AppointmentBookingForm = (selectedAccount) => {
   };
 
   const handleServices = (value) => {
-    //alert(selectedLab);
     axios
-      .get(
-        BASE_URL +
-          `/dataservice/findAllShopServiceByLab/${selectedLab}/${value}`
-      )
+      .get(BASE_URL +`/dataservice/findAllShopServiceByLab/${selectedLab}/${value}`)
       .then((response) => {
         const searchService = response.data.map((result) => ({
           value: result.shopId,
@@ -152,7 +136,7 @@ const AppointmentBookingForm = (selectedAccount) => {
   };
 
   return (
-    <Form form={form} onFinish={onFinish} layout="vertical">
+    <Form form={form} onFinish={bookAppointmentForm} layout="vertical">
       <Form.Item
         label="id"
         name="id"
@@ -181,18 +165,22 @@ const AppointmentBookingForm = (selectedAccount) => {
 
       <Form.Item label="Appointment Slot" name="slot">
         <div className="time-slot-container">
-          {timeSlots.map((time) => (
-            <Button
-              key={time}
-              id={time}
-              className={`time-slot-button ${
-                selectedTime === time ? "selected" : ""
-              }`}
-              onClick={() => handleTimeSlotClick(time)}
-            >
-              {time}
-            </Button>
-          ))}
+          {timeSlots.length > 0 ? (
+            timeSlots.map((time) => (
+              <Button
+                key={time.value}
+                id={time.value}
+                className={`time-slot-button ${
+                  selectedTime === time.value ? "selected" : ""
+                }`}
+                onClick={() => handleTimeSlotClick(time)}
+              >
+                {time.label}
+              </Button>
+            ))
+          ) : (
+            <p>No available time slots for the selected date</p>
+          )}
         </div>
       </Form.Item>
 
@@ -208,7 +196,7 @@ const AppointmentBookingForm = (selectedAccount) => {
 
       <Form.Item
         label="Select Lab"
-        name="shop"
+        name="shopId"
         rules={[
           { required: false, message: "Please search your Lab here" },
           { type: "name", message: "Please enter a valid name" },
@@ -227,7 +215,7 @@ const AppointmentBookingForm = (selectedAccount) => {
 
       <Form.Item
         label="Select Service"
-        name="service"
+        name="serviceId"
         rules={[{ required: true, message: "Please select a service" }]}
       >
         <Select
