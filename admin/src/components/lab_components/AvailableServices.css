@@ -1,0 +1,106 @@
+/* General Styles */
+
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Service Container */
+  
+  .service-container {
+    background-color: lightgray;
+    border-radius: 5px;
+    padding: 15px;
+    box-sizing: border-box;
+    height: auto;
+    justify-content: space-evenly;
+    align-items: center;
+    justify-items: center;
+  }
+  
+/* Filter Section */
+
+.filter-section {
+    display: flex;
+    justify-content: flex-end; /* Adjusted to evenly distribute the elements */
+    align-items: center;
+    width: inherit;
+    padding: 15px;
+  }
+
+  .filter-forms {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Sort By Dropdown */
+  
+  #sort {
+    margin-right: 10px;
+    height: 25px;
+    border-radius: 5px;
+    border-style: none;
+
+  }
+  
+  /* Search Input */l
+  
+  #search {
+    margin-right: 10px;
+    height: 25px;
+    border-radius: 5px;
+    border-style: none;
+  }
+
+  /* Service Card Header */
+  
+  .service-card-header {
+    display: flex;
+    background-color: rgb(28, 175, 180);
+    height: 50px;
+    width: 90%;
+    margin-left: 50px;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 5px;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+  
+  /* Ratings Section */
+  
+  .service-card-ratings {
+    display: flex;
+    align-items: center;
+
+  }
+  
+  .service-card-ratings span {
+    margin-left: 5px;
+    font-size: 18px;
+    color: gold;
+  }
+  
+  /* Card Description Section */
+  
+  .card-description-section {
+    width: 90%;
+    margin-left: 50px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .leftside-description {
+    background-color: cornflowerblue;
+    width: fit-content;
+    height: fit-content;
+  }
+  
+  /* Custom Table Styles */
+  
+  .custom-table .ant-table-tbody > tr > td {
+    padding: 8px; /* Adjust the padding to control the row height */
+  }
+  
