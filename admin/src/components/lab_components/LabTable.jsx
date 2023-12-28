@@ -14,7 +14,7 @@ import LabServiceModal from "./LabServiceModal";
 import Summary from "./Suummary";
 
 
-const LabDataTable = ({ data, onEditLab, onDeleteLab }) => {
+const LabDataTable = ({ data, onDeleteLab }) => {
 
   const [filterLabData, setFilterLabData] = useState([]);
   const [search, setSearch] = useState("");
@@ -29,14 +29,14 @@ const LabDataTable = ({ data, onEditLab, onDeleteLab }) => {
   
 
   const handleRowClick = (row) => {
-    // console.log("selected row"+row)
-    // Assuming your row data contains the necessary lab information
     setSelectedLab(row);
     setShowSummary(true);
-    // You may also set showLabTable to false or perform other logic based on your use case
     setShowLabTable(false);
   };
 
+  const onEditLab = (row) => {
+    alert(row.id)
+  }
 
   // ON LOAD
   useEffect(() => {
@@ -54,7 +54,7 @@ const LabDataTable = ({ data, onEditLab, onDeleteLab }) => {
         BASE_URL + "/dataservice/findAllShopDetails"
       );
       setLabData(response.data);
-      setFilterLabData(response.data);
+      //setFilterLabData(response.data);
     } catch (error) {}
   };
 

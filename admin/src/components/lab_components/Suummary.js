@@ -2,6 +2,7 @@ import React, { useState, useEffect} from 'react';
 import "./LabTable.css";
 import { BASE_URL } from "../../constants/constants";
 import axios from "axios";
+import AvailableService from './AvailableServices';
 
 
 const Summary = ({ labData }) => {
@@ -133,60 +134,8 @@ const getAvailabilityDetails = async () => {
 
       <div className="lab-summary-container">
         <h2>Available Services</h2>
-        <table className="lab-summary">
-          <tbody>
-            <tr>
-              <td className="col-diff">
-                <strong>Name: </strong>
-                {labData.shopName}
-              </td>
-
-              <td>
-                <strong>Phone:</strong>
-                {labData.phone}
-              </td>
-
-              <td>
-                <strong>Email:</strong>
-                {labData.email}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <strong>Address:</strong>
-                {labData.address}
-              </td>
-              <td>
-                <strong>Owner:</strong>
-                {labData.owner}
-              </td>
-              <td>
-                <strong>Ratings:</strong>
-                {labData.ratings}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <strong>Total Appointments:</strong>
-                {labData.totalAppointments}
-              </td>
-              <td>
-                <strong>Active Employees:</strong>
-                {labData.activeEmployees}
-              </td>
-              <td>
-                <strong>Location:</strong>
-                {labData.location}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <strong>Org:</strong>
-                {labData.org}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <AvailableService />
+       
       </div>
     </div>
   );

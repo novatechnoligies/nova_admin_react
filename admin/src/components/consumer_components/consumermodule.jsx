@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
-import { Button, Modal, Form, Input, Upload } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Button, Modal, Form, Input, Upload, Radio, Select} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { BASE_URL } from "../../constants/constants";
+import DataTable from "react-data-table-component";
+
 
 function NewConsumer() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cusumerform] = Form.useForm(); // Create a form instance
+  const [consumerData, setConsumerData] = useState([]);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -36,16 +39,102 @@ function NewConsumer() {
     setIsModalOpen(false);
   };
 
+  useEffect(() => {
+    getConsumerData();
+    
+  }, []);
+
+  const getConsumerData = async () => {
+    try {
+      const response = await axios.get(
+        BASE_URL + "/dataservice/getAllUserDetails"
+      );
+      console.log(response);
+      setConsumerData(response.data);
+    } catch (error) {}
+  };
+
+  const columns = [
+    {
+      name: 'ID',
+      selector: (row) => row.id,
+      sortable: true,
+    },
+    {
+      name: 'Name',
+      selector: (row) => row.firstName,
+      sortable: true,
+    },
+    {
+      name: 'Role',
+      selector: (row) => row.role.code,
+      sortable: true,
+    },
+    {
+      name: 'Contact',
+      selector: (row) => row.phone,
+      sortable: true,
+    },
+    {
+      name: 'Email ID',
+      selector: (row) => row.email,
+      sortable: true,
+    },
+    {
+      name: 'Aadhar Number',
+      selector: (row) => row.adharNo,
+      sortable: true,
+    }, 
+    {
+      name: 'Gender',
+      selector: (row) => row.gender,
+      sortable: true,
+    }
+  ];
+
+  const data = [
+    { id: 1, col1: 'Row 1', col2: 'Data A' },
+    { id: 2, col1: 'Row 2', col2: 'Data B' },
+  ];
+
   return (
     <div>
       <Button type="primary" style={{ float: 'right', marginTop: '20px' }} onClick={showModal}>
         Create Consumer Account
       </Button>
+
+      <div>
+        <input
+          type="text"
+          placeholder="Search Here"
+        />
+      </div>
+
+      <DataTable
+        className="container custom-table lab-data-table-container"
+        title=""
+        search
+        columns={columns}
+        data={consumerData}
+        pagination
+        paginationPosition="bottom"
+        fixedHeader
+        selectableRows
+        selectableRowsHighlight
+        highlightOnHover
+        customStyles={{
+          pagination: {
+            marginBottom: '16px',
+          },
+        }}
+      />
+
       <Modal title="New Consumer Account" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
         <Form form={cusumerform} name="newConsumerForm">
         <Form.Item
             name="id"
             label="id"
+            hidden
           >
             <Input />
         </Form.Item>
@@ -89,10 +178,14 @@ function NewConsumer() {
 
           <Form.Item
             name="gender"
-            label="gender"
-            rules={[{ required: true, max: 50 }]}
+            label="Gender"
+            rules={[{ required: true, message: 'Please select your gender' }]}
           >
-            <Input />
+            <Radio.Group>
+              <Radio value="male">Male</Radio>
+              <Radio value="female">Female</Radio>
+              {/* You can add more options as needed */}
+            </Radio.Group>
           </Form.Item>
 
           <Form.Item
@@ -108,15 +201,15 @@ function NewConsumer() {
             label="password"
             rules={[{ required: true, max: 50 }]}
           >
-            <Input />
+            <Input type="password"/>
           </Form.Item>
-
+ 
           <Form.Item
             name="adharNo"
             label="adharNo"
-            rules={[{ required: true, max: 50 }]}
+            rules={[{ required: true, min:12}]}
           >
-            <Input />
+            <Input type="number"/>
           </Form.Item>
 
           <Form.Item
@@ -124,16 +217,21 @@ function NewConsumer() {
             label="adharPhoto"
             rules={[{ required: true, max: 50 }]}
           >
-            <Input />
+            <Input  type="file"></Input>
           </Form.Item>
 
-          <Form.Item
-            name="role"
-            label="role"
-            rules={[{ required: true, max: 50 }]}
-          >
-            <Input />
-          </Form.Item>
+            <Form.Item
+              name="role"
+              label="Role"
+              rules={[{ required: true, message: 'Please select your role' }]}
+            >
+              <Select placeholder="Select a role">
+                <Select.Option value="1">Owner</Select.Option>
+                <Select.Option value="2">Consumer</Select.Option>
+                <Select.Option value="3">Employee</Select.Option>
+                <Select.Option value="1">Admin</Select.Option>
+              </Select>
+            </Form.Item>
           
           
             
