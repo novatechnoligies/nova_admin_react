@@ -6,9 +6,6 @@ import axios from 'axios';
 import { UserOutlined } from '@ant-design/icons';
 import { BASE_URL } from "../../constants/constants";
 
-
-
-
 const Login = (props) => {
   const [showLogin, setShowLogin] = useState(true);
   const [showForget, setShowForget] = useState(false);
@@ -65,7 +62,7 @@ const Login = (props) => {
   };
 
   const handleLogin = async(values) => {
-    //props.onLogin();
+    props.onLogin();
     
    // Handle login form submission
     console.log(values);
@@ -78,7 +75,7 @@ const Login = (props) => {
     // Handle the response data here
     if(response.data=="username/password not found"){
       alert("invalid username or passowrd");
-    }else{
+    } else{
       props.onLogin();  
       alert("u r success");
     }
@@ -176,9 +173,9 @@ const Login = (props) => {
                   <div>
                   <h1 className="login-taital">
                     <span className="red-letter">W</span>
-                    <span className="white-letters">ELL-COME </span><br/>
-                    <span className="red-letter">N</span>
-                    <span className="white-letters">OVA  ADMIN</span>
+                    <span className="white-letters">elcome- </span><br/>
+                    <span className="red-letter"> N</span>
+                    <span className="white-letters">ova Admin</span>
                   </h1>
                   </div>
                   <Form.Item
