@@ -24,8 +24,9 @@ const AvailableService = () => {
           shopId: result.shopId,
           serviceId: result.serviceId,
         }));
-
         setServiceSummary(serviceSummaryFromApi);
+        console("setServiceSummary"+ setServiceSummary);
+
       })
       .catch((error) => {
         console.error(error);
@@ -46,7 +47,7 @@ const AvailableService = () => {
 
   return (
     <div className="main-container">
-      {/* <div className="filter-section"> // Need to check with Santu, if this section can be removed
+       <div className="filter-section"> 
         <div className="filter-forms">
           <label htmlFor="sort">Sort By:</label>
           <select id="sort">
@@ -62,7 +63,7 @@ const AvailableService = () => {
             Add Services
           </Button>
         </div>
-      </div>{" "} */}
+      </div> 
       <div className="scrollable-section">
         {serviceSummary.map((service) => (
           <div key={service.id} className="service-item">
