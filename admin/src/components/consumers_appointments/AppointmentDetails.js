@@ -3,6 +3,10 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { Button,  Row, Col  } from "antd";
 import { LeftOutlined } from "@ant-design/icons";
+import PatientSummary from "./PatientSummary";
+import Notes from "./Notes";
+import PatientAppointmentsSummary from "./PatientAppointmentsSummary.js";
+import FileDocument from "./FileDocument.js";
 
 const AppointmentDetails = () => {
   const { name } = useParams();
@@ -28,7 +32,8 @@ const AppointmentDetails = () => {
         <Col span={16}>
           {/* Your content for the first section */}
           <div style={{ border: "1px solid #ddd", padding: "10px" }}>
-            Content for col-md-8
+            <PatientSummary />
+            <PatientAppointmentsSummary />
           </div>
         </Col>
 
@@ -36,7 +41,8 @@ const AppointmentDetails = () => {
         <Col span={8}>
           {/* Your content for the second section */}
           <div style={{ border: "1px solid #ddd", padding: "10px" }}>
-            Content for col-md-4
+            <Notes />
+            <FileDocument />
           </div>
         </Col>
       </Row>
