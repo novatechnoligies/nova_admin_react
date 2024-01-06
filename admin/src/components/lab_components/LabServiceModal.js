@@ -3,7 +3,7 @@ import { Button, Modal, Form, Input, Checkbox, Card, Row, Col, Select, message }
 import axios from "axios";
 import { BASE_URL } from "../../constants/constants";
 
-const LabServiceModal = ({ visible, onCancel, onCreate}) => {
+const LabServiceModal = ({ visible, onCancel, onCreate, labData}) => {
   const [selectedServices, setSelectedServices] = useState([]);
   const [isChecked, setChecked] = useState(false);
   const [search, setSearch] = useState("");
@@ -11,6 +11,7 @@ const LabServiceModal = ({ visible, onCancel, onCreate}) => {
   const [modalVisible, setModalVisible] = useState(visible); // Manage the visibility state
 
   useEffect(() => {
+    console.log("here now data"+JSON.stringify(labData));
     if (!visible) {
       setModalVisible(false);
     }
@@ -100,6 +101,24 @@ const handleChange = (selected) => {
   console.log(selectedValues);
 };
 
+// const getLabData = async () => {
+//     const storedUserData = sessionStorage.getItem('userData');
+//     const userDataObject = JSON.parse(storedUserData);
+
+//     try {
+//       const response = await axios.get(
+//         BASE_URL + "/dataservice/getAllLabListByOwnerId?ownerId="+userDataObject.id
+//       );
+//       setLabData(response.data);
+//       //setFilterLabData(response.data);
+//     } catch (error) {}
+//   };
+
+const labOptions = labData.map((item) => ({
+  key: item.id,
+  label: item.shopName,
+}));
+
 const yourData = [
   { key: 'value1', label: 'Value 1' },
   { key: 'value2', label: 'Value 2' },
@@ -110,7 +129,7 @@ const yourData = [
 const allOption = { key: 'all', label: 'Select All' };
 
 const handleSelectAll = () => {
-  const allKeys = yourData.map((item) => item.key);
+  const allKeys = labOptions.map((item) => item.key);
   setSelectedValues(allKeys);
   console.log(selectedValues);
 };
@@ -142,8 +161,8 @@ const handleSelectAll = () => {
         value={selectedValues}
       >
         <Select.Option key={allOption.key}>{allOption.label}</Select.Option>
-        {yourData.map((item) => (
-          <Select.Option key={item.key}>{item.label}</Select.Option>
+        {labData.map((item) => (
+          <Select.Option key={item.id}>{item.shopName}</Select.Option>
         ))}
       </Select>
       <br />

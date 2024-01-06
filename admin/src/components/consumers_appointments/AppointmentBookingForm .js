@@ -154,6 +154,25 @@ const AppointmentBookingForm = (selectedAccount) => {
       </Form.Item>
 
       <Form.Item
+        label="Select Lab"
+        name="shopId"
+        rules={[
+          { required: false, message: "Please search your Lab here" },
+          { type: "name", message: "Please enter a valid name" },
+        ]}
+      >
+        <Select
+          showSearch
+          onSearch={handleSearch}
+          placeholder="Select an Lab"
+          optionFilterProp="label"
+          filterOption={filterOption}
+          options={labDropdownOptions}
+          onChange={handleLabSelect}
+        />
+      </Form.Item>
+
+      <Form.Item
         label="Appointment Date"
         name="appointmentDate"
         rules={[
@@ -192,25 +211,6 @@ const AppointmentBookingForm = (selectedAccount) => {
         ]}
       >
         <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Select Lab"
-        name="shopId"
-        rules={[
-          { required: false, message: "Please search your Lab here" },
-          { type: "name", message: "Please enter a valid name" },
-        ]}
-      >
-        <Select
-          showSearch
-          onSearch={handleSearch}
-          placeholder="Select an Lab"
-          optionFilterProp="label"
-          filterOption={filterOption}
-          options={labDropdownOptions}
-          onChange={handleLabSelect}
-        />
       </Form.Item>
 
       <Form.Item
