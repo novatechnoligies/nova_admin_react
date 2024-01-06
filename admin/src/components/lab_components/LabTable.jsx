@@ -29,6 +29,9 @@ const LabDataTable = ({ data, onDeleteLab }) => {
   
 
   const handleRowClick = (row) => {
+    // const storedLabData = sessionStorage.setItem('labData',row);
+    // const userDataObject = JSON.parse(storedLabData);
+    
     setSelectedLab(row);
     setShowSummary(true);
     setShowLabTable(false);
@@ -235,6 +238,7 @@ const LabDataTable = ({ data, onDeleteLab }) => {
         visible={isAddServiceModalVisible}
         onCancel={() => setIsAddServiceModalVisible(false)}
         onCreate={handleLabServiceSubmit}
+        labData ={labData}
       />
 
     </div>

@@ -13,8 +13,11 @@ const AvailableService = () => {
   }, [search]);
 
   const getServiceSummary = () => {
+    // const storedLabData = sessionStorage.getItem('labData');
+    // const labDataObject = JSON.parse(storedLabData);
+
     axios
-      .get(BASE_URL + `/dataservice/findAllShopServiceByLab/1/u`)
+      .get(BASE_URL + `/dataservice/findAllShopServiceByLab/1`)
       .then((response) => {
         const serviceSummaryFromApi = response.data.map((result) => ({
           id: result.serviceId,
@@ -23,6 +26,7 @@ const AvailableService = () => {
           amount: result.amount,
           shopId: result.shopId,
           serviceId: result.serviceId,
+          testDescription:result.testDescription,
         }));
         setServiceSummary(serviceSummaryFromApi);
         console("setServiceSummary"+ setServiceSummary);
@@ -85,6 +89,7 @@ const AvailableService = () => {
                   }}
                 >
                   <h2>Description:</h2>
+                  {service.testDescription}
                 </div>
               </Col>
               <Col span={6}>

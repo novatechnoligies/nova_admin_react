@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Modal, Form, Input, Upload, Radio, Select} from 'antd';
+import { Button, Modal, Form, Input, Upload, Radio, Select, message} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { BASE_URL } from "../../constants/constants";
@@ -10,6 +10,7 @@ function NewConsumer() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cusumerform] = Form.useForm(); // Create a form instance
   const [consumerData, setConsumerData] = useState([]);
+  const [loginUser, setLoginUser] = useState(null);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -28,6 +29,7 @@ function NewConsumer() {
         .then((response) => {
           console.log('API response:', response);
           setIsModalOpen(false);
+          message.success("User Created..!");
         })
         .catch((error) => {
           console.error('API error:', error);
@@ -46,8 +48,11 @@ function NewConsumer() {
 
   const getConsumerData = async () => {
     try {
+      const storedUserData = sessionStorage.getItem('userData');
+      const userDataObject = JSON.parse(storedUserData);
+      setLoginUser(JSON.stringify(userDataObject.id));
       const response = await axios.get(
-        BASE_URL + "/dataservice/getAllUserDetails"
+        BASE_URL + "/dataservice/getAllUserDetailsByCreadtedBy?userId="+userDataObject.id
       );
       console.log(response);
       setConsumerData(response.data);
@@ -197,6 +202,16 @@ function NewConsumer() {
           </Form.Item>
 
           <Form.Item
+            name="createdBy"
+            label="createdBy"
+            hidden
+            initialValue={loginUser}
+            rules={[{ required: true, max: 50 }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
             name="password"
             label="password"
             rules={[{ required: true, max: 50 }]}
@@ -226,10 +241,10 @@ function NewConsumer() {
               rules={[{ required: true, message: 'Please select your role' }]}
             >
               <Select placeholder="Select a role">
-                <Select.Option value="1">Owner</Select.Option>
-                <Select.Option value="2">Consumer</Select.Option>
-                <Select.Option value="3">Employee</Select.Option>
                 <Select.Option value="1">Admin</Select.Option>
+                <Select.Option value="2">Owner</Select.Option>
+                <Select.Option value="3">Employee</Select.Option>
+                <Select.Option value="4">Consumer</Select.Option>
               </Select>
             </Form.Item>
           
