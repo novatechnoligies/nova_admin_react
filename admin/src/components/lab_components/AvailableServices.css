@@ -1,12 +1,22 @@
-/* General Styles */
-
 body {
     margin: 0;
     font-family: 'Arial', sans-serif;
   }
   
   /* Service Container */
+
+  .main-container {
+    height: 100vh;
+    overflow: hidden; 
+  }
   
+  .scrollable-section {
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+    padding-right: 20px;
+
+  }
+    
   .service-container {
     background-color: lightgray;
     border-radius: 5px;
@@ -24,8 +34,9 @@ body {
     display: flex;
     justify-content: flex-end; /* Adjusted to evenly distribute the elements */
     align-items: center;
-    width: inherit;
+    width: 95%;
     padding: 15px;
+    height: 40px;
   }
 
   .filter-forms {
@@ -97,10 +108,33 @@ body {
     width: fit-content;
     height: fit-content;
   }
+
   
   /* Custom Table Styles */
   
   .custom-table .ant-table-tbody > tr > td {
-    padding: 8px; /* Adjust the padding to control the row height */
+    padding: 8px; 
   }
   
+  .service-item {
+    background-color: #d9e9e5af;
+    margin-bottom: 20px;
+    padding: 10px; 
+    border-radius: 10px;
+    height: auto;
+  }
+  
+  .service-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(20, 187, 187);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    height: 50px;
+  }
+  
+  .service-ratings {
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
