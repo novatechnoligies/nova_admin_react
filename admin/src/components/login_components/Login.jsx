@@ -39,20 +39,9 @@ const Login = (props) => {
 
     try {
       axios
-        .get(
-          BASE_URL +
-            "/dataservice/sendOtpToEmailForForgetPassword/" +
-            formData.emailorphone
-        )
+        .get(BASE_URL + "/dataservice/sendOtpToEmailForForgetPassword/" + formData.emailorphone)
         .then((response) => {
-          // Handle the response data here
-          //if(response.data=="username/password not found"){
-          alert("invalid username or passowrd");
-          // }else{
-          //   props.onLogin();
-          //   alert("u r success");
-          // }
-          console.log(response.data);
+          message.success("OTP Send to Mail");
         })
         .catch((error) => {
           // Handle any errors that occur during the request
@@ -104,17 +93,10 @@ const Login = (props) => {
           BASE_URL + "/dataservice/verifyEmail/" + email + "/" + otp.verifyotp
         )
         .then((response) => {
-          // Handle the response data here
-          //if(response.data=="username/password not found"){
-          alert("invalid username or passowrd");
-          // }else{
-          //   props.onLogin();
-          //   alert("u r success");
-          // }
+          message.success("invalid OTP");
           console.log(response.data);
         })
         .catch((error) => {
-          // Handle any errors that occur during the request
           console.error(error);
         });
     } catch (error) {}
@@ -126,8 +108,6 @@ const Login = (props) => {
     setShowVerifyOTP(false);
     setShowNewPassword(false);
     setCreateAccount(true);
-
-    // Handle create account button click
   };
   const handleLoginPage = () => {
     setShowLogin(true);
@@ -138,27 +118,11 @@ const Login = (props) => {
 
     try {
       axios
-        .get(
-          BASE_URL +
-            "/dataservice/updtaePasswordByEmail/" +
-            email +
-            "/" +
-            otp +
-            "/" +
-            passwordfrom.password
-        )
+        .get(BASE_URL +"/dataservice/updtaePasswordByEmail/"+ email +"/" + otp + "/" + passwordfrom.password)
         .then((response) => {
-          // Handle the response data here
-          //if(response.data=="username/password not found"){
-          alert("invalid username or passowrd");
-          // }else{
-          //   props.onLogin();
-          //   alert("u r success");
-          // }
-          console.log(response.data);
+          message("invalid Otp");
         })
         .catch((error) => {
-          // Handle any errors that occur during the request
           console.error(error);
         });
     } catch (error) {}
@@ -167,7 +131,6 @@ const Login = (props) => {
   return (
     <div className="log-in-wrapper">
       <div className="container">
-        {/* <div className="left-side">Left Side</div> */}
         <div className=" left-side_L login-right-img "></div>
         <div className="right-side_R login-img">
           {showLogin && (
@@ -219,9 +182,6 @@ const Login = (props) => {
                     Log in
                   </Button>
                   <br />
-                  {/* <Button className="button" type="link" onClick={handleForgetPassword}> //onClick={handleCreateAccount}
-                        Forget Password..?
-                      </Button><br/> */}
                   <Button
                     type="primary custom-button"
                     className="button"
@@ -231,23 +191,6 @@ const Login = (props) => {
                   </Button>
                 </Form.Item>
                 <Form.Item></Form.Item>
-
-                {/* <div>
-                    <p className="for-position1">Alternatem Login</p>
-                    <div className="gf-btn">
-                      <Button type="primary" htmlType="submit">
-                        google
-                      </Button>
-
-                      <Button
-                        type="primary"
-                        htmlType="submit"
-                        style={{ marginLeft: "5%" }}
-                      >
-                        facebook
-                      </Button>
-                    </div>
-                  </div> */}
               </Form>
             </div>
           )}
