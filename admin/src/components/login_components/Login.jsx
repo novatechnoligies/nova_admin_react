@@ -1,6 +1,6 @@
 import React from "react";
 import "./Login.css"
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { useState } from 'react';
 import axios from 'axios';
 import { UserOutlined } from '@ant-design/icons';
@@ -64,32 +64,33 @@ const Login = (props) => {
     
   };
 
-  const handleLogin = async(values) => {
-    //props.onLogin();
-    
-   // Handle login form submission
-    console.log(values);
-    const formData = new FormData();
-    formData.append('username', values.username);
-    formData.append('password', values.password);
+  const handleLogin = async (values) => {
     try {
-      axios.post(BASE_URL+"/dataservice/getUserByUserNameAndPassword", formData)
-      .then(response => {
-    // Handle the response data here
-    if(response.data=="username/password not found"){
-      alert("invalid username or passowrd");
-    }else{
-      props.onLogin();  
-      alert("u r success");
+      const formData = new FormData();
+      formData.append('username', values.username);
+      formData.append('password', values.password);
+  
+      const response = await axios.post(BASE_URL + "/dataservice/getUserByUserNameAndPassword", formData);
+  
+      if (response.data === "username/password not found") {
+        alert("Invalid username or password");
+      } else {
+        // Store response.data in session storage
+        sessionStorage.setItem('userData', JSON.stringify(response.data));
+  
+        // Trigger the onLogin function or dispatch an action to update the state
+        props.onLogin();
+  
+        message.success("Login success.");
+      }
+  
+      console.log(response.data);
+    } catch (error) {
+      // Handle any errors that occur during the request
+      console.error(error);
     }
-    console.log(response.data);
-  })
-  .catch(error => {
-    // Handle any errors that occur during the request
-    console.error(error);
-  });
-    } catch (error) {}
   };
+  
 
   const handleNewpassword= () =>{
     alert();

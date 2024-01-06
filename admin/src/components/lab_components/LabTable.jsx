@@ -49,9 +49,13 @@ const LabDataTable = ({ data, onDeleteLab }) => {
   }, [search]);
  
   const getLabData = async () => {
+    const storedUserData = sessionStorage.getItem('userData');
+console.log("dfgnfdkjgjkfdgjkdfgkdj"+JSON.parse(storedUserData));
+const userDataObject = JSON.parse(storedUserData);
+
     try {
       const response = await axios.get(
-        BASE_URL + "/dataservice/findAllShopDetails"
+        BASE_URL + "/dataservice/getAllLabListByOwnerId?ownerId="+userDataObject.id
       );
       setLabData(response.data);
       //setFilterLabData(response.data);
