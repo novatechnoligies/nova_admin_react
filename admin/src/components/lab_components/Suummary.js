@@ -16,6 +16,8 @@ useEffect(() => {
 }, []);
 
 const getAvailabilityDetails = async () => {
+  const storedUserData = sessionStorage.getItem('userData');
+  const userDataObject = JSON.parse(storedUserData);
       try {
         const response = await axios.get(
           BASE_URL + "/dataservice/getShopAvaibilityById/1" // Replace with Shop availability by ShopId

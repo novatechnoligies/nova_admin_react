@@ -3,16 +3,27 @@ import { Button, Modal, Form, Input, Checkbox, Card, Row, Col, Select, message }
 import axios from "axios";
 import { BASE_URL } from "../../constants/constants";
 
-const LabServiceModal = ({ visible, onCancel, onCreate, services }) => {
+const LabServiceModal = ({ visible, onCancel, onCreate}) => {
   const [selectedServices, setSelectedServices] = useState([]);
   const [isChecked, setChecked] = useState(false);
   const [search, setSearch] = useState("");
   const [serviceMaster, setServiceMaster] = useState([]);
+  const [modalVisible, setModalVisible] = useState(visible); // Manage the visibility state
 
   useEffect(() => {
-    getServiceMaster();
-    
-  }, [search]);
+    if (!visible) {
+      setModalVisible(false);
+    }
+    if (visible) {
+      setModalVisible(true);
+      getServiceMaster();
+    }
+  }, [visible, search]);
+
+  const handleModalVisibility = () => {
+    setModalVisible(!modalVisible);
+    onCancel(); // Close the modal
+  };
   
   // Get all service Master from API
   const getServiceMaster = () => {
@@ -106,16 +117,16 @@ const handleSelectAll = () => {
 
   return (
     <Modal
-      title="Add Services which will be provided by Lab"
-      visible={visible}
-      footer={[
-        <Button key="cancel" onClick={onCancel}>
-          Cancel
-        </Button>,
-        <Button
-          key="submit"
-          type="primary"
-          onClick={handleAddServices}
+    title="Add Services which will be provided by Lab"
+    visible={modalVisible}
+    footer={[
+      <Button key="cancel" onClick={handleModalVisibility}>
+        Cancel
+      </Button>,
+      <Button
+        key="submit"
+        type="primary"
+        onClick={handleAddServices}
         
         >
           Add Services
