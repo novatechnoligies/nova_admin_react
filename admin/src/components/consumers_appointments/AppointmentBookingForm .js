@@ -126,21 +126,6 @@ const AppointmentBookingForm = (selectedAccount) => {
     console.log(selectedValues);
   };
 
-  // const handleServices = (value) => {
-  //   axios
-  //     .get(BASE_URL +`/dataservice/findAllShopServiceByLab/${selectedLab}/${value}`)
-  //     .then((response) => {
-  //       const searchService = response.data.map((result) => ({
-  //         value: result.shopId,
-  //         label: `${result.serviceName} - ${result.amount}`,
-  //       }));
-  //       setServiceDropdownOptions(searchService);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // };
-
   const allOption = { key: "all", label: "Select All" };
   
   const handleServices = (value) => {
