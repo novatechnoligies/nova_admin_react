@@ -120,20 +120,46 @@ const AppointmentBookingForm = (selectedAccount) => {
     setSelectedLab(value);
   };
 
+  // const handleServices = (value) => {
+  //   axios
+  //     .get(BASE_URL +`/dataservice/findAllShopServiceByLab/${selectedLab}/${value}`)
+  //     .then((response) => {
+  //       const searchService = response.data.map((result) => ({
+  //         value: result.shopId,
+  //         label: `${result.serviceName} - ${result.amount}`,
+  //       }));
+  //       setServiceDropdownOptions(searchService);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // };
+
   const handleServices = (value) => {
     axios
-      .get(BASE_URL +`/dataservice/findAllShopServiceByLab/${selectedLab}/${value}`)
+      .get(BASE_URL + `/dataservice/findAllShopServiceByLab/${selectedLab}/${value}`)
       .then((response) => {
         const searchService = response.data.map((result) => ({
-          value: result.shopId,
+          value: result.id,
           label: `${result.serviceName} - ${result.amount}`,
         }));
+  
+        console.log("serviceDropdownOptions:", searchService);
+        console.log("Selected Service:", value);
+  
+        // Set both options and selected value
         setServiceDropdownOptions(searchService);
+        form.setFieldsValue({ serviceId: value });
       })
       .catch((error) => {
         console.error(error);
+        // Handle the error or set default options if needed
+        setServiceDropdownOptions([]); // Set default options to an empty array
       });
   };
+  
+  
+  
 
   return (
     <Form form={form} onFinish={bookAppointmentForm} layout="vertical">
@@ -221,11 +247,14 @@ const AppointmentBookingForm = (selectedAccount) => {
         <Select
           showSearch
           onSearch={handleServices}
-          placeholder="Select an service"
+          placeholder="Select a service"
           optionFilterProp="label"
           filterOption={filterOption}
           options={serviceDropdownOptions}
+          value={form.getFieldValue("serviceId")}
+          onChange={(value) => form.setFieldsValue({ serviceId: value })}
         />
+        
       </Form.Item>
 
       <Form.Item>

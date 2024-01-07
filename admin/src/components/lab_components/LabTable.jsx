@@ -29,9 +29,6 @@ const LabDataTable = ({ data, onDeleteLab }) => {
   
 
   const handleRowClick = (row) => {
-    // const storedLabData = sessionStorage.setItem('labData',row);
-    // const userDataObject = JSON.parse(storedLabData);
-    
     setSelectedLab(row);
     setShowSummary(true);
     setShowLabTable(false);
@@ -131,7 +128,6 @@ const LabDataTable = ({ data, onDeleteLab }) => {
   const handleCreateLabClick = () => {
     setIsLabAvailabilityModalVisible(false);
     setIsAddServiceModalVisible(false);
-
     setIsCreateLabModalVisible(true);
   };
 
@@ -148,7 +144,6 @@ const LabDataTable = ({ data, onDeleteLab }) => {
   const handleLabAvailabilityModalClick = () => {
     setIsCreateLabModalVisible(false);
     setIsAddServiceModalVisible(false);
-
     setIsLabAvailabilityModalVisible(true);
   };
 
@@ -165,7 +160,6 @@ const LabDataTable = ({ data, onDeleteLab }) => {
   const handleLabService = () => {
     setIsCreateLabModalVisible(false);
     setIsLabAvailabilityModalVisible(false);
-
     setIsAddServiceModalVisible(true);
   };
 

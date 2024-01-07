@@ -1,9 +1,9 @@
-import React, {useEffect, useState } from 'react';
-import { Button, Modal, Form, Input, Checkbox, Card, Row, Col, Select, message } from 'antd';
+import React, { useEffect, useState } from "react";
+import {Button,  Modal,  Form,  Input,  Checkbox,  Card,  Row,  Col,  Select,  message,} from "antd";
 import axios from "axios";
 import { BASE_URL } from "../../constants/constants";
 
-const LabServiceModal = ({ visible, onCancel, onCreate, labData}) => {
+const LabServiceModal = ({ visible, onCancel, onCreate, labData }) => {
   const [selectedServices, setSelectedServices] = useState([]);
   const [isChecked, setChecked] = useState(false);
   const [search, setSearch] = useState("");
@@ -11,7 +11,7 @@ const LabServiceModal = ({ visible, onCancel, onCreate, labData}) => {
   const [modalVisible, setModalVisible] = useState(visible); // Manage the visibility state
 
   useEffect(() => {
-    console.log("here now data"+JSON.stringify(labData));
+    console.log("here now data" + JSON.stringify(labData));
     if (!visible) {
       setModalVisible(false);
     }
@@ -21,17 +21,24 @@ const LabServiceModal = ({ visible, onCancel, onCreate, labData}) => {
     }
   }, [visible, search]);
 
+  // Load lab data for lab select drop down , the data is from prop
+  const labOptions = labData
+    ? labData.map((item) => ({
+        key: item.id,
+        label: item.shopName,
+      }))
+    : [];
+
   const handleModalVisibility = () => {
     setModalVisible(!modalVisible);
     onCancel(); // Close the modal
   };
-  
+
   // Get all service Master from API
   const getServiceMaster = () => {
     axios
       .get(BASE_URL + `/dataservice/findAllMaster`)
       .then((response) => {
-        
         const serviceMasterFromApi = response.data.map((result) => ({
           id: result.id,
           name: result.name,
@@ -47,7 +54,7 @@ const LabServiceModal = ({ visible, onCancel, onCreate, labData}) => {
       });
   };
 
-  // Handle checkbox with Amout
+  // Handle checkbox with Amout 
   const handleCheckboxChange = (serviceId) => {
     setServiceMaster((prevServices) =>
       prevServices.map((service) =>
@@ -70,84 +77,53 @@ const LabServiceModal = ({ visible, onCancel, onCreate, labData}) => {
   const handleAddServices = () => {
     const selected = serviceMaster.filter((service) => service.isChecked);
     setSelectedServices(selected);
-    const shopIds = ["1", "2"]; // Replace this with your actual shopId values
+    const shopIds = selectedValues.filter((value) => value !== 'all');
 
     const jsonData = {
       shopIds: shopIds,
       masterShopRelationDTOs: selected,
     };
 
-    console.log("json data here : "+JSON.stringify(jsonData));  
-    axios.post(BASE_URL + '/dataservice/saveServiceListForMultiShop', jsonData)
+    console.log("json data here : " + JSON.stringify(jsonData));
+    axios
+      .post(BASE_URL + "/dataservice/saveServiceListForMultiShop", jsonData)
       .then((response) => {
         message.success("Services Added Successfully");
-        // Handle success, if needed
-        console.log('Service list saved successfully:', response.data);
+        console.log("Service list saved successfully:", response.data);
       })
       .catch((error) => {
-        // Handle error, if needed
-        console.error('Error saving service list:', error);
-        message.error("Failed to add services to the lab")
+        console.error("Error saving service list:", error);
+        message.error("Failed to add services to the lab");
       });
     //console.log(selected);
   };
 
-const { Option } = Select;
+  const { Option } = Select;
 
-const [selectedValues, setSelectedValues] = useState([]);
+  const [selectedValues, setSelectedValues] = useState([]);
 
-const handleChange = (selected) => {
-  setSelectedValues(selected);
-  console.log(selectedValues);
-};
+  const handleChange = (selected) => {
+    setSelectedValues(selected);
+    console.log(selectedValues);
+  };
 
-// const getLabData = async () => {
-//     const storedUserData = sessionStorage.getItem('userData');
-//     const userDataObject = JSON.parse(storedUserData);
+  const allOption = { key: "all", label: "Select All" };
 
-//     try {
-//       const response = await axios.get(
-//         BASE_URL + "/dataservice/getAllLabListByOwnerId?ownerId="+userDataObject.id
-//       );
-//       setLabData(response.data);
-//       //setFilterLabData(response.data);
-//     } catch (error) {}
-//   };
-
-const labOptions = labData.map((item) => ({
-  key: item.id,
-  label: item.shopName,
-}));
-
-const yourData = [
-  { key: 'value1', label: 'Value 1' },
-  { key: 'value2', label: 'Value 2' },
-  { key: 'value3', label: 'Value 3' },
-  // Add more data as needed
-];
-
-const allOption = { key: 'all', label: 'Select All' };
-
-const handleSelectAll = () => {
-  const allKeys = labOptions.map((item) => item.key);
-  setSelectedValues(allKeys);
-  console.log(selectedValues);
-};
+  const handleSelectAll = () => {
+    const allKeys = labOptions.map((item) => item.key);
+    setSelectedValues(allKeys);
+    console.log(selectedValues);
+  };
 
   return (
     <Modal
-    title="Add Services which will be provided by Lab"
-    visible={modalVisible}
-    footer={[
-      <Button key="cancel" onClick={handleModalVisibility}>
-        Cancel
-      </Button>,
-      <Button
-        key="submit"
-        type="primary"
-        onClick={handleAddServices}
-        
-        >
+      title="Add Services which will be provided by Lab"
+      visible={modalVisible}
+      footer={[
+        <Button key="cancel" onClick={handleModalVisibility}>
+          Cancel
+        </Button>,
+        <Button key="submit" type="primary" onClick={handleAddServices}>
           Add Services
         </Button>,
       ]}
@@ -155,20 +131,20 @@ const handleSelectAll = () => {
     >
       <Select
         mode="multiple"
-        style={{ width: '100%' }}
+        style={{ width: "100%" }}
         placeholder="Select values"
         onChange={handleChange}
         value={selectedValues}
       >
         <Select.Option key={allOption.key}>{allOption.label}</Select.Option>
-        {labData.map((item) => (
-          <Select.Option key={item.id}>{item.shopName}</Select.Option>
+        {labOptions.map((item) => (
+          <Select.Option key={item.key}>{item.label}</Select.Option>
         ))}
       </Select>
       <br />
       <br />
 
-     <Row gutter={[16, 16]}>
+      <Row gutter={[16, 16]}>
         {serviceMaster.map((service) => (
           <Col key={service.id} span={8}>
             <Card
