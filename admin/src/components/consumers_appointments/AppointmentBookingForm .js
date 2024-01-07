@@ -10,6 +10,7 @@ const AppointmentBookingForm = (selectedAccount) => {
   const [form] = Form.useForm();
   const [labDropdownOptions, setLabDropdownOptions] = useState([]);
   const [serviceDropdownOptions, setServiceDropdownOptions] = useState([]);
+  const [selectedValues, setSelectedValues] = useState([]);
   useEffect(() => {
     console.log("Selected Account:", selectedAccount);
 
@@ -120,6 +121,11 @@ const AppointmentBookingForm = (selectedAccount) => {
     setSelectedLab(value);
   };
 
+  const handleChangeServices = (selected) => {
+    setSelectedValues(selected);
+    console.log(selectedValues);
+  };
+
   // const handleServices = (value) => {
   //   axios
   //     .get(BASE_URL +`/dataservice/findAllShopServiceByLab/${selectedLab}/${value}`)
@@ -135,12 +141,14 @@ const AppointmentBookingForm = (selectedAccount) => {
   //     });
   // };
 
+  const allOption = { key: "all", label: "Select All" };
+  
   const handleServices = (value) => {
     axios
       .get(BASE_URL + `/dataservice/findAllShopServiceByLab/${selectedLab}/${value}`)
       .then((response) => {
-        const searchService = response.data.map((result) => ({
-          value: result.id,
+        const searchService = response.data.map((result, index) => ({
+          key: result.id || index, // Use index if id is null
           label: `${result.serviceName} - ${result.amount}`,
         }));
   
@@ -157,6 +165,8 @@ const AppointmentBookingForm = (selectedAccount) => {
         setServiceDropdownOptions([]); // Set default options to an empty array
       });
   };
+  
+  
   
   
   
@@ -248,12 +258,31 @@ const AppointmentBookingForm = (selectedAccount) => {
           showSearch
           onSearch={handleServices}
           placeholder="Select a service"
-          optionFilterProp="label"
-          filterOption={filterOption}
-          options={serviceDropdownOptions}
-          value={form.getFieldValue("serviceId")}
-          onChange={(value) => form.setFieldsValue({ serviceId: value })}
-        />
+          //optionFilterProp="label"
+         // filterOption={filterOption}
+          //options={serviceDropdownOptions}
+          value={serviceDropdownOptions}
+          onChange={handleChangeServices}
+          mode="multiple"
+        >
+          <Select.Option key={allOption.key}>{allOption.label}</Select.Option>
+        {serviceDropdownOptions.map((item) => (
+          <Select.Option key={item.key}>{item.label}</Select.Option>
+        ))}
+      </Select>
+
+{/* <Select
+        mode="multiple"
+        style={{ width: "100%" }}
+        placeholder="Select values"
+        onChange={handleChange}
+        value={selectedValues}
+      >
+        <Select.Option key={allOption.key}>{allOption.label}</Select.Option>
+        {labOptions.map((item) => (
+          <Select.Option key={item.key}>{item.label}</Select.Option>
+        ))}
+      </Select> */}
         
       </Form.Item>
 
