@@ -167,10 +167,11 @@ body {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 40px; /* Adjust the size of the circle */
-  height: 40px; /* Adjust the size of the circle */
   border-radius: 50%;
   background-color: lightblue;
+  width: 30px; /* Adjust the size of the circle */
+  height: 25px; /* Adjust the size of the circle */
+  margin-bottom: 30px;
 }
 
 

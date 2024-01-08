@@ -69,13 +69,13 @@ function Header({ onLogout, profilePhoto  }) {
     <div  className="top-bar" >
       {/* <div>Header</div> */}
       <div className='top_bar_icons' >
-        <Badge count='5' offset={[10, 0]}>
-        <NotificationOutlined />
+        <Badge  offset={[10, 0]} style={{marginTop:"5px"}}>
+        <NotificationOutlined style={{image:"80px", marginTop:"5px"}}/>
         </Badge>
       </div>
       <div  className='top_bar_icons' >
-        <Badge count='5' offset={[10, 0]}>
-        <MailOutlined style={{ fontSize: '24px' }} />
+        <Badge  offset={[10, 0]} style={{marginTop:"5px"}}>
+        <MailOutlined style={{image:"80px", marginTop:"5px"}}/>
         </Badge>
       </div>
       <div className='top_bar_icons'>
