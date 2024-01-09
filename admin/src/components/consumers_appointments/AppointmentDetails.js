@@ -47,10 +47,7 @@ const AppointmentDetails = () => {
         </Col>
       </Row>
     </div>
-
-      {/* Add your appointment details rendering logic here */}
-      <p>Name: {name}</p>
-      {/* Add more details as needed */}
+     
     </div>
   );
 };

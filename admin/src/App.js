@@ -19,6 +19,7 @@ import { More } from './components/consumers_appointments/More';
 import AppointmentBookingPage from './components/consumers_appointments/AppointmentBookingPage';
 import defaultProfilePhoto from './default-profile-photo.png';
 import AppointmentDetails from './components/consumers_appointments/AppointmentDetails';
+import TestForm from './components/result/TestForm';
 
 
 
@@ -147,6 +148,7 @@ function Content() {
         <Route path="/newconsumeraccount" element={<div><NewConsumer/></div>} />
         <Route path="/appointment-booking" element={<AppointmentBookingPage />} />
         <Route path="/appointment-details/:name" element={<AppointmentDetails />} />
+        <Route path="/report" element={<TestForm />} />
 
       </Routes>
     </div>
