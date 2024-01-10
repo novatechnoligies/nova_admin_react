@@ -164,7 +164,7 @@ const CscTable = () => {
     <div className="novaTable">
       <DataTable
         className="container headerStyles"
-        title="CSC DETAILS"
+       // title="CSC DETAILS"
         columns={columns}
         data={filterCscData}
         pagination
@@ -319,7 +319,7 @@ rules={[
 
 <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
 <Button type="primary" htmlType="submit">
-  Update Csc Details
+ // Update Csc Details
 </Button>
 
 </Form.Item>

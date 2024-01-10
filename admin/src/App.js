@@ -162,9 +162,9 @@ function SlideMenu({ location, navigate, onLogout }) {
           { label: 'Dashboard', key: '/dash', icon: <DashboardOutlined /> },
           { label:'Appointments', key:'Acard',icon: <IdcardOutlined />},
           { label: 'Lab', key: '/lab', icon: <ShopOutlined /> },
-          { label: 'Spa', key: '/spa', icon: <ShopOutlined /> },
-          { label: 'Shalon', key: '/shalon', icon: <ShopOutlined /> },
-          { label: 'CSC', key: '/csc', icon: <ShopOutlined /> },
+         // { label: 'Spa', key: '/spa', icon: <ShopOutlined /> },
+         // { label: 'Shalon', key: '/shalon', icon: <ShopOutlined /> },
+         // { label: 'CSC', key: '/csc', icon: <ShopOutlined /> },
           { label: 'Clinic', key: '/clinic', icon: <ShopOutlined /> },
           { label: 'Consumer', key: '/consumer', icon: <ShoppingOutlined />, children: [
           { label: 'Active', key: '/active', icon: <ShopOutlined /> },

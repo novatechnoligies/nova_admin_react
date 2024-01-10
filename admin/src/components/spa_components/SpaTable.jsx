@@ -165,7 +165,7 @@ const SpaTable = () => {
     <div className="novaTable">
       <DataTable
         className="container headerStyles"
-        title="SPA DETAILS"
+        // title="SPA DETAILS"
         columns={columns}
         data={filterSpaData}
         pagination
