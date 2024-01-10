@@ -47,7 +47,7 @@ const PatientAppointmentsSummary = () => {
           Medical Record
         </a>
       </div>
-      <div className="apt-info-container">
+      <div className="apt-info-container" style={{overflow:"scroll"}}>
         <div className="apt-info">
           {appointments.length > 0 ? (
             appointments.map((appointment, index) => (
