@@ -27,6 +27,7 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  
   const handleLogin = () => {
     // Perform login logic here
     setLoggedIn(true);
