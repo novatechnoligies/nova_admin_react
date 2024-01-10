@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Menu } from 'antd';
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { DashboardOutlined, HomeOutlined, ProfileOutlined, SettingOutlined, ShopOutlined, ShoppingOutlined,IdcardOutlined } from '@ant-design/icons/lib/icons';
@@ -12,7 +12,7 @@ import LoginPage from './components/login_components/Login';
 import Acards from './components/consumers_appointments/Acards';
 import { NotificationOutlined ,UserOutlined } from '@ant-design/icons';
 import { MailOutlined } from '@ant-design/icons';
-import { Badge, Avatar, Upload, Button, Popover} from 'antd';
+import { Badge, Avatar, Upload, Button, Popover, Select} from 'antd';
 import "./App.css";
 import NewConsumer from './components/consumer_components/consumermodule';
 import { More } from './components/consumers_appointments/More';
@@ -20,8 +20,8 @@ import AppointmentBookingPage from './components/consumers_appointments/Appointm
 import defaultProfilePhoto from './default-profile-photo.png';
 import AppointmentDetails from './components/consumers_appointments/AppointmentDetails';
 import TestForm from './components/result/TestForm';
-
-
+import axios from "axios";
+import { BASE_URL } from "./constants/constants";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -66,8 +66,60 @@ function App() {
 }
 
 function Header({ onLogout, profilePhoto  }) {
+
+  const [selectedValues, setSelectedValues] = useState([]);
+  const [labData, setLabData] = useState([]);
+
+  const allOption = { key: "all", label: "Select All" };
+
+
+  useEffect(()=> {
+    getLabData();
+  }, [])  
+
+  const getLabData = async () => {
+    const storedUserData = sessionStorage.getItem('userData');
+    const userDataObject = JSON.parse(storedUserData);
+
+    try {
+      const response = await axios.get(
+        BASE_URL + "/dataservice/getAllLabListByOwnerId?ownerId=1");
+      setLabData(response.data);
+
+      console.log("LabData from API", response.data)
+      //setFilterLabData(response.data);
+    } catch (error) {
+      console.log(error)
+    }
+  };
+
+  const handleChange = (selected) => {
+    setSelectedValues(selected);
+    console.log(selectedValues);
+  };
+
+  const labOptions = labData
+    ? labData.map((item) => ({
+        key: item.id,
+        label: item.shopName,
+      }))
+    : [];
+
   return (
     <div  className="top-bar" >
+      <Select
+        mode="multiple"
+        style={{ width: "20%", marginRight:"20px"}}
+        placeholder="Select Your Lab"
+        onChange={handleChange}
+        value={selectedValues}
+        dropdownStyle={{ width: "200px"}}
+      >
+        <Select.Option key={allOption.key}>{allOption.label}</Select.Option>
+        {labOptions.map((item) => (
+          <Select.Option key={item.key}>{item.label}</Select.Option>
+        ))}
+      </Select>
       {/* <div>Header</div> */}
       <div className='top_bar_icons' >
         <Badge count='5' offset={[10, 0]}>
