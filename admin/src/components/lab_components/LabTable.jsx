@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
-import {Button, Modal, Form, Input, Select, DatePicker, Checkbox, TimePicker, Card} from "antd";
 import {
-  EditOutlined,
-  DeleteOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
+  Button,
+  Modal,
+  Form,
+  Input,
+  Select,
+  DatePicker,
+  Checkbox,
+  TimePicker,
+  Card,
+} from "antd";
+import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { BASE_URL } from "../../constants/constants";
 import axios from "axios";
 import LabFormModal from "./LabFormModal";
@@ -13,20 +19,19 @@ import LabAvailabilityModal from "./LabAvailabilityModal";
 import LabServiceModal from "./LabServiceModal";
 import Summary from "./Suummary";
 
-
 const LabDataTable = ({ data, onDeleteLab }) => {
-
   const [filterLabData, setFilterLabData] = useState([]);
   const [search, setSearch] = useState("");
   const [labData, setLabData] = useState([]);
   const [isCreateLabModalVisible, setIsCreateLabModalVisible] = useState(false);
-  const [isLabAvailabilityModalVisible, setIsLabAvailabilityModalVisible] = useState(false);
-  const [isAddServiceModalVisible, setIsAddServiceModalVisible] = useState(false);
+  const [isLabAvailabilityModalVisible, setIsLabAvailabilityModalVisible] =
+    useState(false);
+  const [isAddServiceModalVisible, setIsAddServiceModalVisible] =
+    useState(false);
   const [selectedLab, setSelectedLab] = useState(null);
   const [showSummary, setShowSummary] = useState(false);
 
   const [showLabTable, setShowLabTable] = useState(true);
-  
 
   const handleRowClick = (row) => {
     setSelectedLab(row);
@@ -35,8 +40,8 @@ const LabDataTable = ({ data, onDeleteLab }) => {
   };
 
   const onEditLab = (row) => {
-    alert(row.id)
-  }
+    alert(row.id);
+  };
 
   // ON LOAD
   useEffect(() => {
@@ -47,14 +52,16 @@ const LabDataTable = ({ data, onDeleteLab }) => {
     console.log("Filtered result:", result);
     setFilterLabData(result);
   }, [search]);
- 
+
   const getLabData = async () => {
-    const storedUserData = sessionStorage.getItem('userData');
+    const storedUserData = sessionStorage.getItem("userData");
     const userDataObject = JSON.parse(storedUserData);
 
     try {
       const response = await axios.get(
-        BASE_URL + "/dataservice/getAllLabListByOwnerId?ownerId="+userDataObject.id
+        BASE_URL +
+          "/dataservice/getAllLabListByOwnerId?ownerId=" +
+          userDataObject.id
       );
       setLabData(response.data);
       //setFilterLabData(response.data);
@@ -171,52 +178,71 @@ const LabDataTable = ({ data, onDeleteLab }) => {
     console.log("service :", values);
     setIsAddServiceModalVisible(false);
   };
-  
 
   return (
     <div>
       {showLabTable ? (
-    <DataTable
-      className="container custom-table lab-data-table-container"
-      title=""
-      columns={columns}
-      data={filterLabData}
-      pagination
-      paginationPosition="bottom"
-      fixedHeader
-      selectableRows
-      selectableRowsHighlight
-      highlightOnHover
-      customStyles={{
-        pagination: {
-          marginBottom: '16px',  // Adjust the margin bottom as needed
-        },
-      }}
-      actions={
-        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
-           <Button type="primary" style={{ marginRight: "10px" }}  onClick={handleCreateLabClick}><PlusOutlined /> Create New Lab</Button>
-           <Button type="primary"  style={{ marginRight: "10px" }} onClick={handleLabAvailabilityModalClick}>Update Lab Availibility</Button>
-           <Button type="primary"  onClick={handleLabService}>Update Service</Button>
-          
-        </div>
-      }
-      subHeaderComponent={
-        <div>
-          <input
-            type="text"
-            placeholder="Search Here"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          ></input>
-        </div>
-      }
-      subHeader
-      onRowClicked={handleRowClick}
-    />):(
-    <Summary labData={selectedLab} />
-    )}
+        <DataTable
+          className="container custom-table lab-data-table-container"
+          title=""
+          columns={columns}
+          data={filterLabData}
+          pagination
+          paginationPosition="bottom"
+          fixedHeader
+          selectableRows
+          selectableRowsHighlight
+          highlightOnHover
+          customStyles={{
+            pagination: {
+              marginBottom: "16px", // Adjust the margin bottom as needed
+            },
+          }}
+          actions={
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginBottom: "10px",
+              }}
+            >
+              <Button
+                type="primary"
+                style={{ marginRight: "10px" }}
+                onClick={handleCreateLabClick}
+              >
+                <PlusOutlined /> Create New Lab
+              </Button>
+              <Button
+                type="primary"
+                style={{ marginRight: "10px" }}
+                onClick={handleLabAvailabilityModalClick}
+              >
+                Update Lab Availibility
+              </Button>
+              <Button type="primary" onClick={handleLabService}>
+                Update Service
+              </Button>
+            </div>
+          }
+          subHeaderComponent={
+            <div>
+              <input
+                type="text"
+                placeholder="Search Here"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              ></input>
+            </div>
+          }
+          subHeader
+          onRowClicked={handleRowClick}
+        />
+      ) : (
+        <Summary labData={selectedLab} />
+      )}
 
-    <LabFormModal
+      <LabFormModal
         visible={isCreateLabModalVisible}
         onCancel={() => setIsCreateLabModalVisible(false)}
         onCreate={handleCreateLabModalSubmit}
@@ -232,9 +258,8 @@ const LabDataTable = ({ data, onDeleteLab }) => {
         visible={isAddServiceModalVisible}
         onCancel={() => setIsAddServiceModalVisible(false)}
         onCreate={handleLabServiceSubmit}
-        labData ={labData}
+        labData={labData}
       />
-
     </div>
   );
 };
