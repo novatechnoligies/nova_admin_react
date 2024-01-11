@@ -162,9 +162,7 @@ function SlideMenu({ location, navigate, onLogout }) {
           { label: 'Dashboard', key: '/dash', icon: <DashboardOutlined /> },
           { label:'Appointments', key:'Acard',icon: <IdcardOutlined />},
           { label: 'Lab', key: '/lab', icon: <ShopOutlined /> },
-          { label: 'Spa', key: '/spa', icon: <ShopOutlined /> },
-          { label: 'Shalon', key: '/shalon', icon: <ShopOutlined /> },
-          { label: 'CSC', key: '/csc', icon: <ShopOutlined /> },
+          { label: 'Reports', key: '/Reports', icon: <ShopOutlined /> },
           { label: 'Clinic', key: '/clinic', icon: <ShopOutlined /> },
           { label: 'Consumer', key: '/consumer', icon: <ShoppingOutlined />, children: [
           { label: 'Active', key: '/active', icon: <ShopOutlined /> },
@@ -183,7 +181,7 @@ function Content() {
   return (
     <div style={{marginTop:'1px'}}>
       <Routes>
-        <Route path="/" element={<div>Dashboard</div>} />
+        <Route path="/Home" element={<div>Home</div>} />
         <Route path="/dash" element={<div>Dashboard</div>} />
         <Route path="/lab" element={<div className="d-flex flex-column align-items-center"> <LabTable /></div>} />
         <Route path="/Acard" element={<div className="d-flex flex-column align-items-center"> <Acards/></div>} />
