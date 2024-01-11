@@ -3,36 +3,36 @@ import { Row, Col, Table, Button, Avatar } from "antd";
 import axios from "axios";
 import { BASE_URL } from "../../constants/constants";
 import "./PatientAppointmentsSummary.css";
+import { useParams } from "react-router-dom";
 
 const PatientAppointmentsSummary = () => {
-  // Replace this with actual data from API
-  const [appointments, setAppointments] = useState([
-    {
-      dateAndTime: "2024-01-04 14:30",
-      serviceName: "Medical Checkup",
-      technicianName: "Dr. John Doe",
-      status: "Pending",
-    },
-    {
-      dateAndTime: "2024-01-05 10:00",
-      serviceName: "Dental Cleaning",
-      technicianName: "Dr. Jane Smith",
-      status: "Confirmed",
-    },
-    {
-      dateAndTime: "2024-01-06 15:45",
-      serviceName: "Eye Examination",
-      technicianName: "Dr. Mike Johnson",
-      status: "Completed",
-    },
-    {
-      dateAndTime: "2024-01-07 12:15",
-      serviceName: "Blood Test",
-      technicianName: "Dr. Sarah Brown",
-      status: "Pending",
-    },
-    // Add more appointments as needed
-  ]);
+  const [appointmentsData, setAppointmentsData] = useState([]);
+  const [technicianName, setTechnicianName] = useState("");
+
+  const { appointmentId } = useParams();
+
+  useEffect(() => {
+    const storedUserData = sessionStorage.getItem("userData");
+    const userDataObject = JSON.parse(storedUserData);
+
+    setTechnicianName(userDataObject.firstName);
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8082/dataservice/getAllServicesByAppointmentIdAndPatientId?appointmentId=" +
+            appointmentId
+        );
+        console.log(response.data);
+        setAppointmentsData(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error.message);
+        // Handle error, such as setting an error state
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="p-appointments-container">
@@ -47,16 +47,16 @@ const PatientAppointmentsSummary = () => {
           Medical Record
         </a>
       </div>
-      <div className="apt-info-container" style={{overflow:"scroll"}}>
+      <div className="apt-info-container" style={{ overflow: "scroll" }}>
         <div className="apt-info">
-          {appointments.length > 0 ? (
-            appointments.map((appointment, index) => (
+          {appointmentsData.length > 0 ? (
+            appointmentsData.map((appointment, index) => (
               <div className="inline-info" key={index}>
                 <div className="info-item">
                   <p>
                     <strong>Date/Time:</strong>
                     <br />
-                    {appointment.dateAndTime}
+                    {`${appointment.appointmentDate} ${appointment.appointmentTime}`}
                   </p>
                   <p>
                     <strong>Service Name:</strong>
@@ -66,11 +66,11 @@ const PatientAppointmentsSummary = () => {
                   <p>
                     <strong>Technician Name:</strong>
                     <br />
-                    {appointment.technicianName}
+                    {technicianName}
                   </p>
                   <p>
                     <strong>Status:</strong> <br />
-                    {appointment.status}
+                    {appointment.appointmentStatus}
                   </p>
                 </div>
               </div>

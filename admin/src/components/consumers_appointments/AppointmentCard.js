@@ -1,18 +1,47 @@
 // AppointmentCard.js
 import React from "react";
-import { Card, Avatar } from "antd";
+import { Card, Avatar, message } from "antd";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const { Meta } = Card;
 
 const AppointmentCard = ({ data }) => {
-  const { photo, name, status, date, time } = data;
+  const [appointments, setAppointments] = useState([]);
+  // const { photo, name, status, date, time } = data;
   const navigate = useNavigate();
 
-  const handleCardClick = () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      const labData = sessionStorage.getItem("labData");
+      console.log("LabData from Session", labData);
+      if (labData == null || labData == undefined) {
+        alert(labData);
+        message.warning("please select lab first");
+      } else {
+        try {
+          const response = await axios.get(
+            "http://localhost:8082/dataservice/getTodaysAppointemtsByLabId?labId=" +
+              labData +
+              "&date=2023-12-19"
+          );
+          console.log(response.data);
+          setAppointments(response.data);
+        } catch (error) {
+          console.error("Error fetching data:", error.message);
+          // Handle error, such as setting an error state
+        }
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleCardClick = (appointmentId) => {
     // Navigate to the appointment details page
-    navigate(`/appointment-details/${name}`); // You can customize the URL as needed
+    navigate(`/appointment-details/${appointmentId}`); // You can customize the URL as needed
   };
 
   const statusColors = {
@@ -37,33 +66,59 @@ const AppointmentCard = ({ data }) => {
   };
 
   return (
-    <Card style={cardStyle} bordered={true} onClick={handleCardClick}>
-      <div>
-        <div style={headerStyle}>
-          <p>Your Appointment</p>
-        </div>
-        <div style={{ display: "flex", marginBottom: -25 }}>
+    <div>
+      {appointments.map((appointment, index) => (
+        <Card
+          key={index}
+          data={appointment}
+          style={cardStyle}
+          bordered={true}
+          onClick={() => handleCardClick(appointment.appointmentId)}
+        >
           <div>
-            <h3 style={{ marginBottom: 0 }}>{name}</h3>
-            <div>
-              <p style={headerStyle}>Status: {status}</p>
+            <div style={headerStyle}>
+              <p>Your Appointment</p>
+            </div>
+            <div style={headerStyle}>
+              <input
+                type="text"
+                name="appontmentId"
+                value={appointment.appointmentId}
+                hidden
+              />
+            </div>
+            <div style={{ display: "flex", marginBottom: -25 }}>
               <div>
-                <p style={{ marginBottom: 0 }}>
-                  <span style={{ borderBottom: "1px solid #000" }}>
-                    {moment(date).format("MMMM Do YYYY")}{" "}/{moment(time, "HH:mm:ss").format("h:mm A")}
-                  </span>
-                </p>
-                <p style={{ marginTop: 0 }}>Appointment Date/Time</p>
+                <h3 style={{ marginBottom: 0 }}>{appointment.patientName}</h3>
+                <div>
+                  <p style={headerStyle}>
+                    Status: {appointment.appointmentStatus}
+                  </p>
+                  <div>
+                    <p style={{ marginBottom: 0 }}>
+                      <span style={{ borderBottom: "1px solid #000" }}>
+                        {moment(appointment.appointmentDate).format(
+                          "MMMM Do YYYY"
+                        )}{" "}
+                        /
+                        {moment(appointment.appointmentTime, "HH:mm:ss").format(
+                          "h:mm A"
+                        )}
+                      </span>
+                    </p>
+                    <p style={{ marginTop: 0 }}>Appointment Date/Time</p>
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ marginLeft: 30, marginTop: 25 }}>
+                <Avatar size={100} />
               </div>
             </div>
           </div>
-
-          <div style={{ marginLeft: 30, marginTop: 25 }}>
-            <Avatar src={photo} size={100} />
-          </div>
-        </div>
-      </div>
-    </Card>
+        </Card>
+      ))}
+    </div>
   );
 };
 

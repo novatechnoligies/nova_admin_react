@@ -3,64 +3,56 @@ import { Row, Col, Table, Button, Avatar } from "antd";
 import axios from "axios";
 import { BASE_URL } from "../../constants/constants";
 import "./PatientSummary.css";
+import { useParams } from "react-router-dom";
 
 const PatientSummary = () => {
-  const [patientData, setPatientData] = useState({
-    name: "",
-    email: "",
-    imageUrl: "",
-    pastAppointments: 0,
-    upcomingAppointments: 0,
-    gender: "",
-    birthday: "",
-    phoneNumber: "",
-    address: "",
-    city: "",
-    zipCode: "",
-    memberStatus: "",
-    registeredDate: "",
-  });
+  const [patientData, setPatientData] = useState({});
 
+  const { appointmentId } = useParams();
   useEffect(() => {
+    fecthPatientDataByAppointmentId();
+
     // Fetch patient data from the API
-    axios.get(`${BASE_URL}/patient`).then((response) => {
-      const data = response.data;
-      setPatientData({
-        name: data.name,
-        email: data.email,
-        imageUrl: data.imageUrl,
-        pastAppointments: data.pastAppointments,
-        upcomingAppointments: data.upcomingAppointments,
-        gender: data.gender,
-        birthday: data.birthday,
-        phoneNumber: data.phoneNumber,
-        address: data.address,
-        city: data.city,
-        zipCode: data.zipCode,
-        memberStatus: data.memberStatus,
-        registeredDate: data.registeredDate,
-      });
-    });
   }, []);
+
+  const fecthPatientDataByAppointmentId = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8082/dataservice/getPatientDetailsByAppointmentId?appointmentId=" +
+          appointmentId
+      );
+      console.log(response.data);
+      setPatientData(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+      // Handle error, such as setting an error state
+    }
+  };
 
   return (
     <div className="card-container">
       <div className="profile-card">
         <Avatar size={100} src="" />
         <div style={{ padding: "0px", height: "80px" }}>
-          <h2>John Doe</h2>
-          <p>Test@gmail.com</p>
+          <h2>{patientData.phoneNumber}</h2>
+          <p>{patientData.emailId}</p>
         </div>
         <div className="appointments-count">
           <div className="past-apts">
             <h3>
-              15 <br />
+              {patientData.pastAppointmentsCount == null
+                ? 0
+                : patientData.pastAppointmentsCount}
+              <br />
               <span>Past</span>
             </h3>
           </div>
           <div className="upcoming-apts">
             <h3>
-              2 <br />
+              {patientData.upcomingAppointmentsCounts == null
+                ? 0
+                : patientData.upcomingAppointmentsCounts}
+              <br />
               <span>Upcoming</span>
             </h3>
           </div>
@@ -82,7 +74,8 @@ const PatientSummary = () => {
             <strong>Address:</strong> {patientData.address}
           </div>
           <div>
-            <strong>City:</strong> {patientData.city}
+            <strong>City:</strong>{" "}
+            {patientData.city == null ? "Bangalore" : patientData.city}
           </div>
           <div>
             <strong>Zip Code:</strong> {patientData.zipCode}
@@ -91,7 +84,7 @@ const PatientSummary = () => {
             <strong>Member Status:</strong> {patientData.memberStatus}
           </div>
           <div>
-            <strong>Registered Date:</strong> {patientData.registeredDate}
+            <strong>Registered Date:</strong> {patientData.appointmentDate}
           </div>
         </div>
       </div>
