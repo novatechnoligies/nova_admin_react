@@ -38,7 +38,9 @@ const Notes = () => {
       const postData = {
         note: trimmedNote,
         patientId: patientId, // Access patientId from the form
-        technicianId: technicianId, // Access technicianId from the form
+        technicianId: technicianId,
+        appointmentId:cd 
+         // Access technicianId from the form
         // Add other fields as needed
       };
 
@@ -75,10 +77,10 @@ const Notes = () => {
           <Form.Item name="technicianId" hidden initialValue={technicianId}>
             <Input />
           </Form.Item>
-          {/* Enable at the server side once we receive the appointment ID */}
-          {/* <Form.Item name="appointmentId" hidden initialValue={appointmentId}>
+         
+          <Form.Item name="appointmentId" hidden initialValue={appointmentId}>
             <Input /> 
-          </Form.Item> */}
+          </Form.Item>
 
           {/* Visible input field for new note */}
           <Form.Item name="newNote">

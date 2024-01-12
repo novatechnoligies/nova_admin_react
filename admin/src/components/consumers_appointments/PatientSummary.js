@@ -34,7 +34,7 @@ const PatientSummary = () => {
       <div className="profile-card">
         <Avatar size={100} src="" />
         <div style={{ padding: "0px", height: "80px" }}>
-          <h2>{patientData.phoneNumber}</h2>
+          <h2>{patientData.patientName}</h2>
           <p>{patientData.emailId}</p>
         </div>
         <div className="appointments-count">
