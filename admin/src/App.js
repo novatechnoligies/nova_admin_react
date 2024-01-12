@@ -85,7 +85,6 @@ function Header({ onLogout, profilePhoto }) {
   const [selectedValues, setSelectedValues] = useState([]);
   const [labData, setLabData] = useState([]);
 
-  const allOption = { key: "all", label: "Select All" };
 
   useEffect(() => {
     getLabData();
@@ -111,9 +110,8 @@ function Header({ onLogout, profilePhoto }) {
   };
 
   const handleChange = (selected) => {
-    sessionStorage.setItem("labData", selectedValues);
+    sessionStorage.setItem("labData", JSON.stringify(selected));
     setSelectedValues(selected);
-    console.log(selectedValues);
   };
 
   const labOptions = labData
@@ -123,19 +121,24 @@ function Header({ onLogout, profilePhoto }) {
       }))
     : [];
 
+  // Set the default selected value
+  const defaultSelectedValue = labOptions.length > 0 ? [labOptions[0].key] : [];
+
+
   return (
     <div className="top-bar">
-      <Select
-        mode="multiple"
+     <Select
         style={{ width: "20%", marginRight: "20px" }}
         placeholder="Select Your Lab"
         onChange={handleChange}
         value={selectedValues}
+        defaultValue={defaultSelectedValue}
         dropdownStyle={{ width: "200px" }}
       >
-        <Select.Option key={allOption.key}>{allOption.label}</Select.Option>
-        {labOptions.map((item) => (
-          <Select.Option key={item.key}>{item.label}</Select.Option>
+        {labOptions.map((item, index) => (
+          <Select.Option key={item.key} value={item.key}>
+            {item.label}
+          </Select.Option>
         ))}
       </Select>
       {/* <div>Header</div> */}
