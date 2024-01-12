@@ -95,7 +95,7 @@ const LabFormModal = ({ visible, onCancel, onCreate }) => {
           </Form.Item>
 
           <Form.Item
-            label="Adress"
+            label="Address"
             name="shopAddress"
             rules={[
               { required: true, message: "Please enter your adress" },
@@ -131,7 +131,7 @@ const LabFormModal = ({ visible, onCancel, onCreate }) => {
           </Form.Item>
 
           <Form.Item
-            label="Ownername"
+            label="Owner Name"
             name="owner"
             rules={[
               { required: false, message: "Please enter your name" },

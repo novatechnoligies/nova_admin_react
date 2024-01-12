@@ -42,6 +42,7 @@ const LabDataTable = ({ data, onDeleteLab }) => {
   useEffect(() => {
     getLabData();
     const result = labData.filter((lab) => {
+      alert(lab);
       return lab.shopName.toLowerCase().includes(search.toLowerCase());
     });
     console.log("Filtered result:", result);
@@ -64,7 +65,7 @@ const LabDataTable = ({ data, onDeleteLab }) => {
   const columns = [
     {
       name: "Lab Name",
-      selector: (row) => row.shopName,
+      selector: (row) => row.email,
       sortable: true,
       style: {
         fontWeight: "bold",
@@ -73,13 +74,13 @@ const LabDataTable = ({ data, onDeleteLab }) => {
     },
     {
       name: "Address",
-      selector: (row) => row.shopAddress,
+      selector: (row) => row.email,
       sortable: true,
       style: { wordWrap: "break-word" },
     },
     {
       name: "Phone",
-      selector: (row) => row.phone,
+      selector: (row) => row.email,
       sortable: true,
       style: { wordWrap: "break-word" },
     },
@@ -91,19 +92,19 @@ const LabDataTable = ({ data, onDeleteLab }) => {
     },
     {
       name: "pinCode",
-      selector: (row) => row.pinCode,
+      selector: (row) => row.email,
       sortable: true,
       style: { wordWrap: "break-word" },
     },
     {
-      name: "Ownername",
-      selector: (row) => row.shopName,
+      name: "Owner Name",
+      selector: (row) => row.email,
       sortable: true,
       style: { wordWrap: "break-word" },
     },
     {
       name: "GST NO",
-      selector: (row) => row.gstNo,
+      selector: (row) => row.email,
       sortable: true,
       style: { wordWrap: "break-word" },
     },
