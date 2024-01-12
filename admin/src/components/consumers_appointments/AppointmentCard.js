@@ -10,30 +10,42 @@ const { Meta } = Card;
 
 const AppointmentCard = ({ data }) => {
   const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true);
   // const { photo, name, status, date, time } = data;
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
-      const labData = sessionStorage.getItem("labData");
-      console.log("LabData from Session", labData);
+      try{
+        const labData = sessionStorage.getItem("labData");
+        console.log("LabData from Session", labData);
       if (labData == null || labData == undefined) {
-        alert(labData);
         message.warning("please select lab first");
       } else {
-        try {
           const response = await axios.get(
             "http://localhost:8082/dataservice/getTodaysAppointemtsByLabId?labId=" +
               labData +
               "&date=2023-12-19"
           );
-          console.log(response.data);
-          setAppointments(response.data);
-        } catch (error) {
+
+          console.log("Is Lab ID coming", response)
+          const responseData = response.data;
+          const isArray = Array.isArray(responseData);
+
+
+          if (!isArray && responseData) {
+            // If responseData is not an array but truthy, convert it to an array
+            setAppointments([responseData]);
+          } else {
+            setAppointments(responseData || []); // Ensure appointments is an array
+          }
+        }}
+        catch (error) {
           console.error("Error fetching data:", error.message);
           // Handle error, such as setting an error state
+        }finally {
+          setLoading(false);
         }
-      }
     };
 
     fetchData();
@@ -67,7 +79,14 @@ const AppointmentCard = ({ data }) => {
 
   return (
     <div>
-      {appointments.map((appointment, index) => (
+      {loading && <p>Loading appointments...</p>}
+      {!loading && appointments.length === 0 && <p>No appointments available.</p>}
+
+      {!loading &&
+        (Array.isArray(appointments) && appointments.length === 0 ? (
+          <p>No appointments available.</p>
+        ) : (
+      appointments.map((appointment, index) => (
         <Card
           key={index}
           data={appointment}
@@ -117,6 +136,7 @@ const AppointmentCard = ({ data }) => {
             </div>
           </div>
         </Card>
+      ))
       ))}
     </div>
   );
