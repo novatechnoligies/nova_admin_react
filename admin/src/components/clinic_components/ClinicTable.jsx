@@ -32,7 +32,7 @@ const ClinicTable = () => {
 
   const onDeleteClinic = (clinic) => {
     Modal.confirm({
-      title: "Do you really want to delet clinic" + clinic.name + "?",
+      title: "Do You Want to Delete Clinic" +" " + clinic.name + "?",
       okText: "YES",
       okType: "danger",
       onOk: () => {
