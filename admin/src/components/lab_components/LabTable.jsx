@@ -12,6 +12,7 @@ import {
   Card,
 } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { LeftOutlined } from "@ant-design/icons";
 import { BASE_URL } from "../../constants/constants";
 import axios from "axios";
 import LabFormModal from "./LabFormModal";
@@ -32,6 +33,11 @@ const LabDataTable = ({ data, onDeleteLab }) => {
   const [showSummary, setShowSummary] = useState(false);
 
   const [showLabTable, setShowLabTable] = useState(true);
+
+  const handleBackButtonClick = () => {
+    setShowSummary(false);
+    setShowLabTable(true);
+  };
 
   const handleRowClick = (row) => {
     setSelectedLab(row);
@@ -239,15 +245,24 @@ const LabDataTable = ({ data, onDeleteLab }) => {
           onRowClicked={handleRowClick}
         />
       ) : (
-        <Summary labData={selectedLab} />
+        <div>
+          <Button
+            type="primary"
+            style={{ marginBottom: "5px", marginTop:"10px", marginLeft:"10px" }}
+            onClick={handleBackButtonClick}
+          >
+            <LeftOutlined /> Back to Lab Table
+          </Button>
+          <Summary labData={selectedLab} />
+          
+        </div>
       )}
 
       <LabFormModal
         visible={isCreateLabModalVisible}
         onCancel={() => setIsCreateLabModalVisible(false)}
         onCreate={handleCreateLabModalSubmit}
-      />
-
+      /> 
       <LabAvailabilityModal
         visible={isLabAvailabilityModalVisible}
         onCancel={() => setIsLabAvailabilityModalVisible(false)}
