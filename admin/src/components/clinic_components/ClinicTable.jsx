@@ -1,11 +1,12 @@
 import DataTable from "react-data-table-component";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Modal ,Form, Input} from "antd";
+import { Button, Upload, Modal ,Form, messageessage, Input} from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
   ExportOutlined,
+  UploadOutlined,
 } from "@ant-design/icons/lib/icons";
 import "./ClinicTable.css";
 const style = {
@@ -294,15 +295,17 @@ rules={[
 </Form.Item>
 
 <Form.Item
-label="Logo"
-name="Logo"
-initialValue={editingClinic?.altSpellings}
-rules={[
-  { required: true, message: 'Please enter your logo' },
-  { type: 'logo', message: 'Please enter a valid logo' },
-]}
+  label="Logo"
+  name="Logo"
+  initialValue={editingClinic?.altSpellings}
+  rules={[
+    { required: true, message: "Please upload your logo" },
+    { type: 'logo', message: 'Please upload a valid logo' },
+  ]}
 >
-<Input />
+  <Upload>
+    <Button icon={<UploadOutlined />}>Click to Upload</Button>
+  </Upload>
 </Form.Item>
 
 <Form.Item
