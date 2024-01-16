@@ -68,8 +68,12 @@
   font-weight: bold;
 }
 
-.top_bar_icons {
-  flex-basis: 4%;
+.top_bar_icons{
+ flex-basis:4% ;
+ height: 50px;
+ width: 1em;
+ align-items: center;
+ margin-top: 35px;
 }
 
 .right-side {

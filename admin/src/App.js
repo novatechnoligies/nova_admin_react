@@ -36,6 +36,7 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  
   const handleLogin = () => {
     // Perform login logic here
     setLoggedIn(true);
@@ -142,14 +143,16 @@ function Header({ onLogout, profilePhoto }) {
         ))}
       </Select>
       {/* <div>Header</div> */}
-      <div className="top_bar_icons">
-        <Badge count="5" offset={[10, 0]}>
-          <NotificationOutlined />
+
+      <div className='top_bar_icons' >
+        <Badge  offset={[10, 0]} style={{marginTop:"5px"}}>
+        <NotificationOutlined style={{image:"80px", marginTop:"5px"}}/>
         </Badge>
       </div>
-      <div className="top_bar_icons">
-        <Badge count="5" offset={[10, 0]}>
-          <MailOutlined style={{ fontSize: "24px" }} />
+      <div  className='top_bar_icons' >
+        <Badge  offset={[10, 0]} style={{marginTop:"5px"}}>
+        <MailOutlined style={{image:"80px", marginTop:"5px"}}/>
+
         </Badge>
       </div>
       <div className="top_bar_icons">
