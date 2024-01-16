@@ -60,9 +60,13 @@
 
 .inline-info {
   display: flex;
+  height: auto;
+  width: auto;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  background-color:#d3d3d3
+  
 }
 
 .inline-info .info-item {
@@ -73,6 +77,13 @@
   margin-bottom: 10px;
 }
 
+.info-item {
+  background-color:#808080;
+  border-radius: 8px;
+  margin-top: 5px;
+}
+
 .info-item p {
   margin-right: 60px;
+  margin-left: 30px;
 }

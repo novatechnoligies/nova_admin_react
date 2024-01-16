@@ -1,33 +1,71 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Table, Button, Avatar } from "antd";
+import { Row, Col, Button } from "antd";
 import axios from "axios";
-import { BASE_URL } from "../../constants/constants";
+import { useParams } from "react-router-dom";
 import "./PatientAppointmentsSummary.css";
 
 const PatientAppointmentsSummary = () => {
-  // Testing with Dummy Data
-  const [currentAppointment, setCurrentAppointment] = useState({
-    dateAndTime: "2024-01-04 14:30", // Replace with your actual date and time
-    serviceName: "Medical Checkup",
-    technicianName: "Dr. John Doe",
-    status: "Pending",
-  });
+  const [appointmentsData, setAppointmentsData] = useState([]);
+  const [technicianName, setTechnicianName] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  //   useEffect(() => {
-  //     // Fetch data from the API
-  //     const fetchData = async () => {
-  //       try {
-  //         const response = await axios.get(
-  //           `${BASE_URL}/api/appointments/current`
-  //         );
-  //         setCurrentAppointment(response.data); // Assuming the API response contains the necessary data
-  //       } catch (error) {
-  //         console.error("Error fetching appointment data:", error);
-  //       }
-  //     };
+  const { appointmentId } = useParams();
 
-  //     fetchData();
-  //   }, []);
+  useEffect(() => {
+    const storedUserData = sessionStorage.getItem("userData");
+    const userDataObject = JSON.parse(storedUserData);
+  
+    setTechnicianName(userDataObject.firstName);
+  
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8082/dataservice/getAllServicesByAppointmentIdAndPatientId?appointmentId=${appointmentId}`
+        );
+        console.log("API Response:", response.data);
+  
+        // Make sure response.data is an array
+        if (Array.isArray(response.data)) {
+          setAppointmentsData(response.data);
+        } else {
+          console.error("Data received is not an array:", response.data);
+          setError("Error fetching data. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error.message);
+        setError("Error fetching data. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchData();
+  }, [appointmentId]);
+
+  
+  // useEffect(() => {
+  //   const storedUserData = sessionStorage.getItem("userData");
+  //   const userDataObject = JSON.parse(storedUserData);
+
+  //   setTechnicianName(userDataObject.firstName);
+
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `http://localhost:8082/dataservice/getAllServicesByAppointmentIdAndPatientId?appointmentId=${appointmentId}`
+  //       );
+  //       setAppointmentsData(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error.message);
+  //       setError("Error fetching data. Please try again.");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [appointmentId]);
 
   return (
     <div className="p-appointments-container">
@@ -42,36 +80,42 @@ const PatientAppointmentsSummary = () => {
           Medical Record
         </a>
       </div>
-      <div className="apt-info-container">
-        <div className="apt-info">
-          {currentAppointment ? (
-            <div className="inline-info">
-              <div className="info-item">
-                <p>
-                  <strong>Date/Time:</strong>
-                  <br />
-                  {currentAppointment.dateAndTime}
-                </p>
-                <p>
-                  <strong>Service Name:</strong>
-                  <br />
-                  {currentAppointment.serviceName}
-                </p>
-                <p>
-                  <strong>Technician Name:</strong>
-                  <br />
-                  {currentAppointment.technicianName}
-                </p>
-                <p>
-                  <strong>Status:</strong> <br />
-                  {currentAppointment.status}
-                </p>
-              </div>
-            </div>
-          ) : (
-            <p>No current appointments</p>
-          )}
-        </div>
+      <div className="apt-info-container" style={{ overflow: "scroll" }}>
+        {loading && <p>Loading...</p>}
+        {error && <p>{error}</p>}
+        {!loading && !error && (
+          <div className="apt-info">
+            {appointmentsData.length > 0 ? (
+              appointmentsData.map((appointment, index) => (
+                <div className="inline-info" key={index}>
+                  <div className="info-item">
+                    <p>
+                      <strong>Date/Time:</strong>
+                      <br />
+                      {`${appointment.appointmentDate} ${appointment.appointmentTime}`}
+                    </p>
+                    <p>
+                      <strong>Service Name:</strong>
+                      <br />
+                      {appointment.serviceName}
+                    </p>
+                    <p>
+                      <strong>Technician Name:</strong>
+                      <br />
+                      {technicianName}
+                    </p>
+                    <p>
+                      <strong>Status:</strong> <br />
+                      {appointment.appointmentStatus}
+                    </p>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>No current appointments</p>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

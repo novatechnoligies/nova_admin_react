@@ -1,18 +1,59 @@
 // AppointmentCard.js
 import React from "react";
-import { Card, Avatar } from "antd";
+import { Card, Avatar, message } from "antd";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const { Meta } = Card;
 
 const AppointmentCard = ({ data }) => {
-  const { photo, name, status, date, time } = data;
+  const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  // const { photo, name, status, date, time } = data;
   const navigate = useNavigate();
 
-  const handleCardClick = () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try{
+        const labData = sessionStorage.getItem("labData");
+        console.log("LabData from Session", labData);
+      if (labData == null || labData == undefined) {
+        message.warning("please select lab first");
+      } else {
+          const response = await axios.get(
+            "http://localhost:8082/dataservice/getTodaysAppointemtsByLabId?labId=" +
+              labData +
+              "&date=2023-12-19"
+          );
+
+          console.log("Is Lab ID coming", response)
+          const responseData = response.data;
+          const isArray = Array.isArray(responseData);
+
+
+          if (!isArray && responseData) {
+            // If responseData is not an array but truthy, convert it to an array
+            setAppointments([responseData]);
+          } else {
+            setAppointments(responseData || []); // Ensure appointments is an array
+          }
+        }}
+        catch (error) {
+          console.error("Error fetching data:", error.message);
+          // Handle error, such as setting an error state
+        }finally {
+          setLoading(false);
+        }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleCardClick = (appointmentId) => {
     // Navigate to the appointment details page
-    navigate(`/appointment-details/${name}`); // You can customize the URL as needed
+    navigate(`/appointment-details/${appointmentId}`); // You can customize the URL as needed
   };
 
   const statusColors = {
@@ -37,33 +78,67 @@ const AppointmentCard = ({ data }) => {
   };
 
   return (
-    <Card style={cardStyle} bordered={true} onClick={handleCardClick}>
-      <div>
-        <div style={headerStyle}>
-          <p>Your Appointment</p>
-        </div>
-        <div style={{ display: "flex", marginBottom: -25 }}>
+    <div>
+      {loading && <p>Loading appointments...</p>}
+      {!loading && appointments.length === 0 && <p>No appointments available.</p>}
+
+      {!loading &&
+        (Array.isArray(appointments) && appointments.length === 0 ? (
+          <p>No appointments available.</p>
+        ) : (
+      appointments.map((appointment, index) => (
+        <Card
+          key={index}
+          data={appointment}
+          style={cardStyle}
+          bordered={true}
+          onClick={() => handleCardClick(appointment.appointmentId)}
+        >
           <div>
-            <h3 style={{ marginBottom: 0 }}>{name}</h3>
-            <div>
-              <p style={headerStyle}>Status: {status}</p>
+            <div style={headerStyle}>
+              <p>Your Appointment</p>
+            </div>
+            <div style={headerStyle}>
+              <input
+                type="text"
+                name="appontmentId"
+                value={appointment.appointmentId}
+                hidden
+              />
+            </div>
+            <div style={{ display: "flex", marginBottom: -25 }}>
               <div>
-                <p style={{ marginBottom: 0 }}>
-                  <span style={{ borderBottom: "1px solid #000" }}>
-                    {moment(date).format("MMMM Do YYYY")}{" "}/{moment(time, "HH:mm:ss").format("h:mm A")}
-                  </span>
-                </p>
-                <p style={{ marginTop: 0 }}>Appointment Date/Time</p>
+                <h3 style={{ marginBottom: 0 }}>{appointment.patientName}</h3>
+                <div>
+                  <p style={headerStyle}>
+                    Status: {appointment.appointmentStatus}
+                  </p>
+                  <div>
+                    <p style={{ marginBottom: 0 }}>
+                      <span style={{ borderBottom: "1px solid #000" }}>
+                        {moment(appointment.appointmentDate).format(
+                          "MMMM Do YYYY"
+                        )}{" "}
+                        /
+                        {moment(appointment.appointmentTime, "HH:mm:ss").format(
+                          "h:mm A"
+                        )}
+                      </span>
+                    </p>
+                    <p style={{ marginTop: 0 }}>Appointment Date/Time</p>
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ marginLeft: 30, marginTop: 25 }}>
+                <Avatar size={100} />
               </div>
             </div>
           </div>
-
-          <div style={{ marginLeft: 30, marginTop: 25 }}>
-            <Avatar src={photo} size={100} />
-          </div>
-        </div>
-      </div>
-    </Card>
+        </Card>
+      ))
+      ))}
+    </div>
   );
 };
 

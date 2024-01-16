@@ -43,6 +43,7 @@ const LabFormModal = ({ visible, onCancel, onCreate }) => {
       .then((response) => {
         message.success("Lab created successfully!");
         console.log("Post request successful:", response.data.id);
+        onCancel();
         //setCreateShopModalData(response.data.id);
         //setIsCreateLabModalVisible(false)
 

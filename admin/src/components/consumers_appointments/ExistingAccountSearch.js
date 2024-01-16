@@ -10,7 +10,7 @@ const ExistingAccountSearch = ({ onSelectAccount }) => {
   const [consumerListByPhone, setConsumerListByPhone] = useState([]);
 
   const getConsumerListByPhone = (value) => {
-    axios.get(BASE_URL + `/dataservice/getUserByPhone/${value.searchQuery}`)
+    axios.get(BASE_URL + `/dataservice/getConsumerByPhone/${value.searchQuery}`)
       .then((response) => {
         const searchOwner = response.data.map((result) => ({
           id: result.id,
