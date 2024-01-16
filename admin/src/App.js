@@ -11,7 +11,7 @@ import {
   IdcardOutlined,
 } from "@ant-design/icons/lib/icons";
 import ShopTable from "./components/shop_components/ShopTable";
-import SpaTable from "./components/spa_components/SpaTable";
+ import SpaTable from "./components/spa_components/SpaTable";
 import LabTable from "./components/lab_components/LabTable";
 import CscTable from "./components/csc_components/CscTable";
 import ClinicTable from "./components/clinic_components/ClinicTable";
@@ -195,9 +195,9 @@ function SlideMenu({ location, navigate, onLogout }) {
           { label: "Dashboard", key: "/dash", icon: <DashboardOutlined /> },
           { label: "Appointments", key: "Acard", icon: <IdcardOutlined /> },
           { label: "Lab", key: "/lab", icon: <ShopOutlined /> },
-          { label: "Spa", key: "/spa", icon: <ShopOutlined /> },
-          { label: "Shalon", key: "/shalon", icon: <ShopOutlined /> },
-          { label: "CSC", key: "/csc", icon: <ShopOutlined /> },
+          //{ label: "Spa", key: "/spa", icon: <ShopOutlined /> },
+          //{ label: "Shalon", key: "/shalon", icon: <ShopOutlined /> },
+          //{ label: "CSC", key: "/csc", icon: <ShopOutlined /> },
           { label: "Clinic", key: "/clinic", icon: <ShopOutlined /> },
           {
             label: "Consumer",
