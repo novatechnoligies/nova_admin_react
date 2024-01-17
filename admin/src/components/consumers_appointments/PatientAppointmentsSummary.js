@@ -142,12 +142,6 @@ const PatientAppointmentsSummary = () => {
           <Button key="back" onClick={handleModalCancel}>
             Back
           </Button>,
-          <Button type="primary" key="back">
-            Save Results
-          </Button>,
-          <Button type="primary" key="back">
-            Save and Create Report
-          </Button>,
         ]}
       >
         {/* Add Lab Test Entry Form or content here */}
