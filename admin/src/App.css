@@ -1,71 +1,28 @@
-/* .App {
-  text-align: center;
-  color: red;
-  background-color: red;
-  background: red;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-} */
-
-/* @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-} */
-
-/* .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-} */
-
-/* .App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
-
-
 .left-side {
   width: 15vw;
   height: 92.5vh;
-  /* width: 300px; */
   background-color: rgb(2, 2, 2);
+  position: fixed; /* Fix the left-side */
 }
 
 .container-row {
   display: flex;
   flex-direction: column;
-  /* height: 0; Adjust the height as needed  */
-  background-color: white;
-  background: white;
+  margin-left: 15vw; /* Adjust the margin to match the width of the left-side */
+  /* height: 100vh; Uncomment if needed to fill the whole height */
 }
 
 .top-bar {
   height: 8.5vh;
   width: 100%;
   background-color: rgb(67, 118, 108);
-  /* position: fixed; */
   color: black;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   font-weight: bold;
+  position: fixed; /* Fix the top-bar */
+  z-index: 1000; /* Add a higher z-index to ensure it's above other elements */
 }
 
 .top_bar_icons {
@@ -74,5 +31,7 @@
 
 .right-side {
   width: 100%;
-  height: 100%;
+  margin-left: 5vw; /* Adjust margin to match the width of the left-side */
+  padding-top: 8.5vh; /* Adjust padding to prevent content from being overlapped by top-bar */
+  box-sizing: border-box; /* Include padding in width calculation */
 }

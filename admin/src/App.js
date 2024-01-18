@@ -85,7 +85,6 @@ function Header({ onLogout, profilePhoto }) {
   const [selectedValues, setSelectedValues] = useState([]);
   const [labData, setLabData] = useState([]);
 
-
   useEffect(() => {
     getLabData();
   }, []);
@@ -124,10 +123,12 @@ function Header({ onLogout, profilePhoto }) {
   // Set the default selected value
   const defaultSelectedValue = labOptions.length > 0 ? [labOptions[0].key] : [];
 
-
   return (
-    <div className="top-bar">
-     <Select
+    <div
+      className="top-bar"
+      style={{ position: "fixed", top: 0, width: "100%" }}
+    >
+      <Select
         style={{ width: "20%", marginRight: "20px" }}
         placeholder="Select Your Lab"
         onChange={handleChange}
@@ -176,8 +177,10 @@ function SlideMenu({ location, navigate, onLogout }) {
         style={{
           background: "#0B8C73",
           color: "white",
-          height: "92.5vh",
+          height: "100vh",
           overflow: "hidden",
+          position: "fixed",
+          width: "250px",
         }}
         selectedKeys={selectedKeys}
         onClick={({ key }) => {

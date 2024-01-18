@@ -1,34 +1,32 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 import "./LabTable.css";
 import { BASE_URL } from "../../constants/constants";
 import axios from "axios";
-import AvailableService from './AvailableServices';
-
+import AvailableService from "./AvailableServices";
 
 const Summary = ({ labData }) => {
-    console.log("here" +JSON.stringify(labData))
+  console.log("here" + JSON.stringify(labData));
 
-const [availabilityData ,setAvailabilityData] = useState([]);
+  const [availabilityData, setAvailabilityData] = useState([]);
 
-useEffect(() => {
-  
-  getAvailabilityDetails();
-}, []);
+  useEffect(() => {
+    getAvailabilityDetails();
+  }, []);
 
-const getAvailabilityDetails = async () => {
-  const storedUserData = sessionStorage.getItem('userData');
-  const userDataObject = JSON.parse(storedUserData);
-      try {
-        const response = await axios.get(
-          BASE_URL + "/dataservice/getShopAvaibilityById/1" // Replace with Shop availability by ShopId
-        );
-        // console.log("availability" + JSON.stringify(response)); 
-        setAvailabilityData(response.data);
-        console.log("availability" + JSON.stringify(availabilityData));
-        console.log("availability" +availabilityData);
-        // setFilterLabData(response.data);
-      } catch (error) {}
-    };
+  const getAvailabilityDetails = async () => {
+    const storedUserData = sessionStorage.getItem("userData");
+    const userDataObject = JSON.parse(storedUserData);
+    try {
+      const response = await axios.get(
+        BASE_URL + "/dataservice/getShopAvaibilityById/1" // Replace with Shop availability by ShopId
+      );
+      // console.log("availability" + JSON.stringify(response));
+      setAvailabilityData(response.data);
+      console.log("availability" + JSON.stringify(availabilityData));
+      console.log("availability" + availabilityData);
+      // setFilterLabData(response.data);
+    } catch (error) {}
+  };
 
   return (
     <div>
@@ -51,7 +49,7 @@ const getAvailabilityDetails = async () => {
               <td>
                 <strong>Email:</strong>
               </td>
-              <td>{labData.email || 'N/A'}</td>
+              <td>{labData.email || "N/A"}</td>
             </tr>
             <tr>
               <td>
@@ -61,35 +59,35 @@ const getAvailabilityDetails = async () => {
               <td>
                 <strong>Owner:</strong>
               </td>
-              <td>{labData.owner || 'N/A'}</td>
+              <td>{labData.owner || "N/A"}</td>
               <td>
                 <strong>GST:</strong>
               </td>
-              <td>{labData.gstNo || 'N/A'}</td>
+              <td>{labData.gstNo || "N/A"}</td>
             </tr>
             <tr>
               <td>
                 <strong>Total Appointments:</strong>
               </td>
-              <td>{labData.totalAppointments || 'N/A'}</td>
+              <td>{labData.totalAppointments || "N/A"}</td>
               <td>
                 <strong>Active Employees:</strong>
               </td>
-              <td>{labData.activeEmployees || 'N/A'}</td>
+              <td>{labData.activeEmployees || "N/A"}</td>
               <td>
                 <strong>Location:</strong>
               </td>
-              <td>{labData.location || 'N/A'}</td>
+              <td>{labData.location || "N/A"}</td>
             </tr>
             <tr>
               <td>
                 <strong>Org:</strong>
               </td>
-              <td> {labData.org || 'NOVA'}</td>
+              <td> {labData.org || "NOVA"}</td>
               <td>
                 <strong>PinCode:</strong>
               </td>
-              <td>{labData.pinCode || 'N/A'}</td>
+              <td>{labData.pinCode || "N/A"}</td>
             </tr>
           </tbody>
         </table>
@@ -135,9 +133,7 @@ const getAvailabilityDetails = async () => {
       </div>
 
       <div className="lab-summary-container">
-        <h2>Available Services</h2>
         <AvailableService />
-       
       </div>
     </div>
   );
