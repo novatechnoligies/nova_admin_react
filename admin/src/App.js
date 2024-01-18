@@ -30,6 +30,8 @@ import AppointmentDetails from "./components/consumers_appointments/AppointmentD
 import TestForm from "./components/result/TestForm";
 import axios from "axios";
 import { BASE_URL } from "./constants/constants";
+import Ems from "./components/ems_components/Ems";
+import Ims from "./components/ems_components/Ims";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -192,6 +194,10 @@ function SlideMenu({ location, navigate, onLogout }) {
           { label: "Dashboard", key: "/dash", icon: <DashboardOutlined /> },
           { label: "Appointments", key: "Acard", icon: <IdcardOutlined /> },
           { label: "Lab", key: "/lab", icon: <ShopOutlined /> },
+          { label: "EMS", key: "/ems", icon: <UserOutlined /> },
+          { label: "IMS", key: "/ims", icon: <UserOutlined /> },
+          { label: "Create Promotions", key: "/createpromotions", icon: <UserOutlined /> },
+
           { label: "Spa", key: "/spa", icon: <ShopOutlined /> },
           { label: "Shalon", key: "/shalon", icon: <ShopOutlined /> },
           { label: "CSC", key: "/csc", icon: <ShopOutlined /> },
@@ -306,6 +312,10 @@ function Content() {
           element={<AppointmentDetails />}
         />
         <Route path="/report" element={<TestForm />} />
+        <Route path="/ems" element={<Ems/>}/>
+        <Route path="/ims" element={<Ims/>} />
+        <Route path="/createpromotions" element={<createpromotions/>} />
+        
       </Routes>
     </div>
   );
