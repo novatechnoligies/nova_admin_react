@@ -32,6 +32,7 @@ import axios from "axios";
 import { BASE_URL } from "./constants/constants";
 import Ems from "./components/ems_components/Ems";
 import Ims from "./components/ems_components/Ims";
+import Createpromotions from "./components/ems_components/Createpromotions";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -314,7 +315,7 @@ function Content() {
         <Route path="/report" element={<TestForm />} />
         <Route path="/ems" element={<Ems/>}/>
         <Route path="/ims" element={<Ims/>} />
-        <Route path="/createpromotions" element={<createpromotions/>} />
+        <Route path="/createpromotions" element={<Createpromotions/>} />
         
       </Routes>
     </div>

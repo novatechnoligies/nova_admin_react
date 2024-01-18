@@ -1,11 +1,11 @@
 import React from "react";
 
-const createpromotions = () => {
+const Createpromotions = () => {
     return (
         <div>
-            <h2>Create Promotions Management System</h2>
+            <h2>Create Promotions System</h2>
         </div>
     )
 }
 
-export default createpromotions;
+export default Createpromotions;
