@@ -1,7 +1,7 @@
 .p-appointments-container {
   background-color: #808080; /* Dark Grey */
   height: 300px;
-  width: 750px;
+  width: 100%;
   margin-top: 10px;
   border-radius: 8px;
   display: flex;

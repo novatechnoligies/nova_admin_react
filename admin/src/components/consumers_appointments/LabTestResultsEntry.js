@@ -1,8 +1,10 @@
 import FormItem from "antd/es/form/FormItem";
 import React, { useState } from "react";
 import "./LabTestResultsEntry.css";
+import { Button, Input } from "antd";
 
 const LabTestResultsEntry = ({ appointmentId }) => {
+  const [parameterResults, setParameterResults] = useState({});
   const [testForm, setTestForm] = useState({
     testId: 1,
     testName: "Complete Blood Count (CBC)",
@@ -150,6 +152,70 @@ const LabTestResultsEntry = ({ appointmentId }) => {
     ],
   });
 
+  const handleInputChange = (parametrId, value) => {
+    setParameterResults((prevResults) => ({
+      ...prevResults,
+      [parametrId]: value,
+    }));
+  };
+
+  const getParameterNameById = (parametrId, labMasterHeadings) => {
+    if (!labMasterHeadings || !Array.isArray(labMasterHeadings)) {
+      // Handle the case when labMasterHeadings is not an array or is null/undefined
+      console.error("Invalid labMasterHeadings:", labMasterHeadings);
+      return "Invalid labMasterHeadings";
+    }
+
+    // Iterate through labMasterHeadings and labParametersDtos to find the parameter name
+    for (const heading of labMasterHeadings) {
+      if (
+        heading.labParametersDtos &&
+        Array.isArray(heading.labParametersDtos)
+      ) {
+        for (const parameter of heading.labParametersDtos) {
+          if (parameter.parametrId === parametrId) {
+            return parameter.parameterName;
+          }
+        }
+      }
+    }
+
+    // Return a default value or handle the case when the parameterId is not found
+    return "Parameter Not Found";
+  };
+
+  // Input Field Validation Part When values are entered
+
+  const getValidationStatus = (value, minValue, maxValue) => {
+    if (value < minValue) {
+      return "low";
+    } else if (value > maxValue) {
+      return "high";
+    } else {
+      return "normal";
+    }
+  };
+
+  const saveResults = () => {
+    const resultsData = {
+      appointmentId: appointmentId,
+      testId: testForm.testId,
+      testName: testForm.testName,
+      results: Object.entries(parameterResults).map(
+        ([parametrId, resultValue]) => ({
+          parametrId,
+          parameterName: getParameterNameById(
+            parametrId,
+            testForm.labMasterHeadings
+          ),
+          result: resultValue,
+        })
+      ),
+    };
+
+    console.log("Results Data to be saved:", resultsData);
+  };
+
   return (
     <div className="lab-result-container">
       {/* Lab test entry form or content */}
@@ -172,7 +238,34 @@ const LabTestResultsEntry = ({ appointmentId }) => {
                   <tr key={parameter.parametrId}>
                     <td>{parameter.parameterName}</td>
                     <td>
-                      <input type="text" />
+                      <Input
+                        type="text"
+                        id={`result-${parameter.parametrId}`}
+                        value={parameterResults[parameter.parametrId] || ""}
+                        onChange={(e) =>
+                          handleInputChange(
+                            parameter.parametrId,
+                            e.target.value
+                          )
+                        }
+                        className={`result-input ${getValidationStatus(
+                          parseFloat(parameterResults[parameter.parametrId]),
+                          parseFloat(parameter.minValue),
+                          parseFloat(parameter.maxValu)
+                        )}`}
+                      />
+                      {getValidationStatus(
+                        parseFloat(parameterResults[parameter.parametrId]),
+                        parseFloat(parameter.minValue),
+                        parseFloat(parameter.maxValu)
+                      ) === "low" && <span className="low-indicator">Low</span>}
+                      {getValidationStatus(
+                        parseFloat(parameterResults[parameter.parametrId]),
+                        parseFloat(parameter.minValue),
+                        parseFloat(parameter.maxValu)
+                      ) === "high" && (
+                        <span className="high-indicator">High</span>
+                      )}
                     </td>
                     <td>
                       {parameter.minValue} to {parameter.maxValu}
@@ -187,6 +280,16 @@ const LabTestResultsEntry = ({ appointmentId }) => {
             {index < testForm.labMasterHeadings.length - 1 && <div></div>}
           </div>
         ))}
+      </div>
+      <div className="footer-btn">
+        <Button
+          type="primary"
+          onClick={saveResults}
+          style={{ marginLeft: "360px", marginRight: "10px" }}
+        >
+          Save Results
+        </Button>
+        <Button type="primary">Save and Create Report</Button>
       </div>
     </div>
   );

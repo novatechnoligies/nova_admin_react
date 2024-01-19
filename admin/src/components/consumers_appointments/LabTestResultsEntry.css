@@ -45,3 +45,12 @@ table {
     background-color: #e0e0e0;
   }
   
+  /* Input field values Validation */
+
+  .low-indicator {
+    color: red;
+  }
+  
+  .high-indicator {
+    color: orange;
+  }

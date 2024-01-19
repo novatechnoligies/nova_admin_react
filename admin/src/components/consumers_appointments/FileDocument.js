@@ -19,7 +19,11 @@ const FileDocument = () => {
         Files/Documents
         <label
           htmlFor="fileInput"
-          style={{ marginLeft: "60px", cursor: "pointer", color: "#007bff" }}
+          style={{
+            marginLeft: "30px",
+            cursor: "pointer",
+            color: "#007bff",
+          }}
         >
           Add files
         </label>
