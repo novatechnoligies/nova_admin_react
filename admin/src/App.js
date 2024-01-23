@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Menu } from "antd";
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
-import {
+import { 
   DashboardOutlined,
   HomeOutlined,
   ProfileOutlined,
@@ -30,6 +30,7 @@ import AppointmentDetails from "./components/consumers_appointments/AppointmentD
 import TestForm from "./components/result/TestForm";
 import axios from "axios";
 import { BASE_URL } from "./constants/constants";
+import AccessManagment from "./components/access-managment/AccessManagment";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -208,7 +209,7 @@ function SlideMenu({ location, navigate, onLogout }) {
             icon: <ShoppingOutlined />,
             children: [
               { label: "Active", key: "/active", icon: <ShopOutlined /> },
-              { label: "Inactive", key: "/inactive", icon: <ShopOutlined /> },
+              { label: "Access Management", key: "/Access-Management", icon: <ShopOutlined /> },
               {
                 label: "New Consumer Account",
                 key: "/newconsumeraccount",
@@ -293,7 +294,7 @@ function Content() {
         <Route path="/profile" element={<div>Profile</div>} />
         <Route path="/logout" element={<div>Logout</div>} />
         <Route path="/active" element={<div>Active</div>} />
-        <Route path="/inactive" element={<div>Inactive</div>} />
+        <Route path="/Access-Management" element={<div><AccessManagment></AccessManagment></div>} />
         <Route path="/AppChildCards/:id" element={<More />} />
         <Route
           path="/newconsumeraccount"
