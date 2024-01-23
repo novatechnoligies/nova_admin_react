@@ -1,0 +1,42 @@
+.vertical-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100vh;
+  background-color: rgb(255, 255, 255);
+  margin-left: 20px; 
+  margin-top: 20px;
+}
+
+.vertical-square {
+  width: 400px;
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+}
+
+.checkbox-group {
+  margin-bottom: 20px; /* Added space between checkboxes and buttons */
+}
+
+.checkbox-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.checkbox-item label {
+  margin-right: 20px; /* Adjusted spacing between label and switch */
+}
+
+/* Adjusted button styles */
+.ant-btn {
+  margin-top: 10px;
+  width: 100%;
+}
+
+/* Adjusted switch styles */
+.ant-switch {
+  margin-left: 20px;
+}
