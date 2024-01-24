@@ -1,0 +1,45 @@
+.vertical-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 80vh; /* Updated height to 80% */
+  background-color: rgb(255, 255, 255);
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.vertical-square {
+  width: 30%;
+  height: 100%;
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 20px; /* Add space at the bottom */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.checkbox-group {
+  margin-bottom: 20px;
+}
+
+.checkbox-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0px;
+}
+
+.checkbox-item label {
+  margin-right: 20px;
+}
+
+.ant-btn {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.ant-switch {
+  margin-left: 20px;
+}
