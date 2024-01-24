@@ -104,7 +104,7 @@ const AvailableService = () => {
                         plan: "GST (18%)",
                         price: `₹${(18 / 100) * service.amount}`,
                       },
-                      { plan: "Discount", price: "null" },
+                      { plan: "Discount", price: "₹0" },
                       {
                         plan: "Net Price",
                         price: `₹${calculateNetPrice(service.amount).toFixed(
