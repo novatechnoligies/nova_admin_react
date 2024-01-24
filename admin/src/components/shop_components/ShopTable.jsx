@@ -164,7 +164,7 @@ const ShopTable = () => {
     <div className="novaTable">
       <DataTable
         className="container headerStyles"
-        title="SHOP DETAILS"
+        //title="SHOP DETAILS"
         columns={columns}
         data={filterShopData}
         pagination
@@ -318,7 +318,7 @@ rules={[
 
 <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
 <Button type="primary" htmlType="submit">
-  Update Shop Details
+ // Update Shop Details
 </Button>
 
 </Form.Item>

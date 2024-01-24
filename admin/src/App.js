@@ -11,7 +11,7 @@ import {
   IdcardOutlined,
 } from "@ant-design/icons/lib/icons";
 import ShopTable from "./components/shop_components/ShopTable";
-import SpaTable from "./components/spa_components/SpaTable";
+ import SpaTable from "./components/spa_components/SpaTable";
 import LabTable from "./components/lab_components/LabTable";
 import CscTable from "./components/csc_components/CscTable";
 import ClinicTable from "./components/clinic_components/ClinicTable";
@@ -39,6 +39,7 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  
   const handleLogin = () => {
     // Perform login logic here
     setLoggedIn(true);
@@ -88,7 +89,6 @@ function Header({ onLogout, profilePhoto }) {
   const [selectedValues, setSelectedValues] = useState([]);
   const [labData, setLabData] = useState([]);
 
-
   useEffect(() => {
     getLabData();
   }, []);
@@ -127,10 +127,12 @@ function Header({ onLogout, profilePhoto }) {
   // Set the default selected value
   const defaultSelectedValue = labOptions.length > 0 ? [labOptions[0].key] : [];
 
-
   return (
-    <div className="top-bar">
-     <Select
+    <div
+      className="top-bar"
+      style={{ position: "fixed", top: 0, width: "100%" }}
+    >
+      <Select
         style={{ width: "20%", marginRight: "20px" }}
         placeholder="Select Your Lab"
         onChange={handleChange}
@@ -145,14 +147,16 @@ function Header({ onLogout, profilePhoto }) {
         ))}
       </Select>
       {/* <div>Header</div> */}
-      <div className="top_bar_icons">
-        <Badge count="5" offset={[10, 0]}>
-          <NotificationOutlined />
+
+      <div className='top_bar_icons' >
+        <Badge  offset={[10, 0]} style={{marginTop:"5px"}}>
+        <NotificationOutlined style={{image:"80px", marginTop:"5px"}}/>
         </Badge>
       </div>
-      <div className="top_bar_icons">
-        <Badge count="5" offset={[10, 0]}>
-          <MailOutlined style={{ fontSize: "24px" }} />
+      <div  className='top_bar_icons' >
+        <Badge  offset={[10, 0]} style={{marginTop:"5px"}}>
+        <MailOutlined style={{image:"80px", marginTop:"5px"}}/>
+
         </Badge>
       </div>
       <div className="top_bar_icons">
@@ -179,8 +183,10 @@ function SlideMenu({ location, navigate, onLogout }) {
         style={{
           background: "#0B8C73",
           color: "white",
-          height: "92.5vh",
+          height: "100vh",
           overflow: "hidden",
+          position: "fixed",
+          width: "250px",
         }}
         selectedKeys={selectedKeys}
         onClick={({ key }) => {
@@ -195,6 +201,7 @@ function SlideMenu({ location, navigate, onLogout }) {
           { label: "Dashboard", key: "/dash", icon: <DashboardOutlined /> },
           { label: "Appointments", key: "Acard", icon: <IdcardOutlined /> },
           { label: "Lab", key: "/lab", icon: <ShopOutlined /> },
+
           { label: "EMS", key: "/ems", icon: <UserOutlined /> },
           { label: "IMS", key: "/ims", icon: <UserOutlined /> },
           { label: "Create Promotions", key: "/createpromotions", icon: <UserOutlined /> },
@@ -202,6 +209,7 @@ function SlideMenu({ location, navigate, onLogout }) {
           { label: "Spa", key: "/spa", icon: <ShopOutlined /> },
           { label: "Shalon", key: "/shalon", icon: <ShopOutlined /> },
           { label: "CSC", key: "/csc", icon: <ShopOutlined /> },
+
           { label: "Clinic", key: "/clinic", icon: <ShopOutlined /> },
           {
             label: "Consumer",
