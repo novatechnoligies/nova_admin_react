@@ -30,6 +30,7 @@ import AppointmentDetails from "./components/consumers_appointments/AppointmentD
 import TestForm from "./components/result/TestForm";
 import axios from "axios";
 import { BASE_URL } from "./constants/constants";
+import AccessManagment from "./components/access-managment/AccessManagment";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -208,7 +209,7 @@ function SlideMenu({ location, navigate, onLogout }) {
             icon: <ShoppingOutlined />,
             children: [
               { label: "Active", key: "/active", icon: <ShopOutlined /> },
-              { label: "Inactive", key: "/inactive", icon: <ShopOutlined /> },
+              { label: "Access Management", key: "/Access-Management", icon: <ShopOutlined /> },
               {
                 label: "New Consumer Account",
                 key: "/newconsumeraccount",
@@ -311,6 +312,7 @@ function Content() {
           path="/appointment-details/:appointmentId"
           element={<AppointmentDetails />}
         />
+        <Route path="/Access-Management" element={<div><AccessManagment></AccessManagment></div>} />
         <Route path="/report" element={<TestForm />} />
       </Routes>
     </div>
