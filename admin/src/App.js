@@ -33,6 +33,8 @@ import { BASE_URL } from "./constants/constants";
 import Ems from "./components/ems_components/Ems";
 import Ims from "./components/ems_components/Ims";
 import Createpromotions from "./components/ems_components/Createpromotions";
+import AccessManagment from "./components/access-managment/AccessManagment";
+
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -214,7 +216,7 @@ function SlideMenu({ location, navigate, onLogout }) {
             icon: <ShoppingOutlined />,
             children: [
               { label: "Active", key: "/active", icon: <ShopOutlined /> },
-              { label: "Inactive", key: "/inactive", icon: <ShopOutlined /> },
+              { label: "Access Management", key: "/Access-Management", icon: <ShopOutlined /> },
               {
                 label: "New Consumer Account",
                 key: "/newconsumeraccount",
@@ -317,6 +319,7 @@ function Content() {
           path="/appointment-details/:appointmentId"
           element={<AppointmentDetails />}
         />
+        <Route path="/Access-Management" element={<div><AccessManagment></AccessManagment></div>} />
         <Route path="/report" element={<TestForm />} />
         <Route path="/ems" element={<Ems/>}/>
         <Route path="/ims" element={<Ims/>} />

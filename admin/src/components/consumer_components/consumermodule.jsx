@@ -8,6 +8,7 @@ import {
   Radio,
   Select,
   message,
+  InputNumber,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
@@ -159,10 +160,16 @@ function NewConsumer() {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <Form form={cusumerform} name="newConsumerForm">
-          <Form.Item name="id" label="id" hidden>
+        <Form
+          form={cusumerform}
+          name="newConsumerForm"
+          labelCol={{ span: 6 }}
+          wrapperCol={{ span: 18 }}
+        >
+          <Form.Item name="id" label="ID" hidden>
             <Input />
           </Form.Item>
+
           <Form.Item
             name="firstName"
             label="First Name"
@@ -170,9 +177,11 @@ function NewConsumer() {
           >
             <Input />
           </Form.Item>
+
           <Form.Item name="lastName" label="Last Name" rules={[{ max: 50 }]}>
             <Input />
           </Form.Item>
+
           <Form.Item
             name="email"
             label="Email"
@@ -183,7 +192,7 @@ function NewConsumer() {
 
           <Form.Item
             name="phone"
-            label="phone"
+            label="Phone"
             rules={[{ required: true, max: 50 }]}
           >
             <Input />
@@ -191,15 +200,15 @@ function NewConsumer() {
 
           <Form.Item
             name="pin"
-            label="pin"
+            label="PIN"
             rules={[{ required: true, max: 50 }]}
           >
             <Input />
           </Form.Item>
 
           <Form.Item
-            name="gender"
             label="Gender"
+            name="gender"
             rules={[{ required: true, message: "Please select your gender" }]}
           >
             <Radio.Group>
@@ -210,8 +219,24 @@ function NewConsumer() {
           </Form.Item>
 
           <Form.Item
+            label="Age"
+            name="age"
+            rules={[{ required: true, message: "Please enter your age" }]}
+          >
+            <InputNumber min={1} max={120} />
+          </Form.Item>
+
+          <Form.Item
+            name="dob"
+            label="Date Of Birth"
+            rules={[{ required: true, max: 50 }]}
+          >
+            <Input type="date" />
+          </Form.Item>
+
+          <Form.Item
             name="username"
-            label="username"
+            label="Username"
             rules={[{ required: true, max: 50 }]}
           >
             <Input />
@@ -219,7 +244,7 @@ function NewConsumer() {
 
           <Form.Item
             name="createdBy"
-            label="createdBy"
+            label="Created By"
             hidden
             initialValue={loginUser}
             rules={[{ required: true, max: 50 }]}
@@ -229,7 +254,7 @@ function NewConsumer() {
 
           <Form.Item
             name="password"
-            label="password"
+            label="Password"
             rules={[{ required: true, max: 50 }]}
           >
             <Input type="password" />
@@ -237,7 +262,7 @@ function NewConsumer() {
 
           <Form.Item
             name="adharNo"
-            label="adharNo"
+            label="Adhar No"
             rules={[{ required: true, min: 12 }]}
           >
             <Input type="number" />
@@ -245,7 +270,7 @@ function NewConsumer() {
 
           <Form.Item
             name="adharPhoto"
-            label="adharPhoto"
+            label="Adhar Photo"
             rules={[{ required: true, max: 50 }]}
           >
             <Input type="file"></Input>
