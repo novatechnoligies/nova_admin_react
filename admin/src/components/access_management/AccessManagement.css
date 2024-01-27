@@ -1,0 +1,62 @@
+.access-management-container {
+    display: flex;
+  }
+  
+  .left-section {
+    width: 60%;
+    padding: 20px;
+  }
+  
+  .right-section {
+    flex: 1;
+    padding: 20px;
+  }
+
+  /* Add these styles to your AccessManagement.css or your main stylesheet */
+
+/* Style for the toggle buttons container */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* Style for each toggle button item */
+li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Style for the label and button container */
+.label-container {
+  margin-right: 20px; /* Adjust the right margin for spacing between label and button */
+}
+
+label {
+  font-size: 16px; /* Increase font size for a more royal appearance */
+  color: #333;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  padding: 12px; /* Increase padding for a larger button */
+  border: none;
+  border-radius: 8px; /* Increase border radius for a more rounded appearance */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+/* Style for the disabled button */
+button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+
+
+  
