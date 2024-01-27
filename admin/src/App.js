@@ -28,8 +28,8 @@ import axios from "axios";
 import { BASE_URL } from "./constants/constants";
 import AccessManagement from "./components/access_management/AccessManagement";
 import Ems from "./components/ems_components/Ems";
-import Ims from "./components/ems_components/Ims";
-import Createpromotions from "./components/ems_components/Createpromotions";
+import Ims from "./components/IMS/Ims";
+import Createpromotions from "./components/promotions_offers/Createpromotions";
 
 
 function App() {
@@ -257,7 +257,6 @@ function Content() {
         <Route path="/appointment-details/:appointmentId"  element={<AppointmentDetails />}/>
         <Route path="/report" element={<TestForm />} />
         <Route path="/accessManagement" element={<AccessManagement />} />
-        <Route path="/report" element={<TestForm />} />
         <Route path="/ems" element={<Ems/>}/>
         <Route path="/ims" element={<Ims/>} />
         <Route path="/createpromotions" element={<Createpromotions/>} />
