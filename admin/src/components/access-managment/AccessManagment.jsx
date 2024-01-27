@@ -1,6 +1,8 @@
 // MainComponent.js
 import React, { useState, useEffect } from 'react';
-import { Switch, Button, Select } from 'antd';
+import { Switch, Button, Select, Form, Radio } from 'antd';
+import { BASE_URL } from '../../constants/constants';
+import axios from 'axios';
 import './AccessManagment.css';
 
 const { Option } = Select;
@@ -8,6 +10,7 @@ const { Option } = Select;
 const AccessManagment = () => {
   const [userRole, setUserRole] = useState('Owner');
   const [lab, setLab] = useState('');
+  const [accessForm] = Form.useForm();
   const [operations, setOperations] = useState({
     createLab: false,
     deleteLab: false,
@@ -18,9 +21,9 @@ const AccessManagment = () => {
     appointmentList: false,
     manageInventory: false,
     employeeManagement: false,
-    importInventory: false,
-    usedInventories: false,
-    loginLogout: false,
+    importInventory: true, // Default ON for "Owner"
+    usedInventories: true, // Default ON for "Owner"
+    loginLogout: true, // Default ON for "Owner"
   });
 
   function onChange(operation, checked) {
@@ -34,18 +37,6 @@ const AccessManagment = () => {
     event.preventDefault();
     console.log('Selected operations:', operations);
   };
-
-  const userRoleItems = [
-    { label: 'Owner', key: 'Owner' },
-    { label: 'Employee 1', key: 'employee1' },
-    { label: 'Employee 2', key: 'employee2' },
-    { label: 'Employee 3', key: 'employee3' },
-  ];
-
-  const labItems = [
-    { label: 'Lab 1', key: 'lab-1' },
-    { label: 'Lab 2', key: 'lab-2' },
-  ];
 
   const operationItems = [
     { label: 'Create Lab', value: 'createLab' },
@@ -63,6 +54,7 @@ const AccessManagment = () => {
   ];
 
   useEffect(() => {
+    loadEmployeeData();
     const employeeInitialState = {
       createLab: false,
       deleteLab: false,
@@ -84,33 +76,68 @@ const AccessManagment = () => {
     }));
   }, [userRole]);
 
+  const [dropdownOptions, setDropdownOptions] = useState([]);
+
+  const loadEmployeeData = () => {
+    axios
+      .get(BASE_URL + `/dataservice/getAllUserDetailsByCreadtedBy?userId=1`)
+      .then((response) => {
+        const searchOwner = response.data.map((result) => ({
+          value: result.id,
+          label: result.firstName,
+        }));
+        setDropdownOptions(searchOwner);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
     <div className="vertical-container">
       <div className="square-border vertical-square">
         <h1 style={{ textAlign: 'center', fontWeight: 'bold', marginBottom: '20px' }}>Access Management</h1>
+        <Form form={accessForm} name="registration_form" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
+          <Form.Item
+            label="User Role"
+            name="userRole"
+            rules={[
+              { required: true, message: 'Please select a user role' },
+            ]}
+          >
+            <Radio.Group onChange={(e) => setUserRole(e.target.value)} value={userRole}>
+              <Radio value="Owner">Owner</Radio>
+              <Radio value="Employee">Employee</Radio>
+            </Radio.Group>
+          </Form.Item>
 
-        <Select
-          placeholder="Select User Role"
-          onChange={(value) => setUserRole(value)}
-          style={{ width: '100%', marginBottom: '20px' }}
-          defaultValue="Select User Role"
-        >
-          {userRoleItems.map((item) => (
-            <Option key={item.key} value={item.label}>
-              {item.label}
-            </Option>
-          ))}
-        </Select>
+          {userRole === 'Employee' && (
+            <Form.Item
+              label="Employee "
+              name="owner"
+              rules={[
+                { required: false, message: 'Please enter your name' },
+                { type: 'name', message: 'Please enter a valid name' },
+              ]}
+            >
+              <Select
+                placeholder="Select an owner"
+                optionFilterProp="label"
+                options={dropdownOptions}
+              />
+            </Form.Item>
+          )}
+        </Form>
 
         {operationItems.map((item) => (
-          (userRole !== 'Owner' || !['importInventory', 'usedInventories', 'loginLogout'].includes(item.value)) && (
+          // Check if the operation should be hidden for "Owner"
+          !(userRole === 'Owner' && ['importInventory', 'usedInventories', 'loginLogout'].includes(item.value)) && (
             <div key={item.value} className="checkbox-item">
               <label>{item.label}</label>
               <Switch checked={operations[item.value]} onChange={(checked) => onChange(item.value, checked)} />
             </div>
           )
         ))}
-
         <div style={{ textAlign: 'center', marginTop: '20px' }}>
           <Button type="primary" size="large" onClick={handleSubmit}>
             Save Permissions

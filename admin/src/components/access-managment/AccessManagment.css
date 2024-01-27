@@ -2,7 +2,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  height: 80vh; /* Updated height to 80% */
+  height: 80vh;
   background-color: rgb(255, 255, 255);
   margin-left: 20px;
   margin-top: 20px;
@@ -14,7 +14,7 @@
   padding: 20px;
   border: 2px solid #ccc;
   border-radius: 8px;
-  margin-bottom: 20px; /* Add space at the bottom */
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
