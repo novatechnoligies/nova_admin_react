@@ -13,7 +13,6 @@ import {
 import LabTable from "./components/lab_components/LabTable";
 import ClinicTable from "./components/clinic_components/ClinicTable";
 import LoginPage from "./components/login_components/Login";
-// import Filter from './components/filter_componets/Filter';
 import Acards from "./components/consumers_appointments/Acards";
 import { NotificationOutlined, UserOutlined } from "@ant-design/icons";
 import { MailOutlined } from "@ant-design/icons";
@@ -28,12 +27,17 @@ import TestForm from "./components/result/TestForm";
 import axios from "axios";
 import { BASE_URL } from "./constants/constants";
 import AccessManagement from "./components/access_management/AccessManagement";
+import Ems from "./components/ems_components/Ems";
+import Ims from "./components/ems_components/Ims";
+import Createpromotions from "./components/ems_components/Createpromotions";
+
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
+  
   const handleLogin = () => {
     // Perform login logic here
     setLoggedIn(true);
@@ -83,7 +87,6 @@ function Header({ onLogout, profilePhoto }) {
   const [selectedValues, setSelectedValues] = useState([]);
   const [labData, setLabData] = useState([]);
 
-
   useEffect(() => {
     getLabData();
   }, []);
@@ -122,10 +125,12 @@ function Header({ onLogout, profilePhoto }) {
   // Set the default selected value
   const defaultSelectedValue = labOptions.length > 0 ? [labOptions[0].key] : [];
 
-
   return (
-    <div className="top-bar">
-     <Select
+    <div
+      className="top-bar"
+      style={{ position: "fixed", top: 0, width: "100%" }}
+    >
+      <Select
         style={{ width: "20%", marginRight: "20px" }}
         placeholder="Select Your Lab"
         onChange={handleChange}
@@ -140,14 +145,16 @@ function Header({ onLogout, profilePhoto }) {
         ))}
       </Select>
       {/* <div>Header</div> */}
-      <div className="top_bar_icons">
-        <Badge count="5" offset={[10, 0]}>
-          <NotificationOutlined />
+
+      <div className='top_bar_icons' >
+        <Badge  offset={[10, 0]} style={{marginTop:"5px"}}>
+        <NotificationOutlined style={{image:"80px", marginTop:"5px"}}/>
         </Badge>
       </div>
-      <div className="top_bar_icons">
-        <Badge count="5" offset={[10, 0]}>
-          <MailOutlined style={{ fontSize: "24px" }} />
+      <div  className='top_bar_icons' >
+        <Badge  offset={[10, 0]} style={{marginTop:"5px"}}>
+        <MailOutlined style={{image:"80px", marginTop:"5px"}}/>
+
         </Badge>
       </div>
       <div className="top_bar_icons">
@@ -182,8 +189,10 @@ function SlideMenu({ location, navigate, onLogout }) {
         style={{
           background: "#0B8C73",
           color: "white",
-          height: "92.5vh",
+          height: "100vh",
           overflow: "hidden",
+          position: "fixed",
+          width: "250px",
         }}
         selectedKeys={selectedKeys}
         onClick={({ key }) => {
@@ -200,12 +209,25 @@ function SlideMenu({ location, navigate, onLogout }) {
           { label: "Appointments", key: "Acard", icon: <IdcardOutlined /> },
            { label: "Lab", key: "/lab", icon: <ShopOutlined /> },
           isHideClinic ? null : { label: "Clinic", key: "/clinic", icon: <ShopOutlined /> },
-          {label: "Consumer",key: "/consumer",icon: < ShoppingOutlined />,
+          
+          { label: "EMS", key: "/ems", icon: <UserOutlined /> },
+          { label: "IMS", key: "/ims", icon: <UserOutlined /> },
+          { label: "Create Promotions", key: "/createpromotions", icon: <UserOutlined /> },
+          { label: "Clinic", key: "/clinic", icon: <ShopOutlined /> },
+          {
+            label: "Consumer",
+            key: "/consumer",
+            icon: <ShoppingOutlined />,
             children: [
               { label: "Active", key: "/active", icon: <ShopOutlined /> },
-              { label: "Inactive", key: "/inactive", icon: <ShopOutlined /> },
-              {label: "New Consumer Account",key: "/newconsumeraccount",icon: <ShopOutlined />,},
-            ],},
+              { label: "Access Management", key: "/Access-Management", icon: <ShopOutlined /> },
+              {
+                label: "New Consumer Account",
+                key: "/newconsumeraccount",
+                icon: <ShopOutlined />,
+              },
+            ],
+          },
           { label: "Profile", key: "/profile", icon: <ProfileOutlined /> },
           
           {label: "Sign Out",key: "/logout",icon: <SettingOutlined />,danger: true, },
@@ -235,6 +257,10 @@ function Content() {
         <Route path="/appointment-details/:appointmentId"  element={<AppointmentDetails />}/>
         <Route path="/report" element={<TestForm />} />
         <Route path="/accessManagement" element={<AccessManagement />} />
+        <Route path="/report" element={<TestForm />} />
+        <Route path="/ems" element={<Ems/>}/>
+        <Route path="/ims" element={<Ims/>} />
+        <Route path="/createpromotions" element={<Createpromotions/>} />
       </Routes>
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./AvailableServices.css";
-import { Row, Col, Table, Button } from "antd";
+import { Row, Col, Table, Button, Input } from "antd";
 import axios from "axios";
 import { BASE_URL } from "../../constants/constants";
 
@@ -26,11 +26,10 @@ const AvailableService = () => {
           amount: result.amount,
           shopId: result.shopId,
           serviceId: result.serviceId,
-          testDescription:result.testDescription,
+          testDescription: result.testDescription,
         }));
         setServiceSummary(serviceSummaryFromApi);
-        console("setServiceSummary"+ setServiceSummary);
-
+        console("setServiceSummary" + setServiceSummary);
       })
       .catch((error) => {
         console.error(error);
@@ -51,23 +50,20 @@ const AvailableService = () => {
 
   return (
     <div className="main-container">
-       <div className="filter-section"> 
-        <div className="filter-forms">
-          <label htmlFor="sort">Sort By:</label>
-          <select id="sort">
-            <option value="">None</option>
-            <option value="price">Price</option>
-          </select>
-          <label htmlFor="search">Search:</label>
-          <input type="text" id="search" />
-          <Button
-            className="ant-btn ant-btn-primary"
-            style={{ marginLeft: "10px" }}
-          >
-            Add Services
-          </Button>
-        </div>
-      </div> 
+      <div className="filter-section">
+        <h3>Available Services</h3>
+        <Input
+          type="search"
+          id="search"
+          placeholder="Search Available Service"
+        />
+        <Button
+          className="ant-btn ant-btn-primary"
+          style={{ marginLeft: "10px" }}
+        >
+          Add Services
+        </Button>
+      </div>
       <div className="scrollable-section">
         {serviceSummary.map((service) => (
           <div key={service.id} className="service-item">
@@ -124,7 +120,6 @@ const AvailableService = () => {
                       background: "red",
                       color: "white",
                       marginLeft: "40px",
-                      marginTop: "20px",
                     }}
                   >
                     Update Price

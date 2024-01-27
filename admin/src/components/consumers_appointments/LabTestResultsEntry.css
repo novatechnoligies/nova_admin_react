@@ -1,0 +1,56 @@
+.lab-result-container{
+    width: 660px;
+
+} 
+
+/* Apply some basic styling to the table */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  /* Style the table header */
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  /* Style the table cells */
+  td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  /* Add some spacing between table cells */
+  td:not(:last-child) {
+    margin-right: 10px;
+  }
+  
+  /* Style the input field within the table */
+  input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Highlight alternate rows for better readability */
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  /* Add hover effect on table rows */
+  tbody tr:hover {
+    background-color: #e0e0e0;
+  }
+  
+  /* Input field values Validation */
+
+  .low-indicator {
+    color: red;
+  }
+  
+  .high-indicator {
+    color: orange;
+  }

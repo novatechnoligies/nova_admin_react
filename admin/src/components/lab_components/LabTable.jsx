@@ -12,6 +12,7 @@ import {
   Card,
 } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { LeftOutlined } from "@ant-design/icons";
 import { BASE_URL } from "../../constants/constants";
 import axios from "axios";
 import LabFormModal from "./LabFormModal";
@@ -33,6 +34,11 @@ const LabDataTable = ({ data, onDeleteLab }) => {
 
   const [showLabTable, setShowLabTable] = useState(true);
 
+  const handleBackButtonClick = () => {
+    setShowSummary(false);
+    setShowLabTable(true);
+  };
+
   const handleRowClick = (row) => {
     setSelectedLab(row);
     setShowSummary(true);
@@ -44,14 +50,18 @@ const LabDataTable = ({ data, onDeleteLab }) => {
   };
 
   // ON LOAD
+
   useEffect(() => {
     getLabData();
+  }, []);
+
+  useEffect(() => {
     const result = labData.filter((lab) => {
       return lab.shopName.toLowerCase().includes(search.toLowerCase());
     });
     console.log("Filtered result:", result);
     setFilterLabData(result);
-  }, [search]);
+  }, [search, labData]);
 
   const getLabData = async () => {
     const storedUserData = sessionStorage.getItem("userData");
@@ -131,6 +141,7 @@ const LabDataTable = ({ data, onDeleteLab }) => {
       style: { wordWrap: "break-word" },
     },
   ];
+
   // handle create lab modal
   const handleCreateLabClick = () => {
     setIsLabAvailabilityModalVisible(false);
@@ -227,19 +238,32 @@ const LabDataTable = ({ data, onDeleteLab }) => {
           }
           subHeaderComponent={
             <div>
-              <input
+              <Input
                 type="text"
                 placeholder="Search Here"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-              ></input>
+              />
             </div>
           }
           subHeader
           onRowClicked={handleRowClick}
         />
       ) : (
-        <Summary labData={selectedLab} />
+        <div>
+          <Button
+            type="primary"
+            style={{
+              marginBottom: "5px",
+              marginTop: "10px",
+              marginLeft: "10px",
+            }}
+            onClick={handleBackButtonClick}
+          >
+            <LeftOutlined /> Back to Lab Table
+          </Button>
+          <Summary labData={selectedLab} />
+        </div>
       )}
 
       <LabFormModal
@@ -247,7 +271,6 @@ const LabDataTable = ({ data, onDeleteLab }) => {
         onCancel={() => setIsCreateLabModalVisible(false)}
         onCreate={handleCreateLabModalSubmit}
       />
-
       <LabAvailabilityModal
         visible={isLabAvailabilityModalVisible}
         onCancel={() => setIsLabAvailabilityModalVisible(false)}
