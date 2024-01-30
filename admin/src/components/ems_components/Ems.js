@@ -31,7 +31,16 @@ const Ems = () => {
 
   const columns = [
     {
-      name: 'Lab Name',
+      name: 'ID',
+      selector: (row) => row.shopID,
+      sortable: true,
+      style: {
+        fontWeight: 'bold',
+        wordWrap: 'break-word',
+      },
+    },
+    {
+      name: 'Name',
       selector: (row) => row.shopName,
       sortable: true,
       style: {
@@ -40,17 +49,18 @@ const Ems = () => {
       },
     },
     {
+      name: 'Phone No',
+      selector: (row) => row.phone,
+      sortable: true,
+      style: { wordWrap: 'break-word' },
+    },
+    {
       name: 'Address',
       selector: (row) => row.shopAddress,
       sortable: true,
       style: { wordWrap: 'break-word' },
     },
-    {
-      name: 'Phone',
-      selector: (row) => row.phone,
-      sortable: true,
-      style: { wordWrap: 'break-word' },
-    },
+    
     {
       name: 'Email',
       selector: (row) => row.email,
@@ -58,20 +68,26 @@ const Ems = () => {
       style: { wordWrap: 'break-word' },
     },
     {
-      name: 'pinCode',
-      selector: (row) => row.pinCode,
+      name: 'Pincode',
+      selector: (row) => row.pincode,
       sortable: true,
       style: { wordWrap: 'break-word' },
     },
     {
-      name: 'Ownername',
-      selector: (row) => row.shopName,
+      name: 'Adhar Number',
+      selector: (row) => row.adharNumber,
       sortable: true,
       style: { wordWrap: 'break-word' },
     },
     {
-      name: 'GST NO',
-      selector: (row) => row.gstNo,
+      name: 'Position',
+      selector: (row) => row.position,
+      sortable: true,
+      style: { wordWrap: 'break-word' },
+    },
+    {
+      name: 'Gender',
+      selector: (row) => row.gender,
       sortable: true,
       style: { wordWrap: 'break-word' },
     },

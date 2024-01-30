@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
 import './App.css';
+import React from 'react';
+
+const TableHeader = () => {
+  const headerStyle = {
+    backgroundColor: '#3498db',  // Replace with the desired color
+    color: '#fff',               // Replace with the desired text color
+    fontWeight: 'bold',
+  };
 
 /*const App = () => {
   // Sample employee data
