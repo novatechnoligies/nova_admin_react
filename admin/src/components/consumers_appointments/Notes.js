@@ -39,7 +39,7 @@ const Notes = () => {
         note: trimmedNote,
         patientId: patientId, // Access patientId from the form
         technicianId: technicianId,
-        appointmentId:cd 
+        appointmentId:appointmentId 
          // Access technicianId from the form
         // Add other fields as needed
       };

@@ -176,13 +176,15 @@ function SlideMenu({ location, navigate, onLogout }) {
   const selectedKeys = [location.pathname];
   const storedUserData = sessionStorage.getItem("userData");
   const userDataObject = JSON.parse(storedUserData);
-  const accessPermissionItems = userDataObject.accePermissions[0].items;
-   
-  const itemsArray = JSON.parse(accessPermissionItems);
-  itemsArray.some(item => item.label === "csc" && item.isOn);
-  //alert(itemsArray.some(item => item.label === "csc" && item.isOn));
 
-  const isHideClinic = itemsArray.some(item => item.label === "csc" && item.isOn);
+  const accessPermissionItems = userDataObject.accePermissions[0]?.items;
+  let isHideClinic = false;
+
+  if (accessPermissionItems !== undefined) {
+    const itemsArray = JSON.parse(accessPermissionItems);
+    isHideClinic = itemsArray.some(item => item.label === "csc" && item.isOn);
+  }
+
   return (
     <div className="App">
       <Menu
@@ -204,12 +206,11 @@ function SlideMenu({ location, navigate, onLogout }) {
         }}
         items={[
           { label: "Home", key: "/", icon: <HomeOutlined /> },
-          { label: "Access Managemnt", key: "/accessManagement"},
+          { label: "Access Managemnt", key: "/accessManagement" },
           { label: "Dashboard", key: "/dash", icon: <DashboardOutlined /> },
           { label: "Appointments", key: "Acard", icon: <IdcardOutlined /> },
-           { label: "Lab", key: "/lab", icon: <ShopOutlined /> },
+          { label: "Lab", key: "/lab", icon: <ShopOutlined /> },
           isHideClinic ? null : { label: "Clinic", key: "/clinic", icon: <ShopOutlined /> },
-          
           { label: "EMS", key: "/ems", icon: <UserOutlined /> },
           { label: "IMS", key: "/ims", icon: <UserOutlined /> },
           { label: "Create Promotions", key: "/createpromotions", icon: <UserOutlined /> },
@@ -229,13 +230,13 @@ function SlideMenu({ location, navigate, onLogout }) {
             ],
           },
           { label: "Profile", key: "/profile", icon: <ProfileOutlined /> },
-          
-          {label: "Sign Out",key: "/logout",icon: <SettingOutlined />,danger: true, },
+          { label: "Sign Out", key: "/logout", icon: <SettingOutlined />, danger: true },
         ]}
       />
     </div>
   );
 }
+
 
 function Content() {
   return (
