@@ -1,0 +1,277 @@
+.dashboard-container {
+    height: 100vh;
+    width: 100%;
+    background-color: lightgrey
+}
+.first-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.first-container > div {
+  
+  box-sizing: border-box;
+  text-align: center;
+  align-items: center;
+  background-color: white; /* Change this to the desired background color */
+  border-radius: 10px; /* Adjust the value to control the curvature */
+  color: black; /* Change this to the desired text color */
+  margin: 4px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.tile1,
+.tile2,
+.tile3,
+.tile4,
+.tile5 {
+  /* Set size for Total Appointment component */
+  /* Example: */
+  width: 130px;
+  height: 100px;
+}
+/* YourStyles.css */
+
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px; /* Adjust the height as needed */
+  border: 1px solid #ccc; /* Optional: Add a border for better visibility */
+  text-align: center; /* Center text horizontally */
+}
+
+
+.tile6 {
+  display: flex;
+  flex-direction: row; /* Display boxes in a row */
+  justify-content: space-between; /* Distribute space between the boxes */
+  align-items: center; /* Center the boxes vertically */
+  width: 310px;
+  height: 100px;
+  background-color: white;
+}
+
+.box {
+  flex: 1;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 10px; /* Add border-radius for curved edges */
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Add transition effect for the highlight */
+  min-width: auto; /* Set a minimum width to prevent very narrow boxes */
+  font-size: 12px;
+  text-align: center;
+}
+
+.box:hover {
+  background-color: lightgray; /* Change the background color on hover */
+}
+
+.box1 {
+  height: 50px; /* Set the desired height for box1 */
+  width: 15%; /* Set the width for box1 */
+}
+
+.box2 {
+  height: 50px; /* Set the desired height for box2 */
+  width: 25%; /* Set the width for box2 */
+}
+
+.box3 {
+  height: 50px; /* Set the desired height for box3 */
+  width: 30%; /* Set the width for box3 */
+}
+
+.custom-heading {
+  font-size: 24px; /* Adjust the font size as needed */
+  font-weight: bold; /* Optional: Adjust the font weight as needed */
+  color: #333; /* Optional: Adjust the color as needed */
+}
+
+.custom-count {
+  font-size: 15px; /* Adjust the font size as needed */
+  font-weight: bold; /* Optional: Adjust the font weight as needed */
+  color: #555; /* Optional: Adjust the color as needed */
+}
+
+
+
+.heading {
+  font-size: 12px; /* Set the desired font size */
+}
+
+
+
+  .second-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .second-container > div {
+    flex: 2;
+    box-sizing: border-box;
+    padding: 20px;
+    text-align: center;
+    align-items: center;
+    background-color:white; /* Change this to the desired background color */
+    border-radius: 10px; /* Adjust the value to control the curvature */
+    color:black; /* Change this to the desired text color */
+    margin: 10px;
+    height: 250px;
+
+    text-align: center;
+}
+
+.tile1 {
+  margin: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 5px;
+}
+
+th {
+  background-color:white; /* Header background color */
+  color:black; /* Header text color */
+  }
+  .custom-th {
+    font-size: 12px; /* Adjust the font size as needed */
+    font-weight: bold; /* Optional: Adjust the font weight as needed */
+    color: #555; /* Optional: Adjust the color as needed */
+    border: 1px solid #ccc; /* Optional: Add border for better visibility */
+    padding: 8px; /* Optional: Adjust the padding as needed */
+  }
+
+  .tile2 {
+    margin: 10px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 5px;
+  }
+  
+  th {
+    background-color:white; /* Header background color */
+    color:black; /* Header text color */
+    }
+    
+    .custom-th {
+      font-size: 12px; /* Adjust the font size as needed */
+      font-weight: bold; /* Optional: Adjust the font weight as needed */
+      color: #555; /* Optional: Adjust the color as needed */
+      border: 1px solid #ccc; /* Optional: Add border for better visibility */
+      padding: 8px; /* Optional: Adjust the padding as needed */
+    }
+
+
+  .third-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .third-container > div {
+    flex: 3;
+    box-sizing: border-box;
+    padding: 20px;
+    text-align: center;
+    align-items: center;
+    background-color: white; /* Change this to the desired background color */ 
+    border-radius: 10px; /* Adjust the value to control the curvature */
+    color: black; /* Change this to the desired text color */
+    margin: 10px;
+    height: 250px;
+
+    .tile2
+    {
+      margin: 10px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th, td {
+      border: 1px solid #ddd;
+      padding: 5px;
+    }
+    
+    th {
+      background-color:white; /* Header background color */
+      color:black; /* Header text color */
+      }
+      .custom-th {
+        font-size: 12px; /* Adjust the font size as needed */
+        font-weight: bold; /* Optional: Adjust the font weight as needed */
+        color: #555; /* Optional: Adjust the color as needed */
+        border: 1px solid #ccc; /* Optional: Add border for better visibility */
+        padding: 8px; /* Optional: Adjust the padding as needed */
+      }
+}
+
+.chart-heading {
+    text-align: left;
+}
+
+.pie-chart {
+    width: 250px;
+    height: 150px;
+    background: conic-gradient(
+      #a4f8b4 0deg 162deg,    /* Light Green 45% */
+      #e6e6e6 162deg 216deg,  /* Light Gray 15% */
+      #ffad99 216deg 288deg,  /* Light Red 20% */
+      #add8e6 288deg 360deg   /* Light Blue 20% */
+    );
+    border-radius: 50% 50%;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    float: left; 
+    margin-right: 20px;
+}
+
+.color-box-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Adjust as needed for spacing between color boxes */
+}
+
+.color-box {
+    width: 20px;
+    height: 20px;
+    margin-left: 20px;
+}
+
+.color-name {
+    font-size: 15px;
+    
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.color-box.green { background-color: #a4f8b4; }
+.color-box.gray { background-color: #e6e6e6; }
+.color-box.red { background-color: #ffad99; }
+.color-box.blue { background-color: #add8e6; }
+
+
+
+.first-container > div:hover,
+.second-container > div:hover,
+.third-container > div:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
