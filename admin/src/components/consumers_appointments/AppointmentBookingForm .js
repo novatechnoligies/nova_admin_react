@@ -142,7 +142,7 @@ const AppointmentBookingForm = (selectedAccount) => {
   
         // Set both options and selected value
         setServiceDropdownOptions(searchService);
-        form.setFieldsValue({ serviceId: value });
+        // form.setFieldsValue({ serviceId: value }); // No need to set this value
       })
       .catch((error) => {
         console.error(error);
@@ -243,20 +243,16 @@ const AppointmentBookingForm = (selectedAccount) => {
           showSearch
           onSearch={handleServices}
           placeholder="Select a service"
-          //optionFilterProp="label"
-         // filterOption={filterOption}
-          //options={serviceDropdownOptions}
-          value={serviceDropdownOptions}
-          onChange={handleChangeServices}
           mode="multiple"
+          value={selectedValues}
+          onChange={handleChangeServices}
         >
-          <Select.Option key={allOption.key}>{allOption.label}</Select.Option>
-        {serviceDropdownOptions.map((item) => (
-          <Select.Option key={item.key}>{item.label}</Select.Option>
-        ))}
-      </Select>
+          {serviceDropdownOptions.map((item) => (
+            <Select.Option key={item.key}>{item.label}</Select.Option>
+          ))}
+        </Select>
 
-{/* <Select
+        {/* <Select
         mode="multiple"
         style={{ width: "100%" }}
         placeholder="Select values"
@@ -268,7 +264,6 @@ const AppointmentBookingForm = (selectedAccount) => {
           <Select.Option key={item.key}>{item.label}</Select.Option>
         ))}
       </Select> */}
-        
       </Form.Item>
 
       <Form.Item>

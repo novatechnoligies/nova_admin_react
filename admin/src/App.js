@@ -10,13 +10,9 @@ import {
   ShoppingOutlined,
   IdcardOutlined,
 } from "@ant-design/icons/lib/icons";
-import ShopTable from "./components/shop_components/ShopTable";
- import SpaTable from "./components/spa_components/SpaTable";
 import LabTable from "./components/lab_components/LabTable";
-import CscTable from "./components/csc_components/CscTable";
 import ClinicTable from "./components/clinic_components/ClinicTable";
 import LoginPage from "./components/login_components/Login";
-// import Filter from './components/filter_componets/Filter';
 import Acards from "./components/consumers_appointments/Acards";
 import { NotificationOutlined, UserOutlined } from "@ant-design/icons";
 import { MailOutlined } from "@ant-design/icons";
@@ -30,6 +26,11 @@ import AppointmentDetails from "./components/consumers_appointments/AppointmentD
 import TestForm from "./components/result/TestForm";
 import axios from "axios";
 import { BASE_URL } from "./constants/constants";
+import AccessManagement from "./components/access_management/AccessManagement";
+import Ems from "./components/ems_components/Ems";
+import Ims from "./components/IMS/Ims";
+import Createpromotions from "./components/promotions_offers/Createpromotions";
+
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -173,6 +174,16 @@ function Header({ onLogout, profilePhoto }) {
 
 function SlideMenu({ location, navigate, onLogout }) {
   const selectedKeys = [location.pathname];
+  const storedUserData = sessionStorage.getItem("userData");
+  const userDataObject = JSON.parse(storedUserData);
+
+  const accessPermissionItems = userDataObject.accePermissions[0]?.items;
+  let isHideClinic = false;
+
+  if (accessPermissionItems !== undefined) {
+    const itemsArray = JSON.parse(accessPermissionItems);
+    isHideClinic = itemsArray.some(item => item.label === "csc" && item.isOn);
+  }
 
   return (
     <div className="App">
@@ -195,12 +206,14 @@ function SlideMenu({ location, navigate, onLogout }) {
         }}
         items={[
           { label: "Home", key: "/", icon: <HomeOutlined /> },
+          { label: "Access Managemnt", key: "/accessManagement" },
           { label: "Dashboard", key: "/dash", icon: <DashboardOutlined /> },
           { label: "Appointments", key: "Acard", icon: <IdcardOutlined /> },
           { label: "Lab", key: "/lab", icon: <ShopOutlined /> },
-          //{ label: "Spa", key: "/spa", icon: <ShopOutlined /> },
-          //{ label: "Shalon", key: "/shalon", icon: <ShopOutlined /> },
-          //{ label: "CSC", key: "/csc", icon: <ShopOutlined /> },
+          isHideClinic ? null : { label: "Clinic", key: "/clinic", icon: <ShopOutlined /> },
+          { label: "EMS", key: "/ems", icon: <UserOutlined /> },
+          { label: "IMS", key: "/ims", icon: <UserOutlined /> },
+          { label: "Create Promotions", key: "/createpromotions", icon: <UserOutlined /> },
           { label: "Clinic", key: "/clinic", icon: <ShopOutlined /> },
           {
             label: "Consumer",
@@ -208,7 +221,7 @@ function SlideMenu({ location, navigate, onLogout }) {
             icon: <ShoppingOutlined />,
             children: [
               { label: "Active", key: "/active", icon: <ShopOutlined /> },
-              { label: "Inactive", key: "/inactive", icon: <ShopOutlined /> },
+              { label: "Access Management", key: "/Access-Management", icon: <ShopOutlined /> },
               {
                 label: "New Consumer Account",
                 key: "/newconsumeraccount",
@@ -217,17 +230,13 @@ function SlideMenu({ location, navigate, onLogout }) {
             ],
           },
           { label: "Profile", key: "/profile", icon: <ProfileOutlined /> },
-          {
-            label: "Sign Out",
-            key: "/logout",
-            icon: <SettingOutlined />,
-            danger: true,
-          },
+          { label: "Sign Out", key: "/logout", icon: <SettingOutlined />, danger: true },
         ]}
       />
     </div>
   );
 }
+
 
 function Content() {
   return (
@@ -235,83 +244,23 @@ function Content() {
       <Routes>
         <Route path="/" element={<div>Dashboard</div>} />
         <Route path="/dash" element={<div>Dashboard</div>} />
-        <Route
-          path="/lab"
-          element={
-            <div className="d-flex flex-column align-items-center">
-              {" "}
-              <LabTable />
-            </div>
-          }
-        />
-        <Route
-          path="/Acard"
-          element={
-            <div className="d-flex flex-column align-items-center">
-              {" "}
-              <Acards />
-            </div>
-          }
-        />
-        <Route
-          path="/spa"
-          element={
-            <div className="d-flex flex-column align-items-center">
-              {" "}
-              <SpaTable />
-            </div>
-          }
-        />
-        <Route
-          path="/shalon"
-          element={
-            <div className="d-flex flex-column align-items-center">
-              {" "}
-              <ShopTable />
-            </div>
-          }
-        />
-        <Route
-          path="/csc"
-          element={
-            <div className="d-flex flex-column align-items-center">
-              {" "}
-              <CscTable />
-            </div>
-          }
-        />
-        <Route
-          path="/clinic"
-          element={
-            <div className="d-flex flex-column align-items-center">
-              {" "}
-              <ClinicTable />
-            </div>
-          }
-        />
+        <Route path="/lab" element={ <div className="d-flex flex-column align-items-center">{" "} <LabTable /> </div> } />
+        <Route  path="/Acard" element={ <div className="d-flex flex-column align-items-center">{" "} <Acards /> </div>} />
+        <Route path="/clinic" element={ <div className="d-flex flex-column align-items-center"> {" "} <ClinicTable /></div>}/>
         <Route path="/consumer" element={<div>Consumer</div>} />
         <Route path="/profile" element={<div>Profile</div>} />
         <Route path="/logout" element={<div>Logout</div>} />
         <Route path="/active" element={<div>Active</div>} />
         <Route path="/inactive" element={<div>Inactive</div>} />
         <Route path="/AppChildCards/:id" element={<More />} />
-        <Route
-          path="/newconsumeraccount"
-          element={
-            <div>
-              <NewConsumer />
-            </div>
-          }
-        />
-        <Route
-          path="/appointment-booking"
-          element={<AppointmentBookingPage />}
-        />
-        <Route
-          path="/appointment-details/:appointmentId"
-          element={<AppointmentDetails />}
-        />
+        <Route path="/newconsumeraccount" element={ <div> <NewConsumer />  </div>}/>
+        <Route path="/appointment-booking" element={<AppointmentBookingPage />} />
+        <Route path="/appointment-details/:appointmentId"  element={<AppointmentDetails />}/>
         <Route path="/report" element={<TestForm />} />
+        <Route path="/accessManagement" element={<AccessManagement />} />
+        <Route path="/ems" element={<Ems/>}/>
+        <Route path="/ims" element={<Ims/>} />
+        <Route path="/createpromotions" element={<Createpromotions/>} />
       </Routes>
     </div>
   );
