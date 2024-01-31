@@ -30,6 +30,7 @@ import AccessManagement from "./components/access_management/AccessManagement";
 import Ems from "./components/ems_components/Ems";
 import Ims from "./components/IMS/Ims";
 import Createpromotions from "./components/promotions_offers/Createpromotions";
+import Dashboard from "./components/Dashboard_Components/Dashboard";
 
 
 function App() {
@@ -243,7 +244,7 @@ function Content() {
     <div style={{ marginTop: "1px" }}>
       <Routes>
         <Route path="/" element={<div>Dashboard</div>} />
-        <Route path="/dash" element={<div>Dashboard</div>} />
+        <Route path="/dash" element={<div>< Dashboard/></div>} />
         <Route path="/lab" element={ <div className="d-flex flex-column align-items-center">{" "} <LabTable /> </div> } />
         <Route  path="/Acard" element={ <div className="d-flex flex-column align-items-center">{" "} <Acards /> </div>} />
         <Route path="/clinic" element={ <div className="d-flex flex-column align-items-center"> {" "} <ClinicTable /></div>}/>
