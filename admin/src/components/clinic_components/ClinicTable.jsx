@@ -1,7 +1,7 @@
 import DataTable from "react-data-table-component";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Upload, Modal ,Form, messageessage, Input} from "antd";
+import { Button, Upload, Modal, Form, messageessage, Input } from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
@@ -33,7 +33,7 @@ const ClinicTable = () => {
 
   const onDeleteClinic = (clinic) => {
     Modal.confirm({
-      title: "Do You Want to Delete Clinic" +" " + clinic.name + "?",
+      title: "Do You Want to Delete Clinic" + " " + clinic.name + "?",
       okText: "YES",
       okType: "danger",
       onOk: () => {
@@ -124,22 +124,13 @@ const ClinicTable = () => {
     {
       name: "Action",
       cell: (row) => (
-        <div>
-          <EditOutlined
-            onClick={() => {
-              editClinicDetails(row);
-            }}
-          />
+        <div style={{ display: "flex", gap: "10px" }}>
+          <EditOutlined onClick={() => editClinicDetails(row)} />
           <DeleteOutlined
-            onClick={() => {
-              onDeleteClinic(row);
-            }}
-            style={{ color: "red", marginLeft: "20px" }}
+            onClick={() => onDeleteClinic(row)}
+            style={{ color: "red" }}
           />
         </div>
-        // <Button type="primary" onClick={() => alert(row.name)}>
-        //   Edit
-        // </Button>
       ),
       style: {
         fontWeight: "bold",
@@ -174,6 +165,8 @@ const ClinicTable = () => {
         selectableRows
         selectableRowsHighlight
         highlightOnHover
+        paginationPerPage={10} // Adjust the number of rows per page
+        paginationRowsPerPageOptions={[10, 20, 30]} // Customize rows per page option
         actions={
           <div>
             <ExportOutlined>
@@ -193,17 +186,19 @@ const ClinicTable = () => {
         }
         subHeader
         subHeaderComponent={
-          <input
-            className="w-25 form-control"
-            type="text"
-            placeholder="Search Here"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          ></input>
+          <div style={{ marginBottom: "10px" }}>
+            <Input
+              className="w-50"
+              type="text"
+              placeholder="Search Here"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
         }
       />
-
       <Modal
+        className="custom-modal"
         title="Edit Clinic:"
         visible={isEditing}
         onCancel={() => {
@@ -214,121 +209,119 @@ const ClinicTable = () => {
           setIsEditing(false);
         }}
       >
-      <div>
+        <div>
+          <Form
+            name="registration_form"
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 16 }}
+          >
+            <Form.Item
+              label="Name"
+              name="name"
+              initialValue={editingClinic?.name}
+              rules={[{ required: true, message: "Please enter your name" }]}
+            >
+              <Input />
+            </Form.Item>
 
-<Form
+            <Form.Item
+              label="Adress"
+              name="Adress"
+              initialValue={editingClinic?.topLevelDomain}
+              rules={[
+                { required: true, message: "Please enter your adress" },
+                { type: "email", message: "Please enter a valid adress" },
+              ]}
+            >
+              <Input />
+            </Form.Item>
 
-name="registration_form"
+            <Form.Item
+              label="Password"
+              name="password"
+              initialValue={editingClinic?.alpha2Code}
+              rules={[
+                { required: true, message: "Please enter a password" },
+                {
+                  min: 6,
+                  message: "Password must be at least 6 characters long",
+                },
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
 
-labelCol={{ span: 8 }}
-wrapperCol={{ span: 16 }}
->
-<Form.Item
-label="Name"
-name="name"
-initialValue={editingClinic?.name}
-rules={[{ required: true, message: 'Please enter your name' }]}
->
-<Input />
-</Form.Item>
+            <Form.Item
+              label="Email"
+              name="email"
+              initialValue={editingClinic?.alpha3Code}
+              rules={[
+                { required: true, message: "Please enter your email" },
+                { type: "email", message: "Please enter a valid email" },
+              ]}
+            >
+              <Input />
+            </Form.Item>
 
-<Form.Item
-label="Adress"
-name="Adress"
-initialValue={editingClinic?.topLevelDomain}
-rules={[
-  { required: true, message: 'Please enter your adress' },
-  { type: 'email', message: 'Please enter a valid adress' },
-]}
->
-<Input />
-</Form.Item>
+            <Form.Item
+              label="Pincode"
+              name="Pincode"
+              initialValue={editingClinic?.callingCodes}
+              rules={[
+                { required: true, message: "Please enter your Pincode" },
+                { type: "pincode", message: "Please enter a valid Pincode" },
+              ]}
+            >
+              <Input />
+            </Form.Item>
 
-<Form.Item
-label="Password"
-name="password"
-initialValue={editingClinic?.alpha2Code}
-rules={[
-  { required: true, message: 'Please enter a password' },
-  { min: 6, message: 'Password must be at least 6 characters long' },
-]}
+            <Form.Item
+              label="Ownername"
+              name="Ownername"
+              initialValue={editingClinic?.capital}
+              rules={[
+                { required: true, message: "Please enter your name" },
+                { type: "name", message: "Please enter a valid name" },
+              ]}
+            >
+              <Input />
+            </Form.Item>
 
- 
->
-<Input.Password />
-</Form.Item>
+            <Form.Item
+              label="Logo"
+              name="Logo"
+              initialValue={editingClinic?.altSpellings}
+              rules={[
+                { required: true, message: "Please upload your logo" },
+                { type: "logo", message: "Please upload a valid logo" },
+              ]}
+            >
+              <Upload>
+                <Button icon={<UploadOutlined />}>Click to Upload</Button>
+              </Upload>
+            </Form.Item>
 
-<Form.Item
-label="Email"
-name="email"
-initialValue={editingClinic?.alpha3Code}
-rules={[
-  { required: true, message: 'Please enter your email' },
-  { type: 'email', message: 'Please enter a valid email' },
-]}
->
- <Input />
-</Form.Item>
+            <Form.Item
+              label="Is deleted"
+              name="Is deleted"
+              initialValue={editingClinic?.subregion}
+              rules={[
+                { required: true, message: "deleted" },
+                { type: "delete", message: "deleted" },
+              ]}
+            >
+              {" "}
+              <Input />
+            </Form.Item>
 
-<Form.Item
-label="Pincode"
-name="Pincode"
-initialValue={editingClinic?.callingCodes}
-rules={[
-  { required: true, message: 'Please enter your Pincode' },
-  { type: 'pincode', message: 'Please enter a valid Pincode' },
-]}
->
- <Input />
-</Form.Item>
-
-<Form.Item
-label="Ownername"
-name="Ownername"
-initialValue={editingClinic?.capital}
-rules={[
-  { required: true, message: 'Please enter your name' },
-  { type: 'name', message: 'Please enter a valid name' },
-]}
->
- <Input />
-</Form.Item>
-
-<Form.Item
-  label="Logo"
-  name="Logo"
-  initialValue={editingClinic?.altSpellings}
-  rules={[
-    { required: true, message: "Please upload your logo" },
-    { type: 'logo', message: 'Please upload a valid logo' },
-  ]}
->
-  <Upload>
-    <Button icon={<UploadOutlined />}>Click to Upload</Button>
-  </Upload>
-</Form.Item>
-
-<Form.Item
-label="Is deleted"
-name="Is deleted"
-initialValue={editingClinic?.subregion}
-rules={[
-  { required: true, message: 'deleted' },
-  { type: 'delete', message: 'deleted' },
-]}
-> <Input />
-</Form.Item>
-
-<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-<Button type="primary" htmlType="submit">
-  Update Clinic Details
-</Button>
-
-</Form.Item>
-</Form>
-</div>
+            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+              <Button type="primary" htmlType="submit">
+                Update Clinic Details
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
       </Modal>
-
       <Modal
         title="Edit Clinic:"
         visible={isCreate}
@@ -340,7 +333,7 @@ rules={[
           setIsCreate(false);
         }}
       >
-       <input placeholder="clinic name" />
+        <input placeholder="clinic name" />
       </Modal>
     </div>
   );

@@ -39,8 +39,8 @@ const Notes = () => {
         note: trimmedNote,
         patientId: patientId, // Access patientId from the form
         technicianId: technicianId,
-        appointmentId:cd 
-         // Access technicianId from the form
+        appointmentId: appointmentId,
+        // Access technicianId from the form
         // Add other fields as needed
       };
 
@@ -77,9 +77,9 @@ const Notes = () => {
           <Form.Item name="technicianId" hidden initialValue={technicianId}>
             <Input />
           </Form.Item>
-         
+
           <Form.Item name="appointmentId" hidden initialValue={appointmentId}>
-            <Input /> 
+            <Input />
           </Form.Item>
 
           {/* Visible input field for new note */}

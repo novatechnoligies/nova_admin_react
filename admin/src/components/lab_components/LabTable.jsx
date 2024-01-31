@@ -20,7 +20,7 @@ import LabAvailabilityModal from "./LabAvailabilityModal";
 import LabServiceModal from "./LabServiceModal";
 import Summary from "./Suummary";
 
-const LabDataTable = ({ data, onDeleteLab }) => {
+const LabDataTable = ({ data }) => {
   const [filterLabData, setFilterLabData] = useState([]);
   const [search, setSearch] = useState("");
   const [labData, setLabData] = useState([]);
@@ -49,8 +49,21 @@ const LabDataTable = ({ data, onDeleteLab }) => {
     alert(row.id);
   };
 
-  // ON LOAD
+  const onDeleteLab = async (row) => {
+    try {
+      await axios.put(
+        `${BASE_URL}/dataservice/deleteShopDetails?shopId=${row.id}`
+      );
+      alert("Lab deleted successfully");
+      console.log("Deleting lab with ID:", row.id);
+      getLabData();
+    } catch (error) {
+      console.error("Error deleting lab:", error.message);
+      alert("Error deleting lab. Please try again.");
+    }
+  };
 
+  // ON LOAD
   useEffect(() => {
     getLabData();
   }, []);
