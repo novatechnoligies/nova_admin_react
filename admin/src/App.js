@@ -34,6 +34,7 @@ import Ems from "./components/ems_components/Ems";
 import Ims from "./components/ems_components/Ims";
 import Createpromotions from "./components/ems_components/Createpromotions";
 import AccessManagment from "./components/access-managment/AccessManagment";
+import Dashboard from "./components/Dashboard_Components/Dashboard";
 
 
 function App() {
@@ -242,7 +243,7 @@ function Content() {
     <div style={{ marginTop: "1px" }}>
       <Routes>
         <Route path="/" element={<div>Dashboard</div>} />
-        <Route path="/dash" element={<div>Dashboard</div>} />
+        <Route path="/dash" element={<div><Dashboard /></div>} />
         <Route
           path="/lab"
           element={
