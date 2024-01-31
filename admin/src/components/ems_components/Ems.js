@@ -15,24 +15,28 @@ const Ems = () => {
     getEmployeeTableData();
   }, [search]);
 
+
   const getEmployeeTableData = async () => {
     const storedUserData = sessionStorage.getItem('userData');
     const userDataObject = JSON.parse(storedUserData);
 
     try {
       const response = await axios.get(
-        BASE_URL + `/dataservice/getAllLabListByOwnerId?ownerId=${userDataObject.id}`
+        `http://localhost:8082/dataservice/getAllUserDetailsByCreadtedBy?userId=1`
       );
+      console.log("All Employee Data From API", employeeData);
       setEmployeeData(response.data);
+
     } catch (error) {
       console.error(error);
     }
   };
 
+  
   const columns = [
     {
       name: 'ID',
-      selector: (row) => row.shopID,
+      selector: (row) => row.id,
       sortable: true,
       style: {
         fontWeight: 'bold',
@@ -41,7 +45,7 @@ const Ems = () => {
     },
     {
       name: 'Name',
-      selector: (row) => row.shopName,
+      selector: (row) => row.firstName,
       sortable: true,
       style: {
         fontWeight: 'bold',
@@ -56,11 +60,10 @@ const Ems = () => {
     },
     {
       name: 'Address',
-      selector: (row) => row.shopAddress,
+      selector: (row) => row.lastName,
       sortable: true,
       style: { wordWrap: 'break-word' },
     },
-    
     {
       name: 'Email',
       selector: (row) => row.email,
@@ -69,19 +72,19 @@ const Ems = () => {
     },
     {
       name: 'Pincode',
-      selector: (row) => row.pincode,
+      selector: (row) => row.pin,
       sortable: true,
       style: { wordWrap: 'break-word' },
     },
     {
       name: 'Adhar Number',
-      selector: (row) => row.adharNumber,
+      selector: (row) => row.adharNo,
       sortable: true,
       style: { wordWrap: 'break-word' },
     },
     {
       name: 'Position',
-      selector: (row) => row.position,
+      selector: (row) => row.code,
       sortable: true,
       style: { wordWrap: 'break-word' },
     },
