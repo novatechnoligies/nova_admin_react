@@ -17,21 +17,13 @@
   height: 60px;
   margin-top: 10px;
   border-radius: 8px;
+  align-items: center;
 }
 
-.appointment-button {
-  padding: 10px;
-  text-decoration: none;
-  color: #291d1d;
-  background-color: #ddd; /* Grey */
-  border: none;
-  border-radius: 5px;
-  flex: 1;
-  margin: 0 5px;
-  cursor: pointer;
-  height: 20px;
-  text-align: center;
-  margin-top: 10px;
+.btn-appointments Button {
+  margin: 5px;
+  width: 250px;
+  height: 40px;
 }
 
 .appointment-button:hover {

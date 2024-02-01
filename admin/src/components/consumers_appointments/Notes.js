@@ -77,9 +77,9 @@ const Notes = () => {
           <Form.Item name="technicianId" hidden initialValue={technicianId}>
             <Input />
           </Form.Item>
-         
+
           <Form.Item name="appointmentId" hidden initialValue={appointmentId}>
-            <Input /> 
+            <Input />
           </Form.Item>
 
           {/* Visible input field for new note */}

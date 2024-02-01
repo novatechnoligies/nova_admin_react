@@ -12,16 +12,26 @@ const PatientAppointmentsSummary = () => {
   const [error, setError] = useState(null);
   const [showLabTestModal, setShowLabTestModal] = useState(false);
   const [modalWidth, setModalWidth] = useState(700);
+  const [viewType, setViewType] = useState("current"); // "current" or "past"
 
   const { appointmentId } = useParams();
 
   useEffect(() => {
+    console.log("View Type:", viewType);
+    console.log("Appointments Data:", appointmentsData);
+
     const storedUserData = sessionStorage.getItem("userData");
     const userDataObject = JSON.parse(storedUserData);
 
     setTechnicianName(userDataObject.firstName);
 
     const fetchData = async () => {
+      /*If the console log indicates that the viewType is correctly 
+      set to "past," and you are still not seeing the expected data for past 
+      appointments, consider the following steps: Check API Response for "Past" Appointments: 
+      spect the API response for past appointments to ensure that the 
+      API is returning the expected data. Log the entire response and 
+      examine the data structure for past appointments. */
       try {
         const response = await axios.get(
           `http://localhost:8082/dataservice/getAllServicesByAppointmentIdAndPatientId?appointmentId=${appointmentId}`
@@ -44,7 +54,7 @@ const PatientAppointmentsSummary = () => {
     };
 
     fetchData();
-  }, [appointmentId]);
+  }, [appointmentId, viewType]);
 
   // useEffect(() => {
   //   const storedUserData = sessionStorage.getItem("userData");
@@ -79,18 +89,61 @@ const PatientAppointmentsSummary = () => {
     setShowLabTestModal(false);
   };
 
+  const handleViewTypeChange = async (newViewType) => {
+    // Update the view type and fetch data for the selected type
+    setViewType(newViewType);
+    // Simulate fetching data for past appointments
+    if (newViewType === "past") {
+      try {
+        // Simulate an asynchronous delay (you can remove this in a real scenario)
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        // Dummy data for past appointments - Need to integrate Past Appointments from the API Later
+        const dummyPastAppointments = [
+          {
+            appointmentDate: "2023-01-01",
+            appointmentTime: "09:00 AM",
+            serviceName: "Dummy Service 1",
+            technicianName: "John Doe",
+            appointmentStatus: "Completed",
+          },
+          {
+            appointmentDate: "2023-02-01",
+            appointmentTime: "02:30 PM",
+            serviceName: "Dummy Service 2",
+            technicianName: "Jane Smith",
+            appointmentStatus: "Completed",
+          },
+          // Add more dummy data as needed
+        ];
+
+        // Set the dummy data for past appointments
+        setAppointmentsData(dummyPastAppointments);
+      } catch (error) {
+        console.error("Error fetching dummy data:", error.message);
+        setError("Error fetching data. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
   return (
     <div className="p-appointments-container">
       <div className="btn-appointments">
-        <a href="#" className="appointment-button">
+        <Button
+          type={viewType === "current" ? "primary" : "default"}
+          onClick={() => handleViewTypeChange("current")}
+        >
           Current Appointments
-        </a>
-        <a href="#" className="appointment-button">
+        </Button>
+        <Button
+          type={viewType === "past" ? "primary" : "default"}
+          onClick={() => handleViewTypeChange("past")}
+        >
           Past Appointments
-        </a>
-        <a href="#" className="appointment-button">
-          Medical Record
-        </a>
+        </Button>
+        <Button type="default">Medical Record</Button>
       </div>
       <div className="apt-info-container" style={{ overflow: "scroll" }}>
         {loading && <p>Loading...</p>}
@@ -128,7 +181,9 @@ const PatientAppointmentsSummary = () => {
                 </div>
               ))
             ) : (
-              <p>No current appointments</p>
+              <p>
+                No {viewType === "current" ? "current" : "past"} appointments
+              </p>
             )}
           </div>
         )}
