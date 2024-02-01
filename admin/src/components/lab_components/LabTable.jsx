@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
-import { Button, Modal,Form,Input,Select,DatePicker,Checkbox,TimePicker, Card,} from "antd";
+import {
+  Button,
+  Modal,
+  Form,
+  Input,
+  Select,
+  DatePicker,
+  Checkbox,
+  TimePicker,
+  Card,
+} from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { LeftOutlined } from "@ant-design/icons";
 import { BASE_URL } from "../../constants/constants";
@@ -41,6 +51,14 @@ const LabDataTable = ({ data }) => {
 
   const onDeleteLab = async (row) => {
     try {
+      const isConfirmed = window.confirm(
+        "Are you sure you want to delete the lab?"
+      );
+
+      if (!isConfirmed) {
+        // If user clicks "Cancel" in the confirmation dialog
+        return;
+      }
       await axios.put(
         `${BASE_URL}/dataservice/deleteShopDetails?shopId=${row.id}`
       );

@@ -1,5 +1,16 @@
 import React, { useEffect, useState } from "react";
-import {Button,  Modal,  Form,  Input,  Checkbox,  Card,  Row,  Col,  Select,  message,} from "antd";
+import {
+  Button,
+  Modal,
+  Form,
+  Input,
+  Checkbox,
+  Card,
+  Row,
+  Col,
+  Select,
+  message,
+} from "antd";
 import axios from "axios";
 import { BASE_URL } from "../../constants/constants";
 
@@ -54,7 +65,7 @@ const LabServiceModal = ({ visible, onCancel, onCreate, labData }) => {
       });
   };
 
-  // Handle checkbox with Amout 
+  // Handle checkbox with Amout
   const handleCheckboxChange = (serviceId) => {
     setServiceMaster((prevServices) =>
       prevServices.map((service) =>
@@ -77,7 +88,7 @@ const LabServiceModal = ({ visible, onCancel, onCreate, labData }) => {
   const handleAddServices = () => {
     const selected = serviceMaster.filter((service) => service.isChecked);
     setSelectedServices(selected);
-    const shopIds = selectedValues.filter((value) => value !== 'all');
+    const shopIds = selectedValues.filter((value) => value !== "all");
 
     const jsonData = {
       shopIds: shopIds,
@@ -90,6 +101,8 @@ const LabServiceModal = ({ visible, onCancel, onCreate, labData }) => {
       .then((response) => {
         message.success("Services Added Successfully");
         console.log("Service list saved successfully:", response.data);
+        // Close the modal after successful service addition
+        handleModalVisibility();
       })
       .catch((error) => {
         console.error("Error saving service list:", error);
