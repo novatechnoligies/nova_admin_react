@@ -15,24 +15,28 @@ const Ems = () => {
     getEmployeeTableData();
   }, [search]);
 
+
   const getEmployeeTableData = async () => {
     const storedUserData = sessionStorage.getItem('userData');
     const userDataObject = JSON.parse(storedUserData);
 
     try {
       const response = await axios.get(
-        BASE_URL + `/dataservice/getAllLabListByOwnerId?ownerId=${userDataObject.id}`
+        `http://localhost:8082/dataservice/getAllUserDetailsByCreadtedBy?userId=1`
       );
+      console.log("All Employee Data From API", employeeData);
       setEmployeeData(response.data);
+
     } catch (error) {
       console.error(error);
     }
   };
 
+  
   const columns = [
     {
-      name: 'Lab Name',
-      selector: (row) => row.shopName,
+      name: 'ID',
+      selector: (row) => row.id,
       sortable: true,
       style: {
         fontWeight: 'bold',
@@ -40,14 +44,23 @@ const Ems = () => {
       },
     },
     {
-      name: 'Address',
-      selector: (row) => row.shopAddress,
+      name: 'Name',
+      selector: (row) => row.firstName,
+      sortable: true,
+      style: {
+        fontWeight: 'bold',
+        wordWrap: 'break-word',
+      },
+    },
+    {
+      name: 'Phone No',
+      selector: (row) => row.phone,
       sortable: true,
       style: { wordWrap: 'break-word' },
     },
     {
-      name: 'Phone',
-      selector: (row) => row.phone,
+      name: 'Address',
+      selector: (row) => row.lastName,
       sortable: true,
       style: { wordWrap: 'break-word' },
     },
@@ -58,20 +71,26 @@ const Ems = () => {
       style: { wordWrap: 'break-word' },
     },
     {
-      name: 'pinCode',
-      selector: (row) => row.pinCode,
+      name: 'Pincode',
+      selector: (row) => row.pin,
       sortable: true,
       style: { wordWrap: 'break-word' },
     },
     {
-      name: 'Ownername',
-      selector: (row) => row.shopName,
+      name: 'Adhar Number',
+      selector: (row) => row.adharNo,
       sortable: true,
       style: { wordWrap: 'break-word' },
     },
     {
-      name: 'GST NO',
-      selector: (row) => row.gstNo,
+      name: 'Position',
+      selector: (row) => row.code,
+      sortable: true,
+      style: { wordWrap: 'break-word' },
+    },
+    {
+      name: 'Gender',
+      selector: (row) => row.gender,
       sortable: true,
       style: { wordWrap: 'break-word' },
     },
