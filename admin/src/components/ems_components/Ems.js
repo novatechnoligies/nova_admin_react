@@ -1,110 +1,117 @@
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import React, { useState, useEffect } from 'react';
-import { Button, Input } from 'antd';
-import DataTable from 'react-data-table-component';
-import axios from 'axios';
-import { BASE_URL } from '../../constants/constants';
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from "react";
+import { Button, Input } from "antd";
+import DataTable from "react-data-table-component";
+import axios from "axios";
+import { BASE_URL } from "../../constants/constants";
 
-import './Ems.css';
+import "./Ems.css";
 
 const Ems = () => {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [employeeData, setEmployeeData] = useState([]);
 
   useEffect(() => {
     getEmployeeTableData();
   }, [search]);
 
-
   const getEmployeeTableData = async () => {
-    const storedUserData = sessionStorage.getItem('userData');
+    const storedUserData = sessionStorage.getItem("userData");
     const userDataObject = JSON.parse(storedUserData);
+    console.log("User Data from Session", userDataObject);
 
     try {
       const response = await axios.get(
-        `http://localhost:8082/dataservice/getAllUserDetailsByCreadtedBy?userId=1`
+        `http://localhost:8082/dataservice/getAllUserDetailsByCreadtedBy?userId=` +
+          userDataObject.id
       );
-      console.log("All Employee Data From API", employeeData);
+      console.log("API response Data", response.data);
       setEmployeeData(response.data);
-
     } catch (error) {
       console.error(error);
     }
   };
 
-  
   const columns = [
     {
-      name: 'ID',
+      name: "ID",
       selector: (row) => row.id,
       sortable: true,
       style: {
-        fontWeight: 'bold',
-        wordWrap: 'break-word',
+        fontWeight: "bold",
+        wordWrap: "break-word",
       },
     },
     {
-      name: 'Name',
+      name: "Name",
       selector: (row) => row.firstName,
       sortable: true,
       style: {
-        fontWeight: 'bold',
-        wordWrap: 'break-word',
+        fontWeight: "bold",
+        wordWrap: "break-word",
       },
     },
     {
-      name: 'Phone No',
+      name: "Phone No",
       selector: (row) => row.phone,
       sortable: true,
-      style: { wordWrap: 'break-word' },
+      style: { wordWrap: "break-word" },
     },
     {
-      name: 'Address',
+      name: "Address",
       selector: (row) => row.lastName,
       sortable: true,
-      style: { wordWrap: 'break-word' },
+      style: { wordWrap: "break-word" },
     },
     {
-      name: 'Email',
+      name: "Email",
       selector: (row) => row.email,
       sortable: true,
-      style: { wordWrap: 'break-word' },
+      style: { wordWrap: "break-word" },
     },
     {
-      name: 'Pincode',
+      name: "Pincode",
       selector: (row) => row.pin,
       sortable: true,
-      style: { wordWrap: 'break-word' },
+      style: { wordWrap: "break-word" },
     },
     {
-      name: 'Adhar Number',
+      name: "Adhar Number",
       selector: (row) => row.adharNo,
       sortable: true,
-      style: { wordWrap: 'break-word' },
+      style: { wordWrap: "break-word" },
     },
     {
-      name: 'Position',
-      selector: (row) => row.code,
+      name: "Position",
+      selector: (row) => row.role.code,
       sortable: true,
-      style: { wordWrap: 'break-word' },
+      style: { wordWrap: "break-word" },
     },
     {
-      name: 'Gender',
+      name: "Gender",
       selector: (row) => row.gender,
       sortable: true,
-      style: { wordWrap: 'break-word' },
+      style: { wordWrap: "break-word" },
     },
     {
-      name: 'Action',
+      name: "Action",
       cell: (row) => (
         <div>
-          <Button type="link" onClick={() => handleEditClick(row.id)} icon={<EditOutlined />} />
-          <Button type="link" onClick={() => handleDeleteClick(row.id)} icon={<DeleteOutlined />} />
+          <Button
+            type="link"
+            onClick={() => handleEditClick(row.id)}
+            icon={<EditOutlined />}
+          />
+          <Button
+            type="link"
+            onClick={() => handleDeleteClick(row.id)}
+            icon={<DeleteOutlined />}
+          />
         </div>
       ),
       style: {
-        fontWeight: 'bold',
-        wordWrap: 'break-word',
+        fontWeight: "bold",
+        wordWrap: "break-word",
       },
     },
   ];
@@ -116,7 +123,9 @@ const Ems = () => {
 
   const handleDeleteClick = (employeeId) => {
     // Implement the logic for deleting an employee
-    const updatedEmployeeData = employeeData.filter((employee) => employee.id !== employeeId);
+    const updatedEmployeeData = employeeData.filter(
+      (employee) => employee.id !== employeeId
+    );
     setEmployeeData(updatedEmployeeData);
   };
 
@@ -135,7 +144,7 @@ const Ems = () => {
         highlightOnHover
         customStyles={{
           pagination: {
-            marginBottom: '16px', // Adjust the margin bottom as needed
+            marginBottom: "16px", // Adjust the margin bottom as needed
           },
         }}
         subHeaderComponent={
