@@ -26,25 +26,31 @@ function NewConsumer() {
   };
 
   const handleOk = () => {
-    cusumerform.validateFields().then((values) => {
-      // Validate form fields and post data if validation is successful
-      const modifiedData = {
-        ...values,
-        role: { id: values.role },
-      };
-      console.log("Form values:", modifiedData);
+    cusumerform
+      .validateFields()
+      .then((values) => {
+        // Validate form fields and post data if validation is successful
+        const modifiedData = {
+          ...values,
+          role: { id: values.role },
+        };
+        console.log("Form values:", modifiedData);
 
-      axios
-        .post(BASE_URL + "/dataservice/saveUserDetails", modifiedData)
-        .then((response) => {
-          console.log("API response:", response);
-          setIsModalOpen(false);
-          message.success("User Created..!");
-        })
-        .catch((error) => {
-          console.error("API error:", error);
-        });
-    });
+        return axios.post(
+          BASE_URL + "/dataservice/saveUserDetails",
+          modifiedData
+        );
+      })
+      .then((response) => {
+        console.log("API response:", response);
+        setIsModalOpen(false);
+        message.success("User Created..!");
+      })
+      .catch((error) => {
+        console.error("Validation error:", error);
+        // Handled the validation Here
+        message.error("Please fill in all required fields");
+      });
   };
 
   const handleCancel = () => {
