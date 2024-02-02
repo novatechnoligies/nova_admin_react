@@ -39,8 +39,8 @@ const Notes = () => {
         note: trimmedNote,
         patientId: patientId, // Access patientId from the form
         technicianId: technicianId,
-        appointmentId:appointmentId 
-         // Access technicianId from the form
+        appointmentId: appointmentId,
+        // Access technicianId from the form
         // Add other fields as needed
       };
 
@@ -53,6 +53,7 @@ const Notes = () => {
         message.success("Note successfully saved");
         // Handle response from the server (optional)
         console.log("Note successfully saved:", response.data);
+        form.resetFields();
       } catch (error) {
         message.error("Error saving note");
         console.error("Error saving note:", error.message);
