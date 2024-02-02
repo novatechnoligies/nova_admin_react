@@ -207,7 +207,7 @@ function SlideMenu({ location, navigate, onLogout }) {
         }}
         items={[
           { label: "Home", key: "/", icon: <HomeOutlined /> },
-          { label: "Access Managemnt", key: "/accessManagement" },
+          { label: "Access Management", key: "/accessManagement" },
           { label: "Dashboard", key: "/dash", icon: <DashboardOutlined /> },
           { label: "Appointments", key: "Acard", icon: <IdcardOutlined /> },
           { label: "Lab", key: "/lab", icon: <ShopOutlined /> },
@@ -222,7 +222,6 @@ function SlideMenu({ location, navigate, onLogout }) {
             icon: <ShoppingOutlined />,
             children: [
               { label: "Active", key: "/active", icon: <ShopOutlined /> },
-              { label: "Access Management", key: "/Access-Management", icon: <ShopOutlined /> },
               {
                 label: "New Consumer Account",
                 key: "/newconsumeraccount",
