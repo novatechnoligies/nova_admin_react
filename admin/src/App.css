@@ -3,6 +3,7 @@
   height: 92.5vh;
   background-color: rgb(2, 2, 2);
   position: fixed; /* Fix the left-side */
+  margin-top: 20px;
 }
 
 .container-row {
