@@ -1,62 +1,73 @@
+/* AccessManagement.css */
+
 .access-management-container {
-    display: flex;
-  }
-  
-  .left-section {
-    width: 60%;
-    padding: 20px;
-  }
-  
-  .right-section {
-    flex: 1;
-    padding: 20px;
-  }
-
-  /* Add these styles to your AccessManagement.css or your main stylesheet */
-
-/* Style for the toggle buttons container */
-ul {
-  list-style: none;
-  padding: 0;
+  max-width: 600px; /* Adjust the maximum width as needed */
+  margin-right: 20px;
+  padding: 10px;
+  background-color: #f0f2f5; /* Set background color for the entire component */
+  border-radius: 10px; /* Add rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
 }
 
-/* Style for each toggle button item */
-li {
-  display: flex;
-  align-items: center;
+.main-title {
+  font-size: 20px;
+  font-weight: bold;
   margin-bottom: 10px;
+  padding: 8px 16px; /* Add padding for better readability and appearance */
+  background-color: #1890ff; /* Set a background color */
+  color: #fff; /* Set text color to white for better contrast */
+  border-top-left-radius: 10px; /* Ensure rounded corners match the container */
+  border-top-right-radius: 10px;
 }
 
-/* Style for the label and button container */
-.label-container {
-  margin-right: 20px; /* Adjust the right margin for spacing between label and button */
+.access-management-content {
+  padding: 16px; /* Add padding inside the content area */
+  background-color: #fff; /* Set background color for the content area */
+  border-bottom-left-radius: 10px; /* Ensure rounded corners match the container */
+  border-bottom-right-radius: 10px;
 }
 
-label {
-  font-size: 16px; /* Increase font size for a more royal appearance */
-  color: #333;
+.items-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Add smaller spacing between items */
 }
 
-button {
-  background-color: #3498db;
-  color: white;
-  padding: 12px; /* Increase padding for a larger button */
-  border: none;
-  border-radius: 8px; /* Increase border radius for a more rounded appearance */
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.item {
+  padding: 8px;
+  background-color: #f5f5f5; /* Set background color for items */
+  border-radius: 5px; /* Add rounded corners to items */
 }
 
-button:hover {
-  background-color: #2980b9;
+.item-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* Style for the disabled button */
-button:disabled {
-  background-color: #bdc3c7;
-  cursor: not-allowed;
+.button {
+  width: 50px;
+  border-radius: 5px; /* Add rounded corners to buttons */
 }
 
+.submit-button-container {
+  margin-top: 16px;
+  text-align: right;
+  text-align: center;
+}
 
+.submit-button-container .ant-btn {
+  background-color: #1890ff; /* Set the background color */
+  color: #fff; /* Set the text color to white for better contrast */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Add rounded corners */
+  padding: 12px 24px; /* Increase padding for bigger size */
+  padding-bottom: 40px;
+  font-size: 18px; /* Increase font size for bigger size */
+  font-weight: bold; /* Set font weight to bold */
+}
 
-  
+.submit-button-container .ant-btn:hover {
+  background-color: #40a9ff; /* Change background color on hover for visual feedback */
+}
+
