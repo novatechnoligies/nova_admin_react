@@ -7,15 +7,13 @@ import { BASE_URL } from "../../constants/constants";
 const AvailableService = () => {
   const [serviceSummary, setServiceSummary] = useState([]);
   const [search, setSearch] = useState("");
+  const [editedServicePrices, setEditedServicePrices] = useState({});
 
   useEffect(() => {
     getServiceSummary();
   }, [search]);
 
   const getServiceSummary = () => {
-    // const storedLabData = sessionStorage.getItem('labData');
-    // const labDataObject = JSON.parse(storedLabData);
-
     axios
       .get(BASE_URL + `/dataservice/findAllShopServiceByLab/1`)
       .then((response) => {
@@ -29,7 +27,6 @@ const AvailableService = () => {
           testDescription: result.testDescription,
         }));
         setServiceSummary(serviceSummaryFromApi);
-        console("setServiceSummary" + setServiceSummary);
       })
       .catch((error) => {
         console.error(error);
@@ -37,7 +34,6 @@ const AvailableService = () => {
   };
 
   const calculateNetPrice = (amount) => {
-    // Default GST to 18%
     const gst = (18 / 100) * amount;
     const netPrice = amount + gst;
     return netPrice;
@@ -47,6 +43,23 @@ const AvailableService = () => {
     { title: "Price (in Rs)", dataIndex: "plan", key: "plan" },
     { dataIndex: "price", key: "price" },
   ];
+
+  const handleUpdatePrice = (serviceId) => {
+    setEditedServicePrices((prevEditedServicePrices) => ({
+      ...prevEditedServicePrices,
+      [serviceId]: serviceSummary.find((s) => s.id === serviceId).amount,
+    }));
+  };
+
+  const saveUpdatedPrice = (serviceId) => {
+    // Call API to update the service price with editedServicePrices[serviceId]
+    // You should implement this part based on your API structure
+    // After updating, refresh the service data
+    const updatedServicePrices = { ...editedServicePrices };
+    delete updatedServicePrices[serviceId];
+    setEditedServicePrices(updatedServicePrices);
+    getServiceSummary();
+  };
 
   return (
     <div className="main-container">
@@ -99,7 +112,27 @@ const AvailableService = () => {
                   <Table
                     className="custom-table"
                     dataSource={[
-                      { plan: "Service Price", price: `₹${service.amount}` },
+                      {
+                        plan: "Service Price",
+                        price:
+                          editedServicePrices[service.id] !== undefined ? (
+                            <Input
+                              type="number"
+                              value={
+                                editedServicePrices[service.id] ||
+                                service.amount
+                              }
+                              onChange={(e) =>
+                                setEditedServicePrices((prev) => ({
+                                  ...prev,
+                                  [service.id]: e.target.value,
+                                }))
+                              }
+                            />
+                          ) : (
+                            `₹${service.amount}`
+                          ),
+                      },
                       {
                         plan: "GST (18%)",
                         price: `₹${(18 / 100) * service.amount}`,
@@ -115,15 +148,29 @@ const AvailableService = () => {
                     columns={columns}
                     pagination={false}
                   />
-                  <Button
-                    style={{
-                      background: "red",
-                      color: "white",
-                      marginLeft: "40px",
-                    }}
-                  >
-                    Update Price
-                  </Button>
+                  {editedServicePrices[service.id] !== undefined ? (
+                    <Button
+                      onClick={() => saveUpdatedPrice(service.id)}
+                      style={{
+                        background: "red",
+                        color: "white",
+                        marginLeft: "40px",
+                      }}
+                    >
+                      Save Price
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={() => handleUpdatePrice(service.id)}
+                      style={{
+                        background: "red",
+                        color: "white",
+                        marginLeft: "40px",
+                      }}
+                    >
+                      Update Price
+                    </Button>
+                  )}
                 </div>
               </Col>
             </Row>
