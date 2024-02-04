@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
+import { NavLink, Route, useNavigate } from "react-router-dom";
 import {
   Button,
   Modal,
@@ -21,6 +22,7 @@ import LabServiceModal from "./LabServiceModal";
 import Summary from "./Suummary";
 
 const LabDataTable = ({ data }) => {
+  const navigate = useNavigate();
   const [filterLabData, setFilterLabData] = useState([]);
   const [search, setSearch] = useState("");
   const [labData, setLabData] = useState([]);
@@ -186,6 +188,10 @@ const LabDataTable = ({ data }) => {
     setIsLabAvailabilityModalVisible(true);
   };
 
+  const handleEmployeeMap = () =>{
+    navigate("/employee-mapping");
+  }
+
   const handleLabAvailabilityModalCancel = () => {
     setIsLabAvailabilityModalVisible(false);
   };
@@ -255,6 +261,14 @@ const LabDataTable = ({ data }) => {
               <Button type="primary" onClick={handleLabService}>
                 Update Service
               </Button>
+
+              <Button
+                type="primary"
+                style={{ marginRight: "10px" }}
+                onClick={handleEmployeeMap}
+              >
+                <PlusOutlined /> Map Employee.
+              </Button>
             </div>
           }
           subHeaderComponent={
@@ -283,7 +297,7 @@ const LabDataTable = ({ data }) => {
           >
             <LeftOutlined /> Back to Lab Table
           </Button>
-          <Summary labData={selectedLab} />
+          <Summary selectedLabData={selectedLab} />
         </div>
       )}
 

@@ -4,8 +4,8 @@ import { BASE_URL } from "../../constants/constants";
 import axios from "axios";
 import AvailableService from "./AvailableServices";
 
-const Summary = ({ labData }) => {
-  console.log("here" + JSON.stringify(labData));
+const Summary = ({ selectedLabData }) => {
+  console.log("here" + JSON.stringify(selectedLabData));
 
   const [availabilityData, setAvailabilityData] = useState([]);
 
@@ -39,55 +39,55 @@ const Summary = ({ labData }) => {
               <td className="td-key">
                 <strong>Name: </strong>
               </td>
-              <td>{labData.shopName}</td>
+              <td>{selectedLabData.shopName}</td>
 
               <td>
                 <strong>Phone:</strong>
               </td>
-              <td>{labData.phone}</td>
+              <td>{selectedLabData.phone}</td>
 
               <td>
                 <strong>Email:</strong>
               </td>
-              <td>{labData.email || "N/A"}</td>
+              <td>{selectedLabData.email || "N/A"}</td>
             </tr>
             <tr>
               <td>
                 <strong>Address:</strong>
               </td>
-              <td>{labData.shopAddress}</td>
+              <td>{selectedLabData.shopAddress}</td>
               <td>
                 <strong>Owner:</strong>
               </td>
-              <td>{labData.owner || "N/A"}</td>
+              <td>{selectedLabData.owner || "N/A"}</td>
               <td>
                 <strong>GST:</strong>
               </td>
-              <td>{labData.gstNo || "N/A"}</td>
+              <td>{selectedLabData.gstNo || "N/A"}</td>
             </tr>
             <tr>
               <td>
                 <strong>Total Appointments:</strong>
               </td>
-              <td>{labData.totalAppointments || "N/A"}</td>
+              <td>{selectedLabData.totalAppointments || "N/A"}</td>
               <td>
                 <strong>Active Employees:</strong>
               </td>
-              <td>{labData.activeEmployees || "N/A"}</td>
+              <td>{selectedLabData.activeEmployees || "N/A"}</td>
               <td>
                 <strong>Location:</strong>
               </td>
-              <td>{labData.location || "N/A"}</td>
+              <td>{selectedLabData.location || "N/A"}</td>
             </tr>
             <tr>
               <td>
                 <strong>Org:</strong>
               </td>
-              <td> {labData.org || "NOVA"}</td>
+              <td> {selectedLabData.org || "NOVA"}</td>
               <td>
                 <strong>PinCode:</strong>
               </td>
-              <td>{labData.pinCode || "N/A"}</td>
+              <td>{selectedLabData.pinCode || "N/A"}</td>
             </tr>
           </tbody>
         </table>
