@@ -31,6 +31,7 @@ import Ems from "./components/ems_components/Ems";
 import Ims from "./components/IMS/Ims";
 import Createpromotions from "./components/promotions_offers/Createpromotions";
 import Dashboard from "./components/Dashboard_Components/Dashboard";
+import EmployeeMapping from "./components/employee_mapping/EmployeeMapping";
 
 
 function App() {
@@ -180,10 +181,14 @@ function SlideMenu({ location, navigate, onLogout }) {
 
   const accessPermissionItems = userDataObject.accePermissions[0]?.items;
   let isHideClinic = false;
+  let isHideLab = false;
+  let isHideCreatePromotions = false;
 
   if (accessPermissionItems !== undefined) {
     const itemsArray = JSON.parse(accessPermissionItems);
-    isHideClinic = itemsArray.some(item => item.label === "csc" && item.isOn);
+    isHideClinic = itemsArray.some(item => item.label === "Clinic" && item.isOn);
+    isHideLab = itemsArray.some(item => item.label === "Lab" && item.isOn);
+    isHideCreatePromotions = itemsArray.some(item => item.label === "Create Promotions" && item.isOn);
   }
 
   return (
@@ -207,15 +212,15 @@ function SlideMenu({ location, navigate, onLogout }) {
         }}
         items={[
           { label: "Home", key: "/", icon: <HomeOutlined /> },
-          { label: "Access Management", key: "/accessManagement" },
+          isHideClinic ? null : { label: "Access Management", key: "/accessManagement" },
           { label: "Dashboard", key: "/dash", icon: <DashboardOutlined /> },
           { label: "Appointments", key: "Acard", icon: <IdcardOutlined /> },
-          { label: "Lab", key: "/lab", icon: <ShopOutlined /> },
+          isHideLab ? null : { label: "Lab", key: "/lab", icon: <ShopOutlined /> },
           isHideClinic ? null : { label: "Clinic", key: "/clinic", icon: <ShopOutlined /> },
           { label: "EMS", key: "/ems", icon: <UserOutlined /> },
           { label: "IMS", key: "/ims", icon: <UserOutlined /> },
-          { label: "Create Promotions", key: "/createpromotions", icon: <UserOutlined /> },
-          { label: "Clinic", key: "/clinic", icon: <ShopOutlined /> },
+          isHideCreatePromotions? null :{ label: "Create Promotions", key: "/createpromotions", icon: <UserOutlined /> },
+          isHideClinic ? null : { label: "Clinic", key: "/clinic", icon: <ShopOutlined /> },
           {
             label: "Consumer",
             key: "/consumer",
@@ -255,6 +260,7 @@ function Content() {
         <Route path="/AppChildCards/:id" element={<More />} />
         <Route path="/newconsumeraccount" element={ <div> <NewConsumer />  </div>}/>
         <Route path="/appointment-booking" element={<AppointmentBookingPage />} />
+        <Route path="/employee-mapping" element={<EmployeeMapping />} />
         <Route path="/appointment-details/:appointmentId"  element={<AppointmentDetails />}/>
         <Route path="/report" element={<TestForm />} />
         <Route path="/accessManagement" element={<AccessManagement />} />
