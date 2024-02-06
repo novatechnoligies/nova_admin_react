@@ -1,19 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { Row, Col, Button, Modal } from "antd";
-import axios from "axios";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { Button } from "antd";
 import "./PatientAppointmentsSummary.css";
+<<<<<<< Updated upstream
 import LabTestResultsEntry from "./LabTestResultsEntry";
+=======
+import PatientPastAppointments from "./PatientPastAppointments";
+import PatientCurrentAppointments from "./PatientCurrentAppointments";
+>>>>>>> Stashed changes
 
 const PatientAppointmentsSummary = () => {
-  const [appointmentsData, setAppointmentsData] = useState([]);
-  const [technicianName, setTechnicianName] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [showLabTestModal, setShowLabTestModal] = useState(false);
-  const [modalWidth, setModalWidth] = useState(700);
-  const [viewType, setViewType] = useState("current"); // "current" or "past"
+  const [viewType, setViewType] = useState("current");
 
+<<<<<<< Updated upstream
   const { appointmentId } = useParams();
 
   useEffect(() => {
@@ -127,6 +125,9 @@ const PatientAppointmentsSummary = () => {
       }
     }
   };
+=======
+  const handleViewTypeChange = (newViewType) => setViewType(newViewType);
+>>>>>>> Stashed changes
 
   return (
     <div className="p-appointments-container">
@@ -145,6 +146,7 @@ const PatientAppointmentsSummary = () => {
         </Button>
         <Button type="default">Medical Record</Button>
       </div>
+<<<<<<< Updated upstream
       <div className="apt-info-container" style={{ overflow: "scroll" }}>
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
@@ -203,6 +205,14 @@ const PatientAppointmentsSummary = () => {
         {/* You can use LabTestEntry component or include the form directly */}
         <LabTestResultsEntry />
       </Modal>
+=======
+
+      {viewType === "current" ? (
+        <PatientCurrentAppointments />
+      ) : (
+        <PatientPastAppointments />
+      )}
+>>>>>>> Stashed changes
     </div>
   );
 };
