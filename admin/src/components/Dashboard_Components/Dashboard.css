@@ -47,7 +47,7 @@
   flex-direction: row; /* Display boxes in a row */
   justify-content: space-between; /* Distribute space between the boxes */
   align-items: center; /* Center the boxes vertically */
-  width: 310px;
+  width: 370px;
   height: 100px;
   background-color: white;
 }
@@ -251,6 +251,10 @@ th {
     width: 20px;
     height: 20px;
     margin-left: 20px;
+}
+
+.news-feeds {
+  background-color: #a4f8b4;
 }
 
 .color-name {
