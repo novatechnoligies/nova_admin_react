@@ -2,14 +2,18 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./PatientCurrentAppointments.css";
 import { useParams } from "react-router-dom";
+
 import LabTestResultsEntry from "./LabTestResultsEntry";
 import { Button, Modal } from "antd";
+
 
 const PatientCurrentAppointments = () => {
   const [currentAppointmentsData, setCurrentAppointmentsData] = useState([]);
   const [technicianName, setTechnicianName] = useState("");
   const [error, setError] = useState(null);
+
   const [showLabTestModal, setShowLabTestModal] = useState(false);
+
 
   const { appointmentId } = useParams();
 
@@ -41,6 +45,7 @@ const PatientCurrentAppointments = () => {
     fetchCurrentAppointments();
   }, [appointmentId]);
 
+
   const handleInfoItemClick = (appointment) => {
     setShowLabTestModal(true);
   };
@@ -53,6 +58,7 @@ const PatientCurrentAppointments = () => {
     setShowLabTestModal(false);
   };
 
+
   return (
     <div className="p-appointments-container">
       <div className="apt-info-container" style={{ overflow: "scroll" }}>
@@ -60,6 +66,7 @@ const PatientCurrentAppointments = () => {
           {currentAppointmentsData.length > 0 ? (
             <div className="inline-info clickable">
               {currentAppointmentsData.map((appointment, index) => (
+
                 <div
                   className="info-item"
                   key={index}
@@ -68,6 +75,9 @@ const PatientCurrentAppointments = () => {
                     openLabTestModal();
                   }}
                 >
+
+                <div className="info-item" key={index}>
+
                   <p>
                     <strong>Date/Time:</strong>{" "}
                     {`${appointment.appointmentDate} ${appointment.appointmentTime}`}
@@ -90,6 +100,7 @@ const PatientCurrentAppointments = () => {
           )}
         </div>
       </div>
+
       {/* Lab Test Entry Modal */}
       <Modal
         width={700}
@@ -103,6 +114,7 @@ const PatientCurrentAppointments = () => {
       >
         <LabTestResultsEntry />
       </Modal>
+
     </div>
   );
 };

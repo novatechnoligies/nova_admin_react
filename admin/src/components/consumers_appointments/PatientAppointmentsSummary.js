@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { Button } from "antd";
 import "./PatientAppointmentsSummary.css";
-<<<<<<< Updated upstream
+
 import LabTestResultsEntry from "./LabTestResultsEntry";
-=======
+
 import PatientPastAppointments from "./PatientPastAppointments";
 import PatientCurrentAppointments from "./PatientCurrentAppointments";
->>>>>>> Stashed changes
+
+
 
 const PatientAppointmentsSummary = () => {
   const [viewType, setViewType] = useState("current");
 
-<<<<<<< Updated upstream
   const { appointmentId } = useParams();
 
   useEffect(() => {
@@ -77,60 +77,23 @@ const PatientAppointmentsSummary = () => {
   //   fetchData();
   // }, [appointmentId]);
 
+
+
   const handleInfoItemClick = (appointment) => {
-    // Additional logic if needed before showing the modal
     setShowLabTestModal(true);
   };
 
   const handleModalCancel = () => {
-    // Additional logic if needed before closing the modal
     setShowLabTestModal(false);
   };
 
-  const handleViewTypeChange = async (newViewType) => {
-    // Update the view type and fetch data for the selected type
+  const handleViewTypeChange = (newViewType) => {
     setViewType(newViewType);
-    // Simulate fetching data for past appointments
-    if (newViewType === "past") {
-      try {
-        // Simulate an asynchronous delay (you can remove this in a real scenario)
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        // Dummy data for past appointments - Need to integrate Past Appointments from the API Later
-        const dummyPastAppointments = [
-          {
-            appointmentDate: "2023-01-01",
-            appointmentTime: "09:00 AM",
-            serviceName: "Dummy Service 1",
-            technicianName: "John Doe",
-            appointmentStatus: "Completed",
-          },
-          {
-            appointmentDate: "2023-02-01",
-            appointmentTime: "02:30 PM",
-            serviceName: "Dummy Service 2",
-            technicianName: "Jane Smith",
-            appointmentStatus: "Completed",
-          },
-          // Add more dummy data as needed
-        ];
-
-        // Set the dummy data for past appointments
-        setAppointmentsData(dummyPastAppointments);
-      } catch (error) {
-        console.error("Error fetching dummy data:", error.message);
-        setError("Error fetching data. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    }
   };
-=======
-  const handleViewTypeChange = (newViewType) => setViewType(newViewType);
->>>>>>> Stashed changes
+
 
   return (
-    <div className="p-appointments-container">
+    <div>
       <div className="btn-appointments">
         <Button
           type={viewType === "current" ? "primary" : "default"}
@@ -146,7 +109,7 @@ const PatientAppointmentsSummary = () => {
         </Button>
         <Button type="default">Medical Record</Button>
       </div>
-<<<<<<< Updated upstream
+
       <div className="apt-info-container" style={{ overflow: "scroll" }}>
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
@@ -190,29 +153,14 @@ const PatientAppointmentsSummary = () => {
           </div>
         )}
       </div>
-      {/* Lab Test Entry Modal */}
-      <Modal
-        width={modalWidth}
-        visible={showLabTestModal}
-        onCancel={handleModalCancel}
-        footer={[
-          <Button key="back" onClick={handleModalCancel}>
-            Back
-          </Button>,
-        ]}
-      >
-        {/* Add Lab Test Entry Form or content here */}
-        {/* You can use LabTestEntry component or include the form directly */}
-        <LabTestResultsEntry />
-      </Modal>
-=======
 
+
+      {/* Display Appointments based on the selected viewType */}
       {viewType === "current" ? (
-        <PatientCurrentAppointments />
+        <PatientCurrentAppointments handleInfoItemClick={handleInfoItemClick} />
       ) : (
         <PatientPastAppointments />
       )}
->>>>>>> Stashed changes
     </div>
   );
 };
