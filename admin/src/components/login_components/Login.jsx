@@ -179,7 +179,7 @@ const Login = (props) => {
                     className="button"
                     htmlType="submit"
                   >
-                    Log in
+                    Login
                   </Button>
                   <br />
                   <Button
@@ -187,7 +187,7 @@ const Login = (props) => {
                     className="button"
                     onClick={handleForgetPassword}
                   >
-                    Forget Password..?
+                    Forget Password
                   </Button>
                 </Form.Item>
                 <Form.Item></Form.Item>
