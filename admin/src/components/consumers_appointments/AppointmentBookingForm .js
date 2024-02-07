@@ -60,6 +60,14 @@ const AppointmentBookingForm = (selectedAccount) => {
       .then((response) => {
         message.success("appointment booked ..!");
         console.log("Appointment submitted successfully:", response.data);
+        // Reset form fields after successful booking
+      form.resetFields();
+      
+      // You may also reset any additional state variables if needed
+      // setTimeSlots([]);
+      // setSelectedTime(null);
+      // setSelectedLab([]);
+      // setSelectedValues([]);
       })
       .catch((error) => {
         message.error("appointment failed  booked ..!");
@@ -150,10 +158,6 @@ const AppointmentBookingForm = (selectedAccount) => {
         setServiceDropdownOptions([]); // Set default options to an empty array
       });
   };
-  
-  
-  
-  
   
 
   return (
