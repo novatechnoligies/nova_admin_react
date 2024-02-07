@@ -1,0 +1,85 @@
+.p-appointments-container {
+    background-color: #808080; /* Dark Grey */
+    height: 300px;
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .btn-appointments {
+    display: flex;
+    background-color: #f2f2f2; /* Light Grey */
+    width: 98%;
+    justify-content: space-evenly;
+    height: 60px;
+    margin-top: 10px;
+    border-radius: 8px;
+    align-items: center;
+  }
+  
+  .btn-appointments Button {
+    margin: 5px;
+    width: 250px;
+    height: 40px;
+  }
+  
+  .appointment-button:hover {
+    background-color: #a9a9a9; /* Darker Grey */
+    border-color: #a9a9a9;
+    color: white;
+  }
+  
+  .apt-info-container {
+    background-color:#d3d3d3; /* Dark Olive Green */
+    width: 98%;
+    height: 200px;
+    margin-top: 20px;
+    border-radius: 8px;
+  }
+  
+  .apt-info {
+    background-color: #f2f2f2; /* Light Grey */
+    height: auto;
+    width: 98%;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .inline-info {
+    display: flex;
+    height: auto;
+    width: auto;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color:#d3d3d3
+    
+  }
+  
+  .inline-info .info-item {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .info-item {
+    background-color:#808080;
+    border-radius: 8px;
+    margin-top: 5px;
+  }
+  
+  .info-item p {
+    margin-right: 60px;
+    margin-left: 30px;
+  }
+  
+  .inline-info.clickable {
+    cursor: pointer;
+  }

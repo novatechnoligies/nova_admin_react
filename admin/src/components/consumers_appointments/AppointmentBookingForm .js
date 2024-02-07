@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, DatePicker, Button, Select, message, } from "antd";
+import { Form, Input, DatePicker, Button, Select, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import moment from "moment";
 import "./AppointmentBookingForm.css";
@@ -30,19 +30,42 @@ const AppointmentBookingForm = (selectedAccount) => {
     }
   }, [selectedAccount, form]);
 
-  const handleSearch = (value) => {
-    axios
-      .get(BASE_URL + `/dataservice/searchLabByName?labName=${value}`)
-      .then((response) => {
-        const searchLab = response.data.map((result) => ({
-          value: result.id,
-          label: result.shopName,
-        }));
-        setLabDropdownOptions(searchLab);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  const handleSearch = async (value) => {
+    try {
+      // Search for labs
+      const labResponse = await axios.get(
+        BASE_URL + `/dataservice/searchLabByName?labName=${value}`
+      );
+      const searchLab = labResponse.data.map((result) => ({
+        value: result.id,
+        label: result.shopName,
+      }));
+      setLabDropdownOptions(searchLab);
+
+      // Search for services for the selected lab
+      if (searchLab.length > 0) {
+        const selectedLabId = searchLab[0].value; // Assuming you want services for the first lab in the results
+        const serviceResponse = await axios.get(
+          BASE_URL +
+            `/dataservice/findAllShopServiceByLab/${selectedLabId}/${value}`
+        );
+
+        // Check if the data is an array before mapping
+        const services = Array.isArray(serviceResponse.data)
+          ? serviceResponse.data.map((result, index) => ({
+              key: result.id || index,
+              label: `${result.serviceName} - ${result.amount}`,
+            }))
+          : [];
+
+        setServiceDropdownOptions(services);
+      } else {
+        // Clear services dropdown if no labs found
+        setServiceDropdownOptions([]);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const bookAppointmentForm = (values) => {
@@ -90,7 +113,12 @@ const AppointmentBookingForm = (selectedAccount) => {
   const getAvailableTimeSlots = async (selectedDate, selectedLab) => {
     alert(selectedDate.format("YYYY-MM-DD"));
     try {
-      const response = await axios.get(  BASE_URL +  `/dataservice/getAllSlotAvailabilityByLabIdAndDate?labId=${selectedLab}&date=${selectedDate.format("YYYY-MM-DD")}`);
+      const response = await axios.get(
+        BASE_URL +
+          `/dataservice/getAllSlotAvailabilityByLabIdAndDate?labId=${selectedLab}&date=${selectedDate.format(
+            "YYYY-MM-DD"
+          )}`
+      );
       const responseData = response.data;
       const timeSlots = Array.isArray(responseData)
         ? responseData.map((result) => ({
@@ -107,7 +135,9 @@ const AppointmentBookingForm = (selectedAccount) => {
   };
 
   const handleTimeSlotClick = (time) => {
-    const prevSelectedButton = document.querySelector(".time-slot-button.selected");
+    const prevSelectedButton = document.querySelector(
+      ".time-slot-button.selected"
+    );
     if (prevSelectedButton) {
       prevSelectedButton.classList.remove("selected");
     }
@@ -135,19 +165,22 @@ const AppointmentBookingForm = (selectedAccount) => {
   };
 
   const allOption = { key: "all", label: "Select All" };
-  
+
   const handleServices = (value) => {
     axios
-      .get(BASE_URL + `/dataservice/findAllShopServiceByLab/${selectedLab}/${value}`)
+      .get(
+        BASE_URL +
+          `/dataservice/findAllShopServiceByLab/${selectedLab}/${value}`
+      )
       .then((response) => {
         const searchService = response.data.map((result, index) => ({
           key: result.id || index, // Use index if id is null
           label: `${result.serviceName} - ${result.amount}`,
         }));
-  
+
         console.log("serviceDropdownOptions:", searchService);
         console.log("Selected Service:", value);
-  
+
         // Set both options and selected value
         setServiceDropdownOptions(searchService);
         // form.setFieldsValue({ serviceId: value }); // No need to set this value
@@ -158,7 +191,6 @@ const AppointmentBookingForm = (selectedAccount) => {
         setServiceDropdownOptions([]); // Set default options to an empty array
       });
   };
-  
 
   return (
     <Form form={form} onFinish={bookAppointmentForm} layout="vertical">
