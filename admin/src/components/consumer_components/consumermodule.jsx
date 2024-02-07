@@ -76,6 +76,33 @@ function NewConsumer() {
     } catch (error) {}
   };
 
+  const handleDateOfBirthChange = (event) => {
+    const selectedDate = event.target.value;
+    
+    // Calculate age based on the selected date of birth
+    const birthDate = new Date(selectedDate);
+    const currentDate = new Date();
+    const age = currentDate.getFullYear() - birthDate.getFullYear();
+
+    // Set the calculated age in the form
+    cusumerform.setFieldsValue({ age });
+  };
+
+  const handleAgeChange = (value) => {
+    if (value) {
+      // Calculate date of birth based on the entered age
+      const currentDate = new Date();
+      const birthYear = currentDate.getFullYear() - value;
+      const dateOfBirth = new Date(birthYear, currentDate.getMonth(), currentDate.getDate());
+
+      // Format the date to be in the "YYYY-MM-DD" format expected by the input[type="date"]
+      const formattedDateOfBirth = dateOfBirth.toISOString().split('T')[0];
+
+      // Set the calculated date of birth in the form
+      cusumerform.setFieldsValue({ dob: formattedDateOfBirth });
+    }
+  };
+
   const columns = [
     {
       name: "ID",
@@ -206,7 +233,7 @@ function NewConsumer() {
 
           <Form.Item
             name="pin"
-            label="PIN"
+            label="Pin Code"
             rules={[{ required: true, max: 50 }]}
           >
             <Input />
@@ -225,19 +252,19 @@ function NewConsumer() {
           </Form.Item>
 
           <Form.Item
-            label="Age"
-            name="age"
-            rules={[{ required: true, message: "Please enter your age" }]}
-          >
-            <InputNumber min={1} max={120} />
-          </Form.Item>
-
-          <Form.Item
             name="dob"
             label="Date Of Birth"
             rules={[{ required: true, max: 50 }]}
           >
-            <Input type="date" />
+            <Input type="date" onChange={handleDateOfBirthChange}/>
+          </Form.Item>
+
+          <Form.Item
+            label="Age"
+            name="age"
+            rules={[{ required: true, message: "Please enter your age" }]}
+          >
+            <InputNumber min={1} max={120} onChange={handleAgeChange} />
           </Form.Item>
 
           <Form.Item
@@ -277,7 +304,7 @@ function NewConsumer() {
           <Form.Item
             name="adharPhoto"
             label="Adhar Photo"
-            rules={[{ required: true, max: 50 }]}
+            rules={[{ required: true}]}
           >
             <Input type="file"></Input>
           </Form.Item>
