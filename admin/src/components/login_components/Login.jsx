@@ -148,9 +148,9 @@ const Login = (props) => {
                 <Form.Item
                   className="from-label-color"
                   name="username"
-                  label="Username"
+                  label="User name"
                   rules={[
-                    { required: true, message: "Please input your username!" },
+                    { required: true, message: "Please input your username!" , min: 2 },
                   ]}
                 >
                   <Input
