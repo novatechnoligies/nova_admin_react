@@ -32,3 +32,28 @@ tbody tr:nth-child(even) {
 tbody tr:hover {
   background-color: #ddd;
 }
+
+.ant-modal-content {
+  border-radius: 8px;
+}
+
+.ant-modal-body {
+  padding: 24px;
+}
+
+.ant-form-item-label {
+  font-weight: bold;
+}
+
+.ant-input {
+  width: 100%;
+}
+
+.ant-calendar-picker-input {
+  width: 100%;
+}
+
+.ant-picker-footer {
+  padding-top: 16px;
+  text-align: right;
+}
