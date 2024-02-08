@@ -17,6 +17,10 @@ const AccessManagement = () => {
     { label: "Create Promotions", isOn: false },
     { label: "Consumer", isOn: false },
     { label: "Profile", isOn: false },
+    // Hidden functionalities with default permissions for owner
+    { label: "Import Inventory", isOn: true, hidden: true },
+    { label: "Used Inventories", isOn: true, hidden: true },
+    { label: "Login Logout", isOn: true, hidden: true }
   ]);
 
   const [secondColumnItems, setSecondColumnItems] = useState([
@@ -28,7 +32,7 @@ const AccessManagement = () => {
     { label: "Create Appointments", isOn: false },
     { label: "Appointment List", isOn: false },
     { label: "Manage Inventory", isOn: false },
-    { label: "Employee Management", isOn: false },
+    { label: "Employee Management", isOn: false }
   ]);
 
   useEffect(() => {
@@ -144,18 +148,20 @@ const AccessManagement = () => {
             <Col span={12}>
               <div className="items-container">
                 {items.map((item, index) => (
-                  <div key={index} className="item">
-                    <div className="item-content">
-                      <label>{item.label}</label>
-                      <Button
-                        type={item.isOn ? 'primary' : 'default'}
-                        onClick={() => handleToggle(index, 1)}
-                        className="button"
-                      >
-                        {item.isOn ? 'On' : 'Off'}
-                      </Button>
+                  !item.hidden && (
+                    <div key={index} className="item">
+                      <div className="item-content">
+                        <label>{item.label}</label>
+                        <Button
+                          type={item.isOn ? 'primary' : 'default'}
+                          onClick={() => handleToggle(index, 1)}
+                          className="button"
+                        >
+                          {item.isOn ? 'On' : 'Off'}
+                        </Button>
+                      </div>
                     </div>
-                  </div>
+                  )
                 ))}
               </div>
             </Col>
