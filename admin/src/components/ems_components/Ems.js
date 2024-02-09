@@ -1,9 +1,8 @@
-import { DeleteOutlined, EditOutlined, DownloadOutlined, PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import React, { useState, useEffect } from "react";
 import { Button, Input, DatePicker, message, Modal, Form } from "antd";
 import DataTable from "react-data-table-component";
 import axios from "axios";
-import { BASE_URL } from "../../constants/constants";
 import moment from "moment";
 
 import "./Ems.css";
@@ -13,10 +12,8 @@ const { RangePicker } = DatePicker;
 const Ems = () => {
   const [search, setSearch] = useState("");
   const [employeeData, setEmployeeData] = useState([]);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
   const [exportDropdownVisible, setExportDropdownVisible] = useState(false);
-  const [checkInOut, setCheckInOut] = useState("Check-in");
+  const [checkInOut, setCheckInOut] = useState("Punch-in"); // Renamed "Check-in" to "Punch-in"
   const [addEmployeeModalVisible, setAddEmployeeModalVisible] = useState(false);
 
   const handleAddEmployeeModal = () => {
@@ -73,14 +70,9 @@ const Ems = () => {
   }, [search]);
 
   const getEmployeeTableData = async () => {
-    const storedUserData = sessionStorage.getItem("userData");
-    const userDataObject = JSON.parse(storedUserData);
-    console.log("User Data from Session", userDataObject);
-
     try {
       const response = await axios.get(
-        `http://localhost:8082/dataservice/getAllUserDetailsByCreadtedBy?userId=` +
-          userDataObject.id
+        `http://localhost:8082/dataservice/getAllUserDetails`
       );
       console.log("API response Data", response.data);
       setEmployeeData(response.data);
@@ -187,16 +179,16 @@ const Ems = () => {
   };
 
   const handleCheckInOut = () => {
-    if (checkInOut === "Check-in") {
-      // Logic for Check-in
-      console.log("Checked-in");
-      message.success("You are checked-in successfully");
-      setCheckInOut("Check-out");
+    if (checkInOut === "Punch-in") { // Renamed "Check-in" to "Punch-in"
+      // Logic for Punch-in
+      console.log("Punched-in");
+      message.success("You are punched-in successfully");
+      setCheckInOut("Punch-out"); // Renamed "Check-out" to "Punch-out"
     } else {
-      // Logic for Check-out
-      console.log("Checked-out");
-      message.success("You are checked-out successfully");
-      setCheckInOut("Check-in");
+      // Logic for Punch-out
+      console.log("Punched-out");
+      message.success("You are punched-out successfully");
+      setCheckInOut("Punch-in"); // Renamed "Check-in" to "Punch-in"
     }
   };
 
@@ -206,13 +198,22 @@ const Ems = () => {
   };
 
   const handleExport = () => {
-    // Implement logic for exporting the CSV file
-    console.log("Exporting CSV file...");
-    // You can use a library like react-csv to handle CSV export
-
-    // Show success message
-    message.success("File exported successfully! Check your download folder.");
+    // Generate CSV content
+    const csvContent = "data:text/csv;charset=utf-8," +
+      employeeData.map(employee =>
+        Object.values(employee).join(",")
+      ).join("\n");
     
+    // Create a download link
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "employee_data.csv");
+    document.body.appendChild(link);
+    
+    // Trigger download
+    link.click();
+
     // Set the export dropdown visibility to false
     setExportDropdownVisible(false);
   };
@@ -251,15 +252,7 @@ const Ems = () => {
         {exportDropdownVisible && (
           <RangePicker
             style={{ marginLeft: "10px" }}
-            onChange={(dates) => {
-              if (dates && dates.length === 2) {
-                setStartDate(dates[0]);
-                setEndDate(dates[1]);
-              } else {
-                setStartDate(null);
-                setEndDate(null);
-              }
-            }}
+            onChange={() => {}}
             onOk={handleExport}
             renderExtraFooter={() => (
               <Button type="primary" onClick={handleExport}>
