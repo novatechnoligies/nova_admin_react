@@ -264,7 +264,7 @@ const LabDataTable = ({ data }) => {
 
               <Button
                 type="primary"
-                style={{ marginRight: "10px" }}
+                style={{ marginLeft: "10px" }}
                 onClick={handleEmployeeMap}
               >
                 <PlusOutlined /> Map Employee.
