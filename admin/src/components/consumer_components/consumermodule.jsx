@@ -76,6 +76,17 @@ function NewConsumer() {
     } catch (error) {}
   };
 
+  useEffect(() => {
+    const storedUserData = sessionStorage.getItem("userData");
+
+    if (storedUserData) {
+      const userDataObject = JSON.parse(storedUserData);
+      setLoginUser(userDataObject.id);
+    }
+
+    getConsumerData();
+  }, []);
+
   const columns = [
     {
       name: "ID",

@@ -1,7 +1,6 @@
-import FormItem from "antd/es/form/FormItem";
 import React, { useState } from "react";
-import "./LabTestResultsEntry.css";
 import { Button, Input } from "antd";
+import "./LabTestResultsEntry.css";
 
 const LabTestResultsEntry = ({ appointmentId }) => {
   const [parameterResults, setParameterResults] = useState({});
@@ -159,32 +158,43 @@ const LabTestResultsEntry = ({ appointmentId }) => {
     }));
   };
 
-  const getParameterNameById = (parametrId, labMasterHeadings) => {
-    if (!labMasterHeadings || !Array.isArray(labMasterHeadings)) {
-      // Handle the case when labMasterHeadings is not an array or is null/undefined
-      console.error("Invalid labMasterHeadings:", labMasterHeadings);
-      return "Invalid labMasterHeadings";
-    }
+  const saveResults = () => {
+    const resultsData = {
+      appointmentId: appointmentId,
+      testId: testForm.testId,
+      testName: testForm.testName,
+      results: Object.entries(parameterResults).map(
+        ([parametrId, resultValue]) => {
+          const parameter = testForm.labMasterHeadings
+            .flatMap((heading) => heading.labParametersDtos)
+            .find((param) => param.parametrId === parseInt(parametrId, 10));
 
-    // Iterate through labMasterHeadings and labParametersDtos to find the parameter name
-    for (const heading of labMasterHeadings) {
-      if (
-        heading.labParametersDtos &&
-        Array.isArray(heading.labParametersDtos)
-      ) {
-        for (const parameter of heading.labParametersDtos) {
-          if (parameter.parametrId === parametrId) {
-            return parameter.parameterName;
+          if (parameter) {
+            return {
+              parametrId: parseInt(parametrId, 10),
+              parameterName: parameter.parameterName,
+              result: resultValue,
+              unit: parameter.unit,
+            };
+          } else {
+            console.error(`Parameter with parametrId ${parametrId} not found.`);
+            return {
+              parametrId: parseInt(parametrId, 10),
+              parameterName: "Parameter Not Found",
+              result: resultValue,
+              unit: "Unit Not Found",
+            };
           }
         }
-      }
-    }
+      ),
+    };
 
-    // Return a default value or handle the case when the parameterId is not found
-    return "Parameter Not Found";
+    console.log("Results Data to be saved:", resultsData);
+    // Here you can perform further actions with the resultsData,
+    // such as sending it to an API or updating the state.
+    // Clear all input values after saving results
+    setParameterResults({});
   };
-
-  // Input Field Validation Part When values are entered
 
   const getValidationStatus = (value, minValue, maxValue) => {
     if (value < minValue) {
@@ -196,29 +206,8 @@ const LabTestResultsEntry = ({ appointmentId }) => {
     }
   };
 
-  const saveResults = () => {
-    const resultsData = {
-      appointmentId: appointmentId,
-      testId: testForm.testId,
-      testName: testForm.testName,
-      results: Object.entries(parameterResults).map(
-        ([parametrId, resultValue]) => ({
-          parametrId,
-          parameterName: getParameterNameById(
-            parametrId,
-            testForm.labMasterHeadings
-          ),
-          result: resultValue,
-        })
-      ),
-    };
-
-    console.log("Results Data to be saved:", resultsData);
-  };
-
   return (
     <div className="lab-result-container">
-      {/* Lab test entry form or content */}
       <div className="result-container">
         <h2 style={{ textAlign: "center" }}>{testForm.testName}</h2>
         {testForm.labMasterHeadings.map((heading, index) => (
@@ -275,8 +264,6 @@ const LabTestResultsEntry = ({ appointmentId }) => {
                 ))}
               </tbody>
             </table>
-
-            {/* Check if there is a next heading */}
             {index < testForm.labMasterHeadings.length - 1 && <div></div>}
           </div>
         ))}

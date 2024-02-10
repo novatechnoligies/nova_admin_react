@@ -1,7 +1,7 @@
 .dashboard-container {
     height: 100vh;
     width: 100%;
-    background-color: lightgrey
+    background-color: rgba(53, 83, 81, 0.733);
 }
 .first-container {
   display: flex;
@@ -47,7 +47,7 @@
   flex-direction: row; /* Display boxes in a row */
   justify-content: space-between; /* Distribute space between the boxes */
   align-items: center; /* Center the boxes vertically */
-  width: 310px;
+  width: 375px;
   height: 100px;
   background-color: white;
 }
@@ -111,25 +111,22 @@
   .second-container > div {
     flex: 2;
     box-sizing: border-box;
-    padding: 20px;
+    padding: 10px;
     text-align: center;
     align-items: center;
     background-color:white; /* Change this to the desired background color */
     border-radius: 10px; /* Adjust the value to control the curvature */
     color:black; /* Change this to the desired text color */
-    margin: 10px;
+    margin: 5px;
     height: 250px;
 
     text-align: center;
 }
 
-.tile1 {
-  margin: 10px;
-}
-
 table {
   width: 100%;
   border-collapse: collapse;
+  overflow: scroll;
 }
 
 th, td {
@@ -147,10 +144,6 @@ th {
     color: #555; /* Optional: Adjust the color as needed */
     border: 1px solid #ccc; /* Optional: Add border for better visibility */
     padding: 8px; /* Optional: Adjust the padding as needed */
-  }
-
-  .tile2 {
-    margin: 10px;
   }
   
   table {
@@ -183,25 +176,21 @@ th {
   }
 
   .third-container > div {
-    flex: 3;
+    flex: 2;
     box-sizing: border-box;
-    padding: 20px;
+    padding: 10px;
     text-align: center;
     align-items: center;
     background-color: white; /* Change this to the desired background color */ 
     border-radius: 10px; /* Adjust the value to control the curvature */
     color: black; /* Change this to the desired text color */
-    margin: 10px;
-    height: 250px;
-
-    .tile2
-    {
-      margin: 10px;
-    }
+    margin: 5px;
+    height: 230px;
     
     table {
       width: 100%;
       border-collapse: collapse;
+      overflow: scroll;
     }
     
     th, td {
@@ -226,7 +215,12 @@ th {
     text-align: left;
 }
 
+.color-box-container {
+  margin-top: 40px;
+}
+
 .pie-chart {
+  margin-top: 20px;
     width: 250px;
     height: 150px;
     background: conic-gradient(
@@ -267,11 +261,25 @@ th {
 
 
 
-.first-container > div:hover,
+/* .first-container > div:hover,
 .second-container > div:hover,
 .third-container > div:hover {
   transform: scale(1.1);
   transition: transform 0.3s ease-in-out;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
+ */
 
+ .news-feed-container {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  max-width: 100%;
+  margin-top: 10px;
+
+   /* Adjust based on your layout */
+}
+
+.news-feed-item {
+  margin-bottom: 10px;
+}

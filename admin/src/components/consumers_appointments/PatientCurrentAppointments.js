@@ -104,7 +104,7 @@ const PatientCurrentAppointments = () => {
           </Button>,
         ]}
       >
-        <LabTestResultsEntry />
+        <LabTestResultsEntry appointmentId={appointmentId} />
       </Modal>
     </div>
   );
