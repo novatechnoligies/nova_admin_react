@@ -32,6 +32,7 @@ import Ims from "./components/IMS/Ims";
 import Createpromotions from "./components/promotions_offers/Createpromotions";
 import Dashboard from "./components/Dashboard_Components/Dashboard";
 import EmployeeMapping from "./components/employee_mapping/EmployeeMapping";
+import BulkAppointments from "./components/bulk_appointments/BulkAppointments";
 
 
 function App() {
@@ -217,11 +218,13 @@ function SlideMenu({ location, navigate, onLogout }) {
           { label: "Appointments", key: "Acard", icon: <IdcardOutlined /> },
           isHideLab ? null : { label: "Lab", key: "/lab", icon: <ShopOutlined /> },
           isHideClinic ? null : { label: "Clinic", key: "/clinic", icon: <ShopOutlined /> },
+          { label: "Bulk upload", key: "/bulkupload", icon: <ProfileOutlined /> },
           { label: "EMS", key: "/ems", icon: <UserOutlined /> },
           { label: "IMS", key: "/ims", icon: <UserOutlined /> },
           isHideCreatePromotions? null :{ label: "Create Promotions", key: "/createpromotions", icon: <UserOutlined /> },
           isHideClinic ? null : { label: "Clinic", key: "/clinic", icon: <ShopOutlined /> },
           {
+            
             label: "Consumer",
             key: "/consumer",
             icon: <ShoppingOutlined />,
@@ -234,6 +237,7 @@ function SlideMenu({ location, navigate, onLogout }) {
               },
             ],
           },
+          
           { label: "Profile", key: "/profile", icon: <ProfileOutlined /> },
           { label: "Sign Out", key: "/logout", icon: <SettingOutlined />, danger: true },
         ]}
@@ -267,6 +271,8 @@ function Content() {
         <Route path="/ems" element={<Ems/>}/>
         <Route path="/ims" element={<Ims/>} />
         <Route path="/createpromotions" element={<Createpromotions/>} />
+        <Route path="/bulkupload" element={<BulkAppointments/>} />
+
       </Routes>
     </div>
   );
