@@ -75,7 +75,16 @@ function NewConsumer() {
       setConsumerData(response.data);
     } catch (error) {}
   };
+  useEffect(() => {
+    const storedUserData = sessionStorage.getItem("userData");
 
+    if (storedUserData) {
+      const userDataObject = JSON.parse(storedUserData);
+      setLoginUser(userDataObject.id);
+    }
+
+    getConsumerData();
+  }, []);
   const handleDateOfBirthChange = (event) => {
     const selectedDate = event.target.value;
     
