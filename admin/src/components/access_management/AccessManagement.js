@@ -35,6 +35,22 @@ const AccessManagement = () => {
     { label: "Employee Management", isOn: false }
   ]);
 
+  const [thirdColumnItems, setThirdColumnItems] = useState([
+    { label: "Total Appointments", isOn: false },
+    { label: "Today's Appointments", isOn: false },
+    { label: "Total Count", isOn: false },
+    { label: "LAB Name", isOn: false },
+    { label: "Owner Name", isOn: false },
+    { label: "Status", isOn: false },
+    { label: "Inventory Item Name", isOn: false },
+    { label: "Total Items", isOn: false },
+    { label: "Used Items", isOn: false },
+    { label: "Stock Items", isOn: false },
+    // Including Todays Earnings and Total Earnings in the column, initially OFF
+    { label: "Todays Earnings", isOff: true },
+    { label: "Total Earnings", isOff: true },
+  ]);
+
   useEffect(() => {
     getEmployeeData();
   }, []);
@@ -61,13 +77,24 @@ const AccessManagement = () => {
       });
   };
 
-  const isOff = (item) => !item.isOn;
-
   const handleToggle = (index, column) => {
-    const newItems = column === 1 ? [...items] : [...secondColumnItems];
+    let newItems;
+    if (column === 1) {
+      newItems = [...items];
+    } else if (column === 2) {
+      newItems = [...secondColumnItems];
+    } else {
+      newItems = [...thirdColumnItems];
+    }
     const toggledItem = newItems[index];
     toggledItem.isOn = !toggledItem.isOn;
-    column === 1 ? setItems(newItems) : setSecondColumnItems(newItems);
+    if (column === 1) {
+      setItems(newItems);
+    } else if (column === 2) {
+      setSecondColumnItems(newItems);
+    } else {
+      setThirdColumnItems(newItems);
+    }
     
     if (toggledItem.isOn) {
       message.success("Permission Granted!");
@@ -79,7 +106,7 @@ const AccessManagement = () => {
   const handleAccessFromSubmit = async () => {
     const formValues = accessForm.getFieldsValue();
     const selectedEmployee = formValues.employee;
-    const selectedItems = items.concat(secondColumnItems).filter((item) => item.isOn);
+    const selectedItems = items.concat(secondColumnItems).concat(thirdColumnItems).filter((item) => item.isOn);
     console.log("Selected Employee:", selectedEmployee);
     console.log("Selected Items:", selectedItems);
 
@@ -145,7 +172,7 @@ const AccessManagement = () => {
           </Form.Item>
 
           <Row gutter={[16, 16]}>
-            <Col span={12}>
+            <Col span={8}>
               <div className="items-container">
                 {items.map((item, index) => (
                   !item.hidden && (
@@ -165,7 +192,7 @@ const AccessManagement = () => {
                 ))}
               </div>
             </Col>
-            <Col span={12}>
+            <Col span={8}>
               <div className="items-container">
                 {secondColumnItems.map((item, index) => (
                   <div key={index} className="item">
@@ -180,6 +207,26 @@ const AccessManagement = () => {
                       </Button>
                     </div>
                   </div>
+                ))}
+              </div>
+            </Col>
+            <Col span={8}>
+              <div className="items-container">
+                {thirdColumnItems.map((item, index) => (
+                  !item.hidden && (
+                    <div key={index} className="item">
+                      <div className="item-content">
+                        <label>{item.label}</label>
+                        <Button
+                          type={item.isOn ? 'primary' : 'default'}
+                          onClick={() => handleToggle(index, 3)}
+                          className="button"
+                        >
+                          {item.isOn ? 'On' : 'Off'}
+                        </Button>
+                      </div>
+                    </div>
+                  )
                 ))}
               </div>
             </Col>
