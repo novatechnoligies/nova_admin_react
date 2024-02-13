@@ -1,29 +1,78 @@
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import React, { useState, useEffect } from "react";
-import { Button, Input } from "antd";
+import { Button, Input, DatePicker, message, Modal, Form } from "antd";
 import DataTable from "react-data-table-component";
 import axios from "axios";
-import { BASE_URL } from "../../constants/constants";
+import moment from "moment";
 
 import "./Ems.css";
+
+const { RangePicker } = DatePicker;
 
 const Ems = () => {
   const [search, setSearch] = useState("");
   const [employeeData, setEmployeeData] = useState([]);
+  const [exportDropdownVisible, setExportDropdownVisible] = useState(false);
+  const [checkInOut, setCheckInOut] = useState("Punch-in"); // Renamed "Check-in" to "Punch-in"
+  const [addEmployeeModalVisible, setAddEmployeeModalVisible] = useState(false);
+
+  const handleAddEmployeeModal = () => {
+    setAddEmployeeModalVisible(true);
+  };
+
+  const handleAddEmployeeModalCancel = () => {
+    setAddEmployeeModalVisible(false);
+  };
+
+  const handleAddEmployeeModalOk = () => {
+    // Implement logic to submit form data
+    setAddEmployeeModalVisible(false);
+  };
+
+  const addEmployeeForm = (
+    <Modal
+      title="Add New Employee"
+      visible={addEmployeeModalVisible}
+      onCancel={handleAddEmployeeModalCancel}
+      onOk={handleAddEmployeeModalOk}
+    >
+      <Form layout="vertical">
+        <Form.Item label="Name">
+          <Input />
+        </Form.Item>
+        <Form.Item label="Phone No">
+          <Input />
+        </Form.Item>
+        <Form.Item label="Address">
+          <Input />
+        </Form.Item>
+        <Form.Item label="Email">
+          <Input />
+        </Form.Item>
+        <Form.Item label="Pincode">
+          <Input />
+        </Form.Item>
+        <Form.Item label="Adhar Number">
+          <Input />
+        </Form.Item>
+        <Form.Item label="Position">
+          <Input />
+        </Form.Item>
+        <Form.Item label="Gender">
+          <Input />
+        </Form.Item>
+      </Form>
+    </Modal>
+  );
 
   useEffect(() => {
     getEmployeeTableData();
   }, [search]);
 
   const getEmployeeTableData = async () => {
-    const storedUserData = sessionStorage.getItem("userData");
-    const userDataObject = JSON.parse(storedUserData);
-    console.log("User Data from Session", userDataObject);
-
     try {
       const response = await axios.get(
-        `http://localhost:8082/dataservice/getAllUserDetailsByCreadtedBy?userId=` +
-          userDataObject.id
+        `http://localhost:8082/dataservice/getAllUserDetails`
       );
       console.log("API response Data", response.data);
       setEmployeeData(response.data);
@@ -31,7 +80,7 @@ const Ems = () => {
       console.error(error);
     }
   };
-
+  
   const columns = [
     {
       name: "ID",
@@ -129,8 +178,90 @@ const Ems = () => {
     setEmployeeData(updatedEmployeeData);
   };
 
+  const handleCheckInOut = () => {
+    if (checkInOut === "Punch-in") { // Renamed "Check-in" to "Punch-in"
+      // Logic for Punch-in
+      console.log("Punched-in");
+      message.success("You are punched-in successfully");
+      setCheckInOut("Punch-out"); // Renamed "Check-out" to "Punch-out"
+    } else {
+      // Logic for Punch-out
+      console.log("Punched-out");
+      message.success("You are punched-out successfully");
+      setCheckInOut("Punch-in"); // Renamed "Check-in" to "Punch-in"
+    }
+  };
+
+  const handleExportCSV = () => {
+    // Set the export dropdown visibility to true
+    setExportDropdownVisible(true);
+  };
+
+  const handleExport = () => {
+    // Generate CSV content
+    const csvContent = "data:text/csv;charset=utf-8," +
+      employeeData.map(employee =>
+        Object.values(employee).join(",")
+      ).join("\n");
+    
+    // Create a download link
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "employee_data.csv");
+    document.body.appendChild(link);
+    
+    // Trigger download
+    link.click();
+
+    // Set the export dropdown visibility to false
+    setExportDropdownVisible(false);
+  };
+
   return (
     <div className="Ems">
+      {addEmployeeForm}
+      <div style={{ marginBottom: "10px", display: "flex", alignItems: "center" }}>
+        <Input
+          type="text"
+          placeholder="Search Here"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          style={{ width: "150px", marginRight: "10px" }}
+        />
+        <Button
+          type="primary"
+          onClick={handleCheckInOut}
+        >
+          {checkInOut}
+        </Button>
+        <Button
+          type="primary"
+          onClick={handleAddEmployeeModal}
+          style={{ marginLeft: "10px" }}
+        >
+          <PlusOutlined /> Add New Employee
+        </Button>
+        <Button
+          type="primary"
+          onClick={handleExportCSV}
+          style={{ marginLeft: "10px" }}
+        >
+          Export CSV
+        </Button>
+        {exportDropdownVisible && (
+          <RangePicker
+            style={{ marginLeft: "10px" }}
+            onChange={() => {}}
+            onOk={handleExport}
+            renderExtraFooter={() => (
+              <Button type="primary" onClick={handleExport}>
+                Export
+              </Button>
+            )}
+          />
+        )}
+      </div>
       <DataTable
         className="container custom-table lab-data-table-container"
         title=""
@@ -147,17 +278,6 @@ const Ems = () => {
             marginBottom: "16px", // Adjust the margin bottom as needed
           },
         }}
-        subHeaderComponent={
-          <div>
-            <Input
-              type="text"
-              placeholder="Search Here"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
-        }
-        subHeader
       />
     </div>
   );
