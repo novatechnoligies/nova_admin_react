@@ -122,18 +122,22 @@ const Dashboard = () => {
           Todays Earnings: {earningsData.todaysEarnings}
         </div>
         <div className="tile tile5">Todays Count</div>
-
+  
         <div className="tile6">
           <div className="heading custom-heading">Pax Count</div>
           <div className="box box1">
             {" "}
             Adult Count
-            <div className="count-cicle custom-count">{ageCatAppointmentCount["Adult"]}</div>
+            <div className="count-cicle custom-count">
+              {ageCatAppointmentCount["Adult"]}
+            </div>
           </div>
           <div className="box box2">
             {" "}
             Kids Count
-
+          </div>
+        </div>
+      </div>
       <div className="second-container">
         <div className="tile1">
           <heading>
@@ -180,11 +184,15 @@ const Dashboard = () => {
                 <strong>{item.category}:</strong> {item.content}
               </p>
             ))}
-            <div className="count-cicle custom-count">{ageCatAppointmentCount["Child"]}</div>
+            <div className="count-cicle custom-count">
+              {ageCatAppointmentCount["Child"]}
+            </div>
           </div>
           <div className="box box3">
             Extra Adult Count
-            <div className="count-cicle custom-count">{ageCatAppointmentCount["Extra Adult"]}</div>
+            <div className="count-cicle custom-count">
+              {ageCatAppointmentCount["Extra Adult"]}
+            </div>
           </div>
         </div>
       </div>
@@ -193,44 +201,44 @@ const Dashboard = () => {
           <heading>
             <b>How is our Progress?</b>
           </heading>
-      <div className="second-container">
-        <div className="tile1">
-          <heading>Lab Details</heading>
-          <table>
-            <thead>
-              <tr>
-                <th className="custom-th">Id</th>
-                <th className="custom-th">Lab Name</th>
-                <th className="custom-th">Todays Earnings</th>
-                <th className="custom-th">Owner Name</th>
-                <th className="custom-th">Status</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-        <div className="tile2" style={{backgroundColor:"violet"}}>
-          <heading>News and Feeds</heading>
-          <div className="news-feeds"></div>
-        </div>
-      </div>
+          <div className="second-container">
+            <div className="tile1">
+              <heading>Lab Details</heading>
+              <table>
+                <thead>
+                  <tr>
+                    <th className="custom-th">Id</th>
+                    <th className="custom-th">Lab Name</th>
+                    <th className="custom-th">Todays Earnings</th>
+                    <th className="custom-th">Owner Name</th>
+                    <th className="custom-th">Status</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div className="tile2" style={{ backgroundColor: "violet" }}>
+              <heading>News and Feeds</heading>
+              <div className="news-feeds"></div>
+            </div>
+          </div>
           <div className="pie-chart"></div>
           <div className="color-box-container">
-            <div class="color-box-label">
-              <div class="color-box green"></div>
+            <div className="color-box-label">
+              <div className="color-box green"></div>
               <div className="color-name">Total Appointment</div>
             </div>
-            <div class="color-box-label">
-              <div class="color-box gray"></div>
+            <div className="color-box-label">
+              <div className="color-box gray"></div>
               <div className="color-name">Todays Appointment</div>
             </div>
-            <div class="color-box-label">
-              <div class="color-box red"></div>
-              .<div class="color-box red"></div>
+            <div className="color-box-label">
+              <div className="color-box red"></div>
+              .<div className="color-box red"></div>
               <div className="color-name">Total Earnings</div>
             </div>
-            <div class="color-box-label">
-              <div class="color-box blue"></div>
+            <div className="color-box-label">
+              <div className="color-box blue"></div>
               <div className="color-name">Todays Earnings</div>
             </div>
           </div>
@@ -255,4 +263,5 @@ const Dashboard = () => {
     </div>
   );
 };
+
 export default Dashboard;
