@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Menu } from "antd";
+import { Menu, Upload, Button, Modal } from "antd";
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import {
   DashboardOutlined,
@@ -9,6 +9,7 @@ import {
   ShopOutlined,
   ShoppingOutlined,
   IdcardOutlined,
+  UploadOutlined,
 } from "@ant-design/icons/lib/icons";
 import LabTable from "./components/lab_components/LabTable";
 import ClinicTable from "./components/clinic_components/ClinicTable";
@@ -16,7 +17,7 @@ import LoginPage from "./components/login_components/Login";
 import Acards from "./components/consumers_appointments/Acards";
 import { NotificationOutlined, UserOutlined } from "@ant-design/icons";
 import { MailOutlined } from "@ant-design/icons";
-import { Badge, Avatar, Upload, Button, Popover, Select } from "antd";
+import { Badge, Avatar, Select } from "antd";
 import "./App.css";
 import NewConsumer from "./components/consumer_components/consumermodule";
 import { More } from "./components/consumers_appointments/More";
@@ -34,21 +35,37 @@ import Dashboard from "./components/Dashboard_Components/Dashboard";
 import EmployeeMapping from "./components/employee_mapping/EmployeeMapping";
 import BulkAppointments from "./components/bulk_appointments/BulkAppointments";
 
-
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
-  
   const handleLogin = () => {
-    // Perform login logic here
     setLoggedIn(true);
   };
 
   const handleLogout = () => {
-    // Perform logout logic here
+    setIsModalVisible(false); 
     setLoggedIn(false);
+  };
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleUpload = () => {
+    // Logic for uploading photo
+    setIsModalVisible(false);
+  };
+
+  const handleSave = () => {
+    // Logic for saving photo
+    setIsModalVisible(false);
   };
 
   return (
@@ -56,7 +73,7 @@ function App() {
       {loggedIn ? (
         <section>
           <div>
-            <Header onLogout={handleLogout} />
+            <Header onLogout={handleLogout} showModal={showModal} />
           </div>
           <div className="wrapper">
             <div className="container">
@@ -69,7 +86,6 @@ function App() {
               </div>
               <div className="right-side">
                 <div className="container-row">
-                  {/* <div className="top"><Filter></Filter></div> */}
                   <div className>
                     <Content />
                   </div>
@@ -80,13 +96,43 @@ function App() {
         </section>
       ) : (
         <LoginPage onLogin={handleLogin}></LoginPage>
-        // <Login onLogin={handleLogin} />
       )}
+      <Modal
+  title="Profile"
+  visible={isModalVisible}
+  onCancel={handleCancel}
+  footer={[
+    <Button key="cancel" onClick={handleCancel} styles={{marginRight: "8px"}}>
+      Cancel
+    </Button>,
+    <Button key="save" type="primary" onClick={handleSave} styles={{marginRight: "8px"}}>
+      Save
+    </Button>,
+    <Button key="signout" onClick={handleLogout} style={{ float: "left", marginRight: "4px"}}>
+      Sign Out
+    </Button>,
+  ]}
+  style={{ maxWidth: "20%" }} // Set the maximum width of the modal
+>
+  <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+  <div style={{ width: "100px", marginBottom: "10px" }}>
+    <Upload>
+      <Avatar
+        src={defaultProfilePhoto}
+        alt="Default Profile"
+        className="profile-photo"
+        style={{ width: "100px", height: "100px", marginBottom: "10px" }}
+      />
+    </Upload>
+    {/* Add other profile details or controls here */}
+  </div>
+  </div>
+</Modal>
     </div>
   );
 }
 
-function Header({ onLogout, profilePhoto }) {
+function Header({ onLogout, showModal }) {
   const [selectedValues, setSelectedValues] = useState([]);
   const [labData, setLabData] = useState([]);
 
@@ -105,9 +151,6 @@ function Header({ onLogout, profilePhoto }) {
           userDataObject.id
       );
       setLabData(response.data);
-
-      console.log("LabData from API", response.data);
-      //setFilterLabData(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -125,7 +168,6 @@ function Header({ onLogout, profilePhoto }) {
       }))
     : [];
 
-  // Set the default selected value
   const defaultSelectedValue = labOptions.length > 0 ? [labOptions[0].key] : [];
 
   return (
@@ -147,7 +189,6 @@ function Header({ onLogout, profilePhoto }) {
           </Select.Option>
         ))}
       </Select>
-      {/* <div>Header</div> */}
 
       <div className='top_bar_icons' >
         <Badge  offset={[10, 0]} style={{marginTop:"5px"}}>
@@ -157,19 +198,15 @@ function Header({ onLogout, profilePhoto }) {
       <div  className='top_bar_icons' >
         <Badge  offset={[10, 0]} style={{marginTop:"5px"}}>
         <MailOutlined style={{image:"80px", marginTop:"5px"}}/>
-
         </Badge>
       </div>
       <div className="top_bar_icons">
-        {profilePhoto ? (
-          <img src={profilePhoto} alt="Profile" className="profile-photo" />
-        ) : (
-          <img
-            src={defaultProfilePhoto}
-            alt="Default Profile"
-            className="profile-photo"
-          />
-        )}
+        <Avatar
+          src={defaultProfilePhoto}
+          alt="Default Profile"
+          className="profile-photo"
+          onClick={showModal}
+        />
       </div>
     </div>
   );
@@ -224,7 +261,6 @@ function SlideMenu({ location, navigate, onLogout }) {
           isHideCreatePromotions? null :{ label: "Create Promotions", key: "/createpromotions", icon: <UserOutlined /> },
           isHideClinic ? null : { label: "Clinic", key: "/clinic", icon: <ShopOutlined /> },
           {
-            
             label: "Consumer",
             key: "/consumer",
             icon: <ShoppingOutlined />,
@@ -237,15 +273,11 @@ function SlideMenu({ location, navigate, onLogout }) {
               },
             ],
           },
-          
-          { label: "Profile", key: "/profile", icon: <ProfileOutlined /> },
-          { label: "Sign Out", key: "/logout", icon: <SettingOutlined />, danger: true },
         ]}
       />
     </div>
   );
 }
-
 
 function Content() {
   return (
@@ -272,7 +304,6 @@ function Content() {
         <Route path="/ims" element={<Ims/>} />
         <Route path="/createpromotions" element={<Createpromotions/>} />
         <Route path="/bulkupload" element={<BulkAppointments/>} />
-
       </Routes>
     </div>
   );
