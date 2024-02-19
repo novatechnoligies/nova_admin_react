@@ -254,7 +254,7 @@ function SlideMenu({ location, navigate, onLogout }) {
           { label: "Dashboard", key: "/dash", icon: <DashboardOutlined /> },
           { label: "Appointments", key: "Acard", icon: <IdcardOutlined /> },
           isHideLab ? null : { label: "Lab", key: "/lab", icon: <ShopOutlined /> },
-          isHideClinic ? null : { label: "Clinic", key: "/clinic", icon: <ShopOutlined /> },
+          //isHideClinic ? null : { label: "Clinic", key: "/clinic", icon: <ShopOutlined /> },
           { label: "Bulk upload", key: "/bulkupload", icon: <ProfileOutlined /> },
           { label: "EMS", key: "/ems", icon: <UserOutlined /> },
           { label: "IMS", key: "/ims", icon: <UserOutlined /> },
