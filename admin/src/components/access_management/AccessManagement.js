@@ -17,6 +17,7 @@ const AccessManagement = () => {
     { label: "Create Promotions", isOn: false },
     { label: "Consumer", isOn: false },
     { label: "Profile", isOn: false },
+    { label: "LAB Name", isOn: false }, // Shifted to First column
     // Hidden functionalities with default permissions for owner
     { label: "Import Inventory", isOn: true, hidden: true },
     { label: "Used Inventories", isOn: true, hidden: true },
@@ -32,21 +33,19 @@ const AccessManagement = () => {
     { label: "Create Appointments", isOn: false },
     { label: "Appointment List", isOn: false },
     { label: "Manage Inventory", isOn: false },
-    { label: "Employee Management", isOn: false }
+    { label: "Employee Management", isOn: false },
+    { label: "Owner Name", isOn: false }, // Shifted to Second column
   ]);
-
+  
   const [thirdColumnItems, setThirdColumnItems] = useState([
     { label: "Total Appointments", isOn: false },
     { label: "Today's Appointments", isOn: false },
     { label: "Total Count", isOn: false },
-    { label: "LAB Name", isOn: false },
-    { label: "Owner Name", isOn: false },
     { label: "Status", isOn: false },
     { label: "Inventory Item Name", isOn: false },
     { label: "Total Items", isOn: false },
     { label: "Used Items", isOn: false },
     { label: "Stock Items", isOn: false },
-    // Including Todays Earnings and Total Earnings in the column, initially OFF
     { label: "Todays Earnings", isOff: true },
     { label: "Total Earnings", isOff: true },
   ]);
