@@ -1,0 +1,91 @@
+.container-box {
+  width: 80%;
+  margin: 30px auto;
+  margin-left: 5px;
+  border: 1px solid #ccc;
+  padding: 20px;
+  padding-left: 50px;
+  background-color: #f5f5f5;
+}
+
+.bulk-appointments-title {
+  margin-bottom: 20px;
+}
+
+.upload-button {
+  margin-left: 10px;
+  margin-bottom: 0px;
+  padding-left: 10px;
+  margin-left: 5px;
+  margin-right: 20px;
+}
+
+.form-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.choose-file {
+  margin-bottom: 10px;
+  padding-left: 10px;
+  margin-left: 0px;
+  margin-right: 20px;
+  display: flex;
+}
+
+.button-group {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+/* Additional Content Section Styles */
+.additional-content {
+  margin-top: 40px;
+}
+
+.additional-content h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.additional-content p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* New Styles for Note Input Box */
+.note-input {
+  margin-top: 20px;
+}
+
+.note-input textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+  height: 150px; /* Set a fixed height to limit vertical expansion */
+}
+
+.note-input button {
+  margin-top: 10px;
+}
+
+.popup-message {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #52c41a; /* Green color */
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.popup-message.show {
+  opacity: 1;
+}
