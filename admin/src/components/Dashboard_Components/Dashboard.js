@@ -135,6 +135,15 @@ const Dashboard = () => {
           <div className="box box2">
             {" "}
             Kids Count
+            <div className="count-cicle custom-count">
+              {ageCatAppointmentCount["Child"]}
+            </div>
+          </div>
+          <div className="box box3">
+            Extra Adult Count
+            <div className="count-cicle custom-count">
+              {ageCatAppointmentCount["Extra Adult"]}
+            </div>
           </div>
         </div>
       </div>
@@ -184,15 +193,6 @@ const Dashboard = () => {
                 <strong>{item.category}:</strong> {item.content}
               </p>
             ))}
-            <div className="count-cicle custom-count">
-              {ageCatAppointmentCount["Child"]}
-            </div>
-          </div>
-          <div className="box box3">
-            Extra Adult Count
-            <div className="count-cicle custom-count">
-              {ageCatAppointmentCount["Extra Adult"]}
-            </div>
           </div>
         </div>
       </div>
@@ -201,27 +201,6 @@ const Dashboard = () => {
           <heading>
             <b>How is our Progress?</b>
           </heading>
-          <div className="second-container">
-            <div className="tile1">
-              <heading>Lab Details</heading>
-              <table>
-                <thead>
-                  <tr>
-                    <th className="custom-th">Id</th>
-                    <th className="custom-th">Lab Name</th>
-                    <th className="custom-th">Todays Earnings</th>
-                    <th className="custom-th">Owner Name</th>
-                    <th className="custom-th">Status</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
-            <div className="tile2" style={{ backgroundColor: "violet" }}>
-              <heading>News and Feeds</heading>
-              <div className="news-feeds"></div>
-            </div>
-          </div>
           <div className="pie-chart"></div>
           <div className="color-box-container">
             <div className="color-box-label">
@@ -234,7 +213,6 @@ const Dashboard = () => {
             </div>
             <div className="color-box-label">
               <div className="color-box red"></div>
-              .<div className="color-box red"></div>
               <div className="color-name">Total Earnings</div>
             </div>
             <div className="color-box-label">
@@ -245,7 +223,7 @@ const Dashboard = () => {
         </div>
         <div className="tile2">
           <heading>
-            <b>Your Lab Inventry</b>
+            <b>Lab Inventry</b>
           </heading>
           <table>
             <thead>
