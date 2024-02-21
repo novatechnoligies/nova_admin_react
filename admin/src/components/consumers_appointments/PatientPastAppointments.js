@@ -27,7 +27,7 @@ const PatientPastAppointments = () => {
     <div className="p-appointments-container">
       <div className="apt-info-container" style={{ overflow: "scroll" }}>
         <div className="apt-info">
-          {pastAppointments.length > 0 ? (
+          {Array.isArray(pastAppointments) && pastAppointments.length > 0 ? (
             <div className="inline-info clickable">
               {pastAppointments.map((appointment) => (
                 <div className="info-item" key={appointment.appointmentId}>

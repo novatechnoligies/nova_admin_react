@@ -1,6 +1,13 @@
 .lab-result-container {
   width: 660px;
   margin: 20px auto; /* Center the container */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.result-container {
+  width: 600px;
 }
 
 table {
@@ -12,13 +19,14 @@ table {
 th {
   background-color: #f2f2f2;
   font-weight: bold;
-  padding: 8px;
+  padding: 10px;
   text-align: left;
 }
 
 td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 10px;
+  text-align: left;
 }
 
 td:not(:last-child) {
@@ -26,8 +34,9 @@ td:not(:last-child) {
 }
 
 input {
-  width: 100%;
+  width: calc(100% - 20px); /* Adjust width as needed, considering padding */
   box-sizing: border-box;
+  display: inline-block; /* Ensure inputs appear on the same line */
 }
 
 tbody tr:nth-child(even) {
