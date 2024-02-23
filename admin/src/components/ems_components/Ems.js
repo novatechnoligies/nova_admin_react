@@ -15,6 +15,8 @@ const Ems = () => {
   const [exportDropdownVisible, setExportDropdownVisible] = useState(false);
   const [checkInOut, setCheckInOut] = useState("Punch-in"); // Renamed "Check-in" to "Punch-in"
   const [addEmployeeModalVisible, setAddEmployeeModalVisible] = useState(false);
+  const [editEmployeeModalVisible, setEditEmployeeModalVisible] = useState(false); // Added state for edit employee modal visibility
+  const [editEmployeeData, setEditEmployeeData] = useState(null); // Added state to hold data of employee being edited
 
   const handleAddEmployeeModal = () => {
     setAddEmployeeModalVisible(true);
@@ -27,6 +29,15 @@ const Ems = () => {
   const handleAddEmployeeModalOk = () => {
     // Implement logic to submit form data
     setAddEmployeeModalVisible(false);
+  };
+
+  const handleEditEmployeeModalCancel = () => {
+    setEditEmployeeModalVisible(false);
+  };
+
+  const handleEditEmployeeModalOk = () => {
+    // Implement logic to submit edited form data
+    setEditEmployeeModalVisible(false);
   };
 
   const addEmployeeForm = (
@@ -65,6 +76,66 @@ const Ems = () => {
     </Modal>
   );
 
+  const editEmployeeForm = (
+  <Modal
+    title="Edit Employee Details"
+    visible={editEmployeeModalVisible}
+    onCancel={handleEditEmployeeModalCancel}
+    onOk={handleEditEmployeeModalOk}
+  >
+    <Form layout="vertical">
+      <Form.Item label="Name">
+        <Input 
+          value={editEmployeeData ? editEmployeeData.name : ''} 
+          onChange={(e) => handleEditFormChange('name', e.target.value)} 
+        />
+      </Form.Item>
+      <Form.Item label="Phone No">
+        <Input 
+          value={editEmployeeData ? editEmployeeData.phone : ''} 
+          onChange={(e) => handleEditFormChange('phone', e.target.value)} 
+        />
+      </Form.Item>
+      <Form.Item label="Address">
+        <Input 
+          value={editEmployeeData ? editEmployeeData.address : ''} 
+          onChange={(e) => handleEditFormChange('address', e.target.value)} 
+        />
+      </Form.Item>
+      <Form.Item label="Email">
+        <Input 
+          value={editEmployeeData ? editEmployeeData.email : ''} 
+          onChange={(e) => handleEditFormChange('email', e.target.value)} 
+        />
+      </Form.Item>
+      <Form.Item label="Pincode">
+        <Input 
+          value={editEmployeeData ? editEmployeeData.pincode : ''} 
+          onChange={(e) => handleEditFormChange('pincode', e.target.value)} 
+        />
+      </Form.Item>
+      <Form.Item label="Adhar Number">
+        <Input 
+          value={editEmployeeData ? editEmployeeData.adharNumber : ''} 
+          onChange={(e) => handleEditFormChange('adharNumber', e.target.value)} 
+        />
+      </Form.Item>
+      <Form.Item label="Position">
+        <Input 
+          value={editEmployeeData ? editEmployeeData.position : ''} 
+          onChange={(e) => handleEditFormChange('position', e.target.value)} 
+        />
+      </Form.Item>
+      <Form.Item label="Gender">
+        <Input 
+          value={editEmployeeData ? editEmployeeData.gender : ''} 
+          onChange={(e) => handleEditFormChange('gender', e.target.value)} 
+        />
+      </Form.Item>
+    </Form>
+  </Modal>
+);
+
   useEffect(() => {
     getEmployeeTableData();
   }, [search]);
@@ -86,6 +157,7 @@ const Ems = () => {
       name: "ID",
       selector: (row) => row.id,
       sortable: true,
+      width: "70px", // Adjusted width for ID column
       style: {
         fontWeight: "bold",
         wordWrap: "break-word",
@@ -95,6 +167,7 @@ const Ems = () => {
       name: "Name",
       selector: (row) => row.firstName,
       sortable: true,
+      width: "100px", // Adjusted width for Name column
       style: {
         fontWeight: "bold",
         wordWrap: "break-word",
@@ -104,18 +177,21 @@ const Ems = () => {
       name: "Phone No",
       selector: (row) => row.phone,
       sortable: true,
+      width: "100px", // Adjusted width for Phone No column
       style: { wordWrap: "break-word" },
     },
     {
       name: "Address",
       selector: (row) => row.lastName,
       sortable: true,
+      width: "100px", // Adjusted width for Address column
       style: { wordWrap: "break-word" },
     },
     {
       name: "Email",
       selector: (row) => row.email,
       sortable: true,
+      width: "100px", // Adjusted width for Email column
       style: { wordWrap: "break-word" },
     },
     {
@@ -148,7 +224,7 @@ const Ems = () => {
         <div>
           <Button
             type="link"
-            onClick={() => handleEditClick(row.id)}
+            onClick={() => handleEditClick(row)} // Pass entire row data to handleEditClick
             icon={<EditOutlined />}
           />
           <Button
@@ -165,9 +241,11 @@ const Ems = () => {
     },
   ];
 
-  const handleEditClick = (employeeId) => {
-    // Implement the logic for editing an employee
-    console.log(`Edit button clicked for employee with ID ${employeeId}`);
+  const handleEditClick = (rowData) => {
+    // Set the data of the employee being edited
+    setEditEmployeeData(rowData);
+    // Open the edit modal
+    setEditEmployeeModalVisible(true);
   };
 
   const handleDeleteClick = (employeeId) => {
@@ -176,6 +254,14 @@ const Ems = () => {
       (employee) => employee.id !== employeeId
     );
     setEmployeeData(updatedEmployeeData);
+  };
+
+  const handleEditFormChange = (field, value) => {
+    // Update the corresponding field in the editEmployeeData state
+    setEditEmployeeData(prevState => ({
+      ...prevState,
+      [field]: value
+    }));
   };
 
   const handleCheckInOut = () => {
@@ -221,6 +307,7 @@ const Ems = () => {
   return (
     <div className="Ems">
       {addEmployeeForm}
+      {editEmployeeForm}
       <div style={{ marginBottom: "10px", display: "flex", alignItems: "center" }}>
         <Input
           type="text"
