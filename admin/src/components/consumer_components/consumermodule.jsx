@@ -45,6 +45,9 @@ function NewConsumer() {
         console.log("API response:", response);
         setIsModalOpen(false);
         message.success("User Created..!");
+        // Upload Aadhar photo
+        const file = document.getElementById("fileInput").files[0]; // Assuming fileInput is the ID of the file input element
+        uploadAdharPhoto(file, response.data.id);
       })
       .catch((error) => {
         console.error("Validation error:", error);
@@ -87,7 +90,7 @@ function NewConsumer() {
   }, []);
   const handleDateOfBirthChange = (event) => {
     const selectedDate = event.target.value;
-    
+
     // Calculate age based on the selected date of birth
     const birthDate = new Date(selectedDate);
     const currentDate = new Date();
@@ -102,10 +105,14 @@ function NewConsumer() {
       // Calculate date of birth based on the entered age
       const currentDate = new Date();
       const birthYear = currentDate.getFullYear() - value;
-      const dateOfBirth = new Date(birthYear, currentDate.getMonth(), currentDate.getDate());
+      const dateOfBirth = new Date(
+        birthYear,
+        currentDate.getMonth(),
+        currentDate.getDate()
+      );
 
       // Format the date to be in the "YYYY-MM-DD" format expected by the input[type="date"]
-      const formattedDateOfBirth = dateOfBirth.toISOString().split('T')[0];
+      const formattedDateOfBirth = dateOfBirth.toISOString().split("T")[0];
 
       // Set the calculated date of birth in the form
       cusumerform.setFieldsValue({ dob: formattedDateOfBirth });
@@ -150,10 +157,29 @@ function NewConsumer() {
     },
   ];
 
-  const data = [
-    { id: 1, col1: "Row 1", col2: "Data A" },
-    { id: 2, col1: "Row 2", col2: "Data B" },
-  ];
+  const uploadAdharPhoto = async (file, userId) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("userId", userId);
+
+      const response = await axios.post(
+        "http://localhost:8082/dataservice/uploadAdharPhoto",
+        formData
+      );
+
+      if (response.status === 200) {
+        console.log("File uploaded successfully:", response.data);
+        // Handle success
+      } else {
+        console.error("Failed to upload file:", response.statusText);
+        // Handle error
+      }
+    } catch (error) {
+      console.error("Failed to upload file:", error.message);
+      // Handle error
+    }
+  };
 
   return (
     <div>
@@ -265,7 +291,7 @@ function NewConsumer() {
             label="Date Of Birth"
             rules={[{ required: true, max: 50 }]}
           >
-            <Input type="date" onChange={handleDateOfBirthChange}/>
+            <Input type="date" onChange={handleDateOfBirthChange} />
           </Form.Item>
 
           <Form.Item
@@ -313,9 +339,9 @@ function NewConsumer() {
           <Form.Item
             name="adharPhoto"
             label="Adhar Photo"
-            rules={[{ required: true}]}
+            rules={[{ required: true }]}
           >
-            <Input type="file"></Input>
+            <Input type="file" id="fileInput"></Input>
           </Form.Item>
 
           <Form.Item
