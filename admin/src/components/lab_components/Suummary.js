@@ -18,7 +18,7 @@ const Summary = ({ selectedLabData }) => {
     const userDataObject = JSON.parse(storedUserData);
     try {
       const response = await axios.get(
-        BASE_URL + "/dataservice/getShopAvaibilityById/1" // Replace with Shop availability by ShopId
+        BASE_URL + `/dataservice/getShopAvaibilityById/${selectedLabData.id}`
       );
       // console.log("availability" + JSON.stringify(response));
       setAvailabilityData(response.data);
@@ -133,7 +133,7 @@ const Summary = ({ selectedLabData }) => {
       </div>
 
       <div className="lab-summary-container">
-        <AvailableService />
+        <AvailableService labId={selectedLabData.id}/>
       </div>
     </div>
   );
