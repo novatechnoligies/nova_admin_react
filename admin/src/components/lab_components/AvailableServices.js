@@ -4,7 +4,7 @@ import { Row, Col, Table, Button, Input } from "antd";
 import axios from "axios";
 import { BASE_URL } from "../../constants/constants";
 
-const AvailableService = () => {
+const AvailableService = ({ labId }) => {
   const [serviceSummary, setServiceSummary] = useState([]);
   const [search, setSearch] = useState("");
   const [editedServicePrices, setEditedServicePrices] = useState({});
@@ -15,7 +15,7 @@ const AvailableService = () => {
 
   const getServiceSummary = () => {
     axios
-      .get(BASE_URL + `/dataservice/findAllShopServiceByLab/1`)
+      .get(BASE_URL + `/dataservice/findAllShopServiceByLab/${labId}`)
       .then((response) => {
         const serviceSummaryFromApi = response.data.map((result) => ({
           id: result.serviceId,
@@ -27,6 +27,7 @@ const AvailableService = () => {
           testDescription: result.testDescription,
         }));
         setServiceSummary(serviceSummaryFromApi);
+        console.log("Services From the API", serviceSummary)
       })
       .catch((error) => {
         console.error(error);
