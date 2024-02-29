@@ -55,7 +55,7 @@ const Ems = () => {
           <Input />
         </Form.Item>
         <Form.Item label="Address">
-          <Input />
+        <Input onChange={(e) => setAddress(e.target.value)} />
         </Form.Item>
         <Form.Item label="Email">
           <Input />
@@ -96,7 +96,7 @@ const Ems = () => {
           onChange={(e) => handleEditFormChange('phone', e.target.value)} 
         />
       </Form.Item>
-      <Form.Item label="Address">
+      <Form.Item label="Last Name">
         <Input 
           value={editEmployeeData ? editEmployeeData.address : ''} 
           onChange={(e) => handleEditFormChange('address', e.target.value)} 
@@ -181,10 +181,10 @@ const Ems = () => {
       style: { wordWrap: "break-word" },
     },
     {
-      name: "Address",
+      name: "Last Name", // Changed "Address" to "Last Name"
       selector: (row) => row.lastName,
       sortable: true,
-      width: "100px", // Adjusted width for Address column
+      width: "100px", // Adjusted width for Last Name column
       style: { wordWrap: "break-word" },
     },
     {
@@ -215,6 +215,12 @@ const Ems = () => {
     {
       name: "Gender",
       selector: (row) => row.gender,
+      sortable: true,
+      style: { wordWrap: "break-word" },
+    },
+{
+      name: "Address",
+      selector: (row) => row.address,
       sortable: true,
       style: { wordWrap: "break-word" },
     },
