@@ -120,6 +120,12 @@ function NewConsumer() {
   };
 
   const columns = [
+    
+    {
+      name: "Sl No",
+      selector: (row, index) => index + 1,
+      sortable: false,
+    },
     {
       name: "ID",
       selector: (row) => row.id,
