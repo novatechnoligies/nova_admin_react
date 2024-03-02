@@ -120,16 +120,17 @@ function NewConsumer() {
   };
 
   const columns = [
-    
     {
-      name: "Sl No",
-      selector: (row, index) => index + 1,
-      sortable: false,
-    },
+        name: "S.No",
+        selector: (row, index) => index + 1,
+        sortable: false,
+        width: "60px", // Set to width size
+      },
     {
       name: "ID",
       selector: (row) => row.id,
       sortable: true,
+      width: "70px", // Set to width size
     },
     {
       name: "Name",

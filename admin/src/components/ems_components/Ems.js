@@ -48,6 +48,7 @@ const Ems = () => {
       onOk={handleAddEmployeeModalOk}
     >
       <Form layout="vertical">
+        
         <Form.Item label="Name">
           <Input />
         </Form.Item>
@@ -153,6 +154,12 @@ const Ems = () => {
   };
   
   const columns = [
+    {
+      name: "S.No",
+      selector: (row, index) => index + 1,
+      sortable: false,
+      width: "60px", // Set to width size
+    },
     {
       name: "ID",
       selector: (row) => row.id,
