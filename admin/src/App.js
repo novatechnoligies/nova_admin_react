@@ -38,8 +38,18 @@ import BulkAppointments from "./components/bulk_appointments/BulkAppointments";
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [userFullName, setUserFullName] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    const storedUserData = sessionStorage.getItem("userData");
+    const userDataObject = JSON.parse(storedUserData);
+    if (userDataObject) {
+      const fullName = `${userDataObject.firstName} ${userDataObject.lastName}`;
+      setUserFullName(fullName);
+    }
+  }, [loggedIn]);
 
   const handleLogin = () => {
     setLoggedIn(true);
@@ -115,17 +125,21 @@ function App() {
   style={{ maxWidth: "20%" }} // Set the maximum width of the modal
 >
   <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-  <div style={{ width: "100px", marginBottom: "10px" }}>
-    <Upload>
-      <Avatar
-        src={defaultProfilePhoto}
-        alt="Default Profile"
-        className="profile-photo"
-        style={{ width: "100px", height: "100px", marginBottom: "10px" }}
-      />
-    </Upload>
-    {/* Add other profile details or controls here */}
-  </div>
+    <div style={{ width: "100px", marginBottom: "10px", textAlign: "center" }}>
+      <Upload>
+        <Avatar
+          src={defaultProfilePhoto}
+          alt="Default Profile"
+          className="profile-photo"
+          style={{ width: "100px", height: "100px", marginBottom: "10px" }}
+        />
+      </Upload>
+      <div style={{ textAlign: "center" }}>
+        {/* Display userFullName in one line */}
+        <div style={{ whiteSpace: "nowrap", margin: "20", paddingRight: "5px" }}>{userFullName}</div>
+      </div>
+      {/* Add other profile details or controls here */}
+    </div>
   </div>
 </Modal>
     </div>

@@ -52,3 +52,12 @@
   height: 35px;
   margin-bottom: 20px;
 }
+
+.profile-name {
+  font-size: 20px; /* Keep font size as it is or adjust as needed */
+  color: #333; /* Adjust color as needed */
+  margin-top: 2px; /* Keep top margin as it is or adjust as needed */
+  text-align: center; /* Center the text */
+  margin-left: -20; /* Set left margin to 0 */
+  padding-left: 20; /* Set left padding to 0 */
+}
