@@ -32,9 +32,16 @@ const Ims = () => {
 
   const columns = [
     {
+      name: "S.No",
+      selector: (row, index) => index + 1,
+      sortable: false,
+      width: "70px", // Set to auto size
+    },
+    {
       name: 'ID',
       selector: (row) => row.shopID,
       sortable: true,
+      width: "70px", // Set to auto size
       style: {
         fontWeight: 'bold',
         wordWrap: 'break-word',

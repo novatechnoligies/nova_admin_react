@@ -153,6 +153,13 @@ const Ems = () => {
   };
   
   const columns = [
+    
+    {
+      name: "S.No",
+      selector: (row, index) => index + 1,
+      sortable: false,
+      width: "60px", // Set to width size
+    },
     {
       name: "ID",
       selector: (row) => row.id,
