@@ -40,8 +40,18 @@ import Locations from "./components/locations_components/Locations";
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [userFullName, setUserFullName] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    const storedUserData = sessionStorage.getItem("userData");
+    const userDataObject = JSON.parse(storedUserData);
+    if (userDataObject) {
+      const fullName = `${userDataObject.firstName} ${userDataObject.lastName}`;
+      setUserFullName(fullName);
+    }
+  }, [loggedIn]);
 
   const handleLogin = () => {
     setLoggedIn(true);

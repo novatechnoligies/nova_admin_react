@@ -121,9 +121,16 @@ function NewConsumer() {
 
   const columns = [
     {
+      name: "S.No",
+      selector: (row, index) => index + 1,
+      sortable: false,
+      width: "70px",
+    },
+    {
       name: "ID",
       selector: (row) => row.id,
       sortable: true,
+      width: "70px",
     },
     {
       name: "Name",

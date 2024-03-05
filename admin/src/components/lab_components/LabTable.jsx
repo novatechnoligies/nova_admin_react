@@ -102,7 +102,13 @@ const LabDataTable = ({ data }) => {
   };
 
   const columns = [
-        {
+    {
+      name: "S.No",
+      selector: (row, index) => index + 1,
+      sortable: false,
+      width: "70px", // Set to auto size
+    },
+    {
       name: "Lab Name",
       selector: (row) => row.shopName,
       sortable: true,

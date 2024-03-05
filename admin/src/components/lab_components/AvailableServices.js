@@ -133,19 +133,17 @@ const AvailableService = ({ labId }) => {
                           ) : (
                             `₹${service.amount}`
                           ),
-                      },
-                      {
-                        plan: "GST (18%)",
-                        price: `₹${(18 / 100) * service.amount}`,
-                      },
-                      { plan: "Discount", price: "null" },
-                      {
-                        plan: "Net Price",
-                        price: `₹${calculateNetPrice(service.amount).toFixed(
-                          2
-                        )}`,
-                      },
-                    ]}
+                        },
+                        {
+                          plan: "GST (18%)",
+                          price: `₹${((18 / 100) * service.amount).toFixed(2)}`, 
+                        },
+                        { plan: "Discount", price: "null" },
+                        {
+                          plan: "Net Price",
+                          price: `₹${calculateNetPrice(service.amount)}`,
+                        },
+                      ]}
                     columns={columns}
                     pagination={false}
                   />
