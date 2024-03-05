@@ -102,7 +102,7 @@ const LabDataTable = ({ data }) => {
   };
 
   const columns = [
-    {
+        {
       name: "Lab Name",
       selector: (row) => row.shopName,
       sortable: true,

@@ -34,6 +34,8 @@ import Createpromotions from "./components/promotions_offers/Createpromotions";
 import Dashboard from "./components/Dashboard_Components/Dashboard";
 import EmployeeMapping from "./components/employee_mapping/EmployeeMapping";
 import BulkAppointments from "./components/bulk_appointments/BulkAppointments";
+import Organizations from "./components/org_components/Organizations";
+import Locations from "./components/locations_components/Locations";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -46,7 +48,7 @@ function App() {
   };
 
   const handleLogout = () => {
-    setIsModalVisible(false); 
+    setIsModalVisible(false);
     setLoggedIn(false);
   };
 
@@ -98,36 +100,59 @@ function App() {
         <LoginPage onLogin={handleLogin}></LoginPage>
       )}
       <Modal
-  title="Profile"
-  visible={isModalVisible}
-  onCancel={handleCancel}
-  footer={[
-    <Button key="cancel" onClick={handleCancel} styles={{marginRight: "8px"}}>
-      Cancel
-    </Button>,
-    <Button key="save" type="primary" onClick={handleSave} styles={{marginRight: "8px"}}>
-      Save
-    </Button>,
-    <Button key="signout" onClick={handleLogout} style={{ float: "left", marginRight: "4px"}}>
-      Sign Out
-    </Button>,
-  ]}
-  style={{ maxWidth: "20%" }} // Set the maximum width of the modal
->
-  <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-  <div style={{ width: "100px", marginBottom: "10px" }}>
-    <Upload>
-      <Avatar
-        src={defaultProfilePhoto}
-        alt="Default Profile"
-        className="profile-photo"
-        style={{ width: "100px", height: "100px", marginBottom: "10px" }}
-      />
-    </Upload>
-    {/* Add other profile details or controls here */}
-  </div>
-  </div>
-</Modal>
+        title="Profile"
+        visible={isModalVisible}
+        onCancel={handleCancel}
+        footer={[
+          <Button
+            key="cancel"
+            onClick={handleCancel}
+            styles={{ marginRight: "8px" }}
+          >
+            Cancel
+          </Button>,
+          <Button
+            key="save"
+            type="primary"
+            onClick={handleSave}
+            styles={{ marginRight: "8px" }}
+          >
+            Save
+          </Button>,
+          <Button
+            key="signout"
+            onClick={handleLogout}
+            style={{ float: "left", marginRight: "4px" }}
+          >
+            Sign Out
+          </Button>,
+        ]}
+        style={{ maxWidth: "20%" }} // Set the maximum width of the modal
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <div style={{ width: "100px", marginBottom: "10px" }}>
+            <Upload>
+              <Avatar
+                src={defaultProfilePhoto}
+                alt="Default Profile"
+                className="profile-photo"
+                style={{
+                  width: "100px",
+                  height: "100px",
+                  marginBottom: "10px",
+                }}
+              />
+            </Upload>
+            {/* Add other profile details or controls here */}
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }
@@ -135,6 +160,10 @@ function App() {
 function Header({ onLogout, showModal }) {
   const [selectedValues, setSelectedValues] = useState([]);
   const [labData, setLabData] = useState([]);
+  const [selectedOrganization, setSelectedOrganization] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState([]);
+  const [selectedLab, setSelectedLab] = useState([]);
+  
 
   useEffect(() => {
     getLabData();
@@ -156,9 +185,20 @@ function Header({ onLogout, showModal }) {
     }
   };
 
-  const handleChange = (selected) => {
-    sessionStorage.setItem("labData", JSON.stringify(selected));
-    setSelectedValues(selected);
+  const handleChange = (selected, field) => {
+    if (field === "organization") {
+      setSelectedOrganization(selected);
+      setSelectedLocation([]); // Clear location when organization changes
+      setSelectedLab([]); // Clear lab when organization changes
+    } else if (field === "location") {
+      setSelectedLocation(selected);
+      setSelectedLab([]); // Clear lab when location changes
+    } else if (field === "lab" && (selectedOrganization.length === 0 || selectedLocation.length === 0)) {
+      alert("Please select both Organization and Location first.");
+      setSelectedLab([]);
+    } else {
+      setSelectedLab(selected);
+    }
   };
 
   const labOptions = labData
@@ -170,17 +210,60 @@ function Header({ onLogout, showModal }) {
 
   const defaultSelectedValue = labOptions.length > 0 ? [labOptions[0].key] : [];
 
+  const organizationOptions = [
+    { value: "org1", label: "Organization 1" },
+    { value: "org2", label: "Organization 2" },
+    { value: "org3", label: "Organization 3" },
+  ];
+
+  const locationOptions = [
+    { value: "loc1", label: "Location 1" },
+    { value: "loc2", label: "Location 2" },
+    { value: "loc3", label: "Location 3" },
+  ];
+
   return (
     <div
       className="top-bar"
       style={{ position: "fixed", top: 0, width: "100%" }}
     >
-      <Select
+      {organizationOptions && organizationOptions.length > 0 && (
+        <Select
+          style={{ width: "20%", marginRight: "20px" }}
+          placeholder="Select Organization"
+          dropdownStyle={{ width: "200px" }}
+          onChange={(selected) => handleChange(selected, "organization")}
+          value={selectedOrganization}
+        >
+          {organizationOptions.map((org) => (
+            <Select.Option key={org.value} value={org.value}>
+              {org.label}
+            </Select.Option>
+          ))}
+        </Select>
+      )}
+
+      {locationOptions && locationOptions.length > 0 && (
+        <Select
+          style={{ width: "20%", marginRight: "20px" }}
+          placeholder="Select Location"
+          dropdownStyle={{ width: "200px" }}
+          onChange={(selected) => handleChange(selected, "location")}
+          value={selectedLocation}
+        >
+          {locationOptions.map((loc) => (
+            <Select.Option key={loc.value} value={loc.value}>
+              {loc.label}
+            </Select.Option>
+          ))}
+        </Select>
+      )}
+
+<Select
         style={{ width: "20%", marginRight: "20px" }}
-        placeholder="Select Your Lab"
-        onChange={handleChange}
-        value={selectedValues}
-        defaultValue={defaultSelectedValue}
+        placeholder={labOptions && labOptions.length > 0 ? "Select Your Lab" : "No Labs Available"}
+        onChange={(selected) => handleChange(selected, "lab")}
+        value={selectedLab}
         dropdownStyle={{ width: "200px" }}
       >
         {labOptions.map((item, index) => (
@@ -190,14 +273,14 @@ function Header({ onLogout, showModal }) {
         ))}
       </Select>
 
-      <div className='top_bar_icons' >
-        <Badge  offset={[10, 0]} style={{marginTop:"5px"}}>
-        <NotificationOutlined style={{image:"80px", marginTop:"5px"}}/>
+      <div className="top_bar_icons">
+        <Badge offset={[10, 0]} style={{ marginTop: "5px" }}>
+          <NotificationOutlined style={{ image: "80px", marginTop: "5px" }} />
         </Badge>
       </div>
-      <div  className='top_bar_icons' >
-        <Badge  offset={[10, 0]} style={{marginTop:"5px"}}>
-        <MailOutlined style={{image:"80px", marginTop:"5px"}}/>
+      <div className="top_bar_icons">
+        <Badge offset={[10, 0]} style={{ marginTop: "5px" }}>
+          <MailOutlined style={{ image: "80px", marginTop: "5px" }} />
         </Badge>
       </div>
       <div className="top_bar_icons">
@@ -224,9 +307,13 @@ function SlideMenu({ location, navigate, onLogout }) {
 
   if (accessPermissionItems !== undefined) {
     const itemsArray = JSON.parse(accessPermissionItems);
-    isHideClinic = itemsArray.some(item => item.label === "Clinic" && item.isOn);
-    isHideLab = itemsArray.some(item => item.label === "Lab" && item.isOn);
-    isHideCreatePromotions = itemsArray.some(item => item.label === "Create Promotions" && item.isOn);
+    isHideClinic = itemsArray.some(
+      (item) => item.label === "Clinic" && item.isOn
+    );
+    isHideLab = itemsArray.some((item) => item.label === "Lab" && item.isOn);
+    isHideCreatePromotions = itemsArray.some(
+      (item) => item.label === "Create Promotions" && item.isOn
+    );
   }
 
   return (
@@ -250,16 +337,38 @@ function SlideMenu({ location, navigate, onLogout }) {
         }}
         items={[
           { label: "Home", key: "/", icon: <HomeOutlined /> },
-          isHideClinic ? null : { label: "Access Management", key: "/accessManagement" },
+          isHideClinic
+            ? null
+            : { label: "Access Management", key: "/accessManagement", icon: <UserOutlined /> },
           { label: "Dashboard", key: "/dash", icon: <DashboardOutlined /> },
           { label: "Appointments", key: "Acard", icon: <IdcardOutlined /> },
-          isHideLab ? null : { label: "Lab", key: "/lab", icon: <ShopOutlined /> },
+          isHideLab
+            ? null
+            : { label: "Manage Orgs", key: "/lab", icon: <ShopOutlined />,  
+            children: [
+              {label: "Lab", key: "/lab",icon: <ShopOutlined />},
+              { label: "Organizations", key: "/org", icon: <ShopOutlined /> },
+              {label: "Locations", key: "/location",icon: <ShopOutlined />},
+
+            ], },
           //isHideClinic ? null : { label: "Clinic", key: "/clinic", icon: <ShopOutlined /> },
-          { label: "Bulk upload", key: "/bulkupload", icon: <ProfileOutlined /> },
+          {
+            label: "Bulk upload",
+            key: "/bulkupload",
+            icon: <ProfileOutlined />,
+          },
           { label: "EMS", key: "/ems", icon: <UserOutlined /> },
           { label: "IMS", key: "/ims", icon: <UserOutlined /> },
-          isHideCreatePromotions? null :{ label: "Create Promotions", key: "/createpromotions", icon: <UserOutlined /> },
-          isHideClinic ? null : { label: "Clinic", key: "/clinic", icon: <ShopOutlined /> },
+          isHideCreatePromotions
+            ? null
+            : {
+                label: "Create Promotions",
+                key: "/createpromotions",
+                icon: <UserOutlined />,
+              },
+          isHideClinic
+            ? null
+            : { label: "Clinic", key: "/clinic", icon: <ShopOutlined /> },
           {
             label: "Consumer",
             key: "/consumer",
@@ -284,26 +393,89 @@ function Content() {
     <div style={{ marginTop: "1px" }}>
       <Routes>
         <Route path="/" element={<div>Dashboard</div>} />
-        <Route path="/dash" element={<div>< Dashboard/></div>} />
-        <Route path="/lab" element={ <div className="d-flex flex-column align-items-center">{" "} <LabTable /> </div> } />
-        <Route  path="/Acard" element={ <div className="d-flex flex-column align-items-center">{" "} <Acards /> </div>} />
-        <Route path="/clinic" element={ <div className="d-flex flex-column align-items-center"> {" "} <ClinicTable /></div>}/>
+        <Route
+          path="/dash"
+          element={
+            <div>
+              <Dashboard />
+            </div>
+          }
+        />
+        <Route
+          path="/lab"
+          element={
+            <div className="d-flex flex-column align-items-center">
+              {" "}
+              <LabTable />{" "}
+            </div>
+          }
+        />
+         <Route
+          path="/org"
+          element={
+            <div className="d-flex flex-column align-items-center">
+              {" "}
+              <Organizations /> {" "}
+            </div>
+          }
+        />
+        <Route
+          path="/location"
+          element={
+            <div className="d-flex flex-column align-items-center">
+              {" "}
+              <Locations /> {" "}
+            </div>
+          }
+        />
+        <Route
+          path="/Acard"
+          element={
+            <div className="d-flex flex-column align-items-center">
+              {" "}
+              <Acards />{" "}
+            </div>
+          }
+        />
+        <Route
+          path="/clinic"
+          element={
+            <div className="d-flex flex-column align-items-center">
+              {" "}
+              <ClinicTable />
+            </div>
+          }
+        />
         <Route path="/consumer" element={<div>Consumer</div>} />
         <Route path="/profile" element={<div>Profile</div>} />
         <Route path="/logout" element={<div>Logout</div>} />
         <Route path="/active" element={<div>Active</div>} />
         <Route path="/inactive" element={<div>Inactive</div>} />
         <Route path="/AppChildCards/:id" element={<More />} />
-        <Route path="/newconsumeraccount" element={ <div> <NewConsumer />  </div>}/>
-        <Route path="/appointment-booking" element={<AppointmentBookingPage />} />
+        <Route
+          path="/newconsumeraccount"
+          element={
+            <div>
+              {" "}
+              <NewConsumer />{" "}
+            </div>
+          }
+        />
+        <Route
+          path="/appointment-booking"
+          element={<AppointmentBookingPage />}
+        />
         <Route path="/employee-mapping" element={<EmployeeMapping />} />
-        <Route path="/appointment-details/:appointmentId"  element={<AppointmentDetails />}/>
+        <Route
+          path="/appointment-details/:appointmentId"
+          element={<AppointmentDetails />}
+        />
         <Route path="/report" element={<TestForm />} />
         <Route path="/accessManagement" element={<AccessManagement />} />
-        <Route path="/ems" element={<Ems/>}/>
-        <Route path="/ims" element={<Ims/>} />
-        <Route path="/createpromotions" element={<Createpromotions/>} />
-        <Route path="/bulkupload" element={<BulkAppointments/>} />
+        <Route path="/ems" element={<Ems />} />
+        <Route path="/ims" element={<Ims />} />
+        <Route path="/createpromotions" element={<Createpromotions />} />
+        <Route path="/bulkupload" element={<BulkAppointments />} />
       </Routes>
     </div>
   );
