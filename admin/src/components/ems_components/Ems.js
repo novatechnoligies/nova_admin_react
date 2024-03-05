@@ -18,6 +18,9 @@ const Ems = () => {
   const [editEmployeeModalVisible, setEditEmployeeModalVisible] = useState(false); // Added state for edit employee modal visibility
   const [editEmployeeData, setEditEmployeeData] = useState(null); // Added state to hold data of employee being edited
 
+  const userData = JSON.parse(sessionStorage.getItem("userData"));
+  const isAdmin = userData && userData.role && userData.role.code === "ADMIN";
+
   const handleAddEmployeeModal = () => {
     setAddEmployeeModalVisible(true);
   };
@@ -142,11 +145,25 @@ const Ems = () => {
 
   const getEmployeeTableData = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8082/dataservice/getAllUserDetails`
-      );
-      console.log("API response Data", response.data);
-      setEmployeeData(response.data);
+      const response = await axios.get("http://localhost:8082/dataservice/getAllUserDetails");
+      console.log("All User Details from API", response.data);
+  
+      const loggedInUserData = JSON.parse(sessionStorage.getItem("userData"));
+      console.log("Logged-in User Data", loggedInUserData);
+  
+      const loggedInUserId = loggedInUserData ? loggedInUserData.id : null;
+      const isAdmin = loggedInUserData && loggedInUserData.role && loggedInUserData.role.id === 1;
+      console.log("Is Admin", isAdmin);
+  
+      // Filter the data based on user role
+      const filteredData = response.data.filter(user => {
+        const isConsumerAccount = user.role && user.role.code === "CONSUMER";
+        return !isAdmin || !isConsumerAccount;
+      });
+  
+      console.log("Filtered Data", filteredData);
+  
+      setEmployeeData(filteredData);
     } catch (error) {
       console.error(error);
     }
