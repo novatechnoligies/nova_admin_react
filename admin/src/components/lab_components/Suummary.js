@@ -22,7 +22,7 @@ const Summary = ({ selectedLabData }) => {
       );
       // console.log("availability" + JSON.stringify(response));
       setAvailabilityData(response.data);
-      console.log("availability" + JSON.stringify(availabilityData));
+      console.log("Lab Availability From API" + JSON.stringify(availabilityData));
       console.log("availability" + availabilityData);
       // setFilterLabData(response.data);
     } catch (error) {}
