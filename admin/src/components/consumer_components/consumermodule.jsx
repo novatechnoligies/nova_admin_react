@@ -48,6 +48,7 @@ function NewConsumer() {
         // Upload Aadhar photo
         const file = document.getElementById("fileInput").files[0]; // Assuming fileInput is the ID of the file input element
         uploadAdharPhoto(file, response.data.id);
+        cusumerform.resetFields();
       })
       .catch((error) => {
         console.error("Validation error:", error);
