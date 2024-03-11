@@ -1,5 +1,5 @@
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
-import React, { useState, useEffect } from "react";
+  import React, { useState, useEffect } from "react";
 import { Button, Input, DatePicker, message, Modal, Form } from "antd";
 import DataTable from "react-data-table-component";
 import axios from "axios";
@@ -17,6 +17,7 @@ const Ems = () => {
   const [addEmployeeModalVisible, setAddEmployeeModalVisible] = useState(false);
   const [editEmployeeModalVisible, setEditEmployeeModalVisible] = useState(false); // Added state for edit employee modal visibility
   const [editEmployeeData, setEditEmployeeData] = useState(null); // Added state to hold data of employee being edited
+  const [originalEmployeeData, setOriginalEmployeeData] = useState([]);
 
   const userData = JSON.parse(sessionStorage.getItem("userData"));
   const isAdmin = userData && userData.role && userData.role.code === "ADMIN";
@@ -141,7 +142,7 @@ const Ems = () => {
 
   useEffect(() => {
     getEmployeeTableData();
-  }, [search]);
+  }, []);
 
   const getEmployeeTableData = async () => {
     try {
@@ -164,10 +165,21 @@ const Ems = () => {
       console.log("Filtered Data", filteredData);
   
       setEmployeeData(filteredData);
+      setOriginalEmployeeData(filteredData);
     } catch (error) {
       console.error(error);
     }
   };
+
+  // Apply search filter on employee data
+  useEffect(() => {
+    const filteredData = originalEmployeeData.filter(employee =>
+      employee.firstName.toLowerCase().includes(search.toLowerCase()) ||
+      employee.lastName.toLowerCase().includes(search.toLowerCase())
+      
+    );
+    setEmployeeData(filteredData);
+  }, [search, originalEmployeeData]);
   
   const columns = [
     
