@@ -20,6 +20,8 @@ function NewConsumer() {
   const [cusumerform] = Form.useForm(); // Create a form instance
   const [consumerData, setConsumerData] = useState([]);
   const [loginUser, setLoginUser] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -189,6 +191,15 @@ function NewConsumer() {
     }
   };
 
+  
+  const handleSearch = (value) => {
+    setSearchQuery(value);
+  };
+
+  const filteredConsumerData = consumerData.filter((consumer) =>
+    consumer.firstName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
@@ -201,6 +212,7 @@ function NewConsumer() {
             marginTop: "20px",
             marginRight: "10px",
           }}
+          onChange={(e) => handleSearch(e.target.value)}
         />
         <Button
           type="primary"
@@ -216,7 +228,7 @@ function NewConsumer() {
         title=""
         search
         columns={columns}
-        data={consumerData}
+        data={filteredConsumerData} // Use filtered data for display
         pagination
         paginationPosition="bottom"
         fixedHeader
